@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "swift-format",
+        "repositoryURL": "https://github.com/apple/swift-format",
+        "state": {
+          "branch": "master",
+          "revision": "801d068d769f532c6438d2e6973d0eb538d64c2f",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftSyntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax",
+        "state": {
+          "branch": "swift-DEVELOPMENT-SNAPSHOT-2019-09-26-m",
+          "revision": "c915603ef6815e0ec09cec33fe120be735798131",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-tools-support-core",
+        "repositoryURL": "https://github.com/apple/swift-tools-support-core.git",
+        "state": {
+          "branch": null,
+          "revision": "693aba4c4c9dcc4767cc853a0dd38bf90ad8c258",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
