@@ -1,5 +1,4 @@
 import ComposableArchitecture
-import SwiftFormatConfiguration
 import SwiftUI
 
 public enum RulesViewAction: Equatable {
