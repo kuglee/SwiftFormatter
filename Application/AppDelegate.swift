@@ -13,6 +13,7 @@ fileprivate let configFileURL : URL = FileManager.default.urls(
 class AppDelegate: NSObject, NSApplicationDelegate {
 
   var window: NSWindow!
+  var contentView: ContentView? = nil
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window = NSWindow(
@@ -24,7 +25,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.center()
     window.setFrameAutosaveName("Main Window")
 
-    let contentView = ContentView(store: Store(initialValue: AppState(configuration: loadConfiguration(fromFileAtPath: configFileURL)), reducer: appReducer))
+    contentView = ContentView(store: Store(initialValue: AppState(configuration: loadConfiguration(fromFileAtPath: configFileURL)), reducer: appReducer))
+
     window.contentView = NSHostingView(rootView: contentView)
 
     window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled = false
@@ -33,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
-//    dumpConfiguration(configuration: configurationWrapper.config, outputFileURL: configFileURL)
+    dumpConfiguration(configuration: contentView!.store.value.configuration, outputFileURL: configFileURL)
   }
 
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
