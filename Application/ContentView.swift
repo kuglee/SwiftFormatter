@@ -144,7 +144,7 @@ struct ContentView: View {
           action: { .rulesView($0) }
         )
       ).padding().tabItem { Text("Rules") }.tag(2)
-    }.frame(width: 450, height: 500)
+    }.frame(width: 500, height: 500)
   }
 }
 

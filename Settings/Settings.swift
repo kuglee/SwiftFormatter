@@ -124,13 +124,13 @@ public struct SettingsView: View {
   }
   public var body: some View {
     VStack(alignment: .myAlignmentGuide, spacing: 9) {
-      HStack(alignment: .firstTextBaseline) {
+      HStack(alignment: .top) {
         Text("indentation:").alignmentGuide(
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
-        )
+        ).offset(y: 3)
         VStack(alignment: .leading, spacing: 6) {
-          HStack(alignment: .bottom) {
+          HStack {
             Text("type:")
             Picker(
               "",
@@ -147,7 +147,7 @@ public struct SettingsView: View {
               )
             }.labelsHidden().frame(maxWidth: 100)
           }
-          HStack(alignment: .bottom) {
+          HStack {
             Text("length:")
             TextField(
               "",
@@ -169,7 +169,7 @@ public struct SettingsView: View {
           ) { Text("indentConditionalCompilationBlocks") }
         }
       }
-      HStack(alignment: .bottom) {
+      HStack {
         Text("tab width:").alignmentGuide(
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
@@ -182,7 +182,7 @@ public struct SettingsView: View {
           )
         ).frame(width: 40)
       }
-      HStack(alignment: .bottom) {
+      HStack {
         Text("line length:").alignmentGuide(
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
@@ -249,7 +249,7 @@ public struct SettingsView: View {
               }
             )
           ) { Text("prioritizeKeepingFunctionOutputTogether") }
-          HStack(alignment: .bottom) {
+          HStack {
             Text("maximumBlankLines:")
             TextField(
               "",
@@ -261,7 +261,7 @@ public struct SettingsView: View {
           }
         }
       }
-      HStack(alignment: .firstTextBaseline) {
+      HStack(alignment: .top) {
         Text("blankLineBetweenMembers:").alignmentGuide(
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
