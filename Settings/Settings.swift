@@ -3,12 +3,31 @@ import SwiftFormatConfiguration
 import SwiftUI
 import os.log
 
+class UIntNumberFormatter: NumberFormatter {
+  override init() {
+    super.init()
+    self.allowsFloats = false
+    self.minimum = 0
+  }
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+}
+
 public enum SettingsViewAction: Equatable {
-  case maximumBlankLinesFilledOut(value: String)
-  case lineLengthFilledOut(value: String)
-  case tabWidthFilledOut(value: String)
+  case maximumBlankLinesFilledOut(value: Int)
+  case maximumBlankLinesIncremented
+  case maximumBlankLinesDecremented
+  case lineLengthFilledOut(value: Int)
+  case lineLengthIncremented
+  case lineLengthDecremented
+  case tabWidthFilledOut(value: Int)
+  case tabWidthIncremented
+  case tabWidthDecremented
   case indentationSelected(value: Indent)
-  case indentationCountFilledOut(value: String)
+  case indentationCountFilledOut(value: Int)
+  case indentationIncremented
+  case indentationDecremented
   case respectsExistingLineBreaksFilledOut(value: Bool)
   case lineBreakBeforeControlFlowKeywordsFilledOut(value: Bool)
   case lineBreakBeforeEachArgumentFilledOut(value: Bool)
@@ -70,6 +89,20 @@ extension Indent: RawRepresentable {
     case .tabs: return "tabs"
     }
   }
+  public var count: Int {
+    get {
+      switch self {
+      case .spaces(let count): return count
+      case .tabs(let count): return count
+      }
+    }
+    set {
+      switch self {
+      case .spaces: self = .spaces(newValue)
+      case .tabs: self = .tabs(newValue)
+      }
+    }
+  }
 }
 
 public func settingsViewReducer(
@@ -77,16 +110,20 @@ public func settingsViewReducer(
   action: SettingsViewAction
 ) -> [Effect<SettingsViewAction>] {
   switch action {
-  case .maximumBlankLinesFilledOut(let value):
-    state.maximumBlankLines = Int(value) ?? 0
-  case .lineLengthFilledOut(let value): state.lineLength = Int(value) ?? 0
-  case .tabWidthFilledOut(let value): state.tabWidth = Int(value) ?? 0
+  case .maximumBlankLinesFilledOut(let value): state.maximumBlankLines = value
+  case .maximumBlankLinesIncremented: state.maximumBlankLines += 1
+  case .maximumBlankLinesDecremented: state.maximumBlankLines -= 1
+  case .lineLengthFilledOut(let value): state.lineLength = value
+  case .lineLengthIncremented: state.lineLength += 1
+  case .lineLengthDecremented: state.lineLength -= 1
+  case .tabWidthFilledOut(let value): state.tabWidth = value
+  case .tabWidthIncremented: state.tabWidth += 1
+  case .tabWidthDecremented:
+    state.tabWidth = state.tabWidth == 0 ? 0 : state.tabWidth - 1
   case .indentationSelected(let value): state.indentation = value
-  case .indentationCountFilledOut(let value):
-    switch state.indentation {
-    case .spaces: state.indentation = Indent.spaces(Int(value) ?? 0)
-    case .tabs: state.indentation = Indent.tabs(Int(value) ?? 0)
-    }
+  case .indentationCountFilledOut(let value): state.indentation.count = value
+  case .indentationIncremented: state.indentation.count += 1
+  case .indentationDecremented: state.indentation.count -= 1
   case .respectsExistingLineBreaksFilledOut(let value):
     state.respectsExistingLineBreaks = value
   case .ignoreSingleLinePropertiesFilledOut(let value):
@@ -149,13 +186,22 @@ public struct SettingsView: View {
           }
           HStack {
             Text("length:")
-            TextField(
-              "",
-              text: Binding(
-                get: { "\(self.store.value.indentation.count)" },
-                set: { self.store.send(.indentationCountFilledOut(value: $0)) }
-              )
-            ).frame(width: 40)
+            Stepper(
+              onIncrement: { self.store.send(.indentationIncremented) },
+              onDecrement: { self.store.send(.indentationDecremented) },
+              label: {
+                TextField(
+                  "",
+                  value: Binding(
+                    get: { self.store.value.indentation.count },
+                    set: {
+                      self.store.send(.indentationCountFilledOut(value: $0))
+                    }
+                  ),
+                  formatter: UIntNumberFormatter()
+                ).frame(width: 40)
+              }
+            )
           }
           Toggle(
             isOn: Binding(
@@ -174,26 +220,40 @@ public struct SettingsView: View {
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
         )
-        TextField(
-          "",
-          text: Binding(
-            get: { "\(self.store.value.tabWidth)" },
-            set: { self.store.send(.tabWidthFilledOut(value: $0)) }
-          )
-        ).frame(width: 40)
+        Stepper(
+          onIncrement: { self.store.send(.tabWidthIncremented) },
+          onDecrement: { self.store.send(.tabWidthDecremented) },
+          label: {
+            TextField(
+              "",
+              value: Binding(
+                get: { self.store.value.tabWidth },
+                set: { self.store.send(.tabWidthFilledOut(value: $0)) }
+              ),
+              formatter: UIntNumberFormatter()
+            ).frame(width: 40)
+          }
+        )
       }
       HStack {
         Text("line length:").alignmentGuide(
           .myAlignmentGuide,
           computeValue: { d in d[.trailing] }
         )
-        TextField(
-          "",
-          text: Binding(
-            get: { "\(self.store.value.lineLength)" },
-            set: { self.store.send(.lineLengthFilledOut(value: $0)) }
-          )
-        ).frame(width: 40)
+        Stepper(
+          onIncrement: { self.store.send(.lineLengthIncremented) },
+          onDecrement: { self.store.send(.lineLengthDecremented) },
+          label: {
+            TextField(
+              "",
+              value: Binding(
+                get: { self.store.value.lineLength },
+                set: { self.store.send(.lineLengthFilledOut(value: $0)) }
+              ),
+              formatter: UIntNumberFormatter()
+            ).frame(width: 40)
+          }
+        )
       }
       HStack(alignment: .firstTextBaseline) {
         Text("line breaks:").alignmentGuide(
@@ -251,13 +311,22 @@ public struct SettingsView: View {
           ) { Text("prioritizeKeepingFunctionOutputTogether") }
           HStack {
             Text("maximumBlankLines:")
-            TextField(
-              "",
-              text: Binding(
-                get: { "\(self.store.value.maximumBlankLines)" },
-                set: { self.store.send(.maximumBlankLinesFilledOut(value: $0)) }
-              )
-            ).frame(width: 40)
+            Stepper(
+              onIncrement: { self.store.send(.maximumBlankLinesIncremented) },
+              onDecrement: { self.store.send(.maximumBlankLinesDecremented) },
+              label: {
+                TextField(
+                  "",
+                  value: Binding(
+                    get: { self.store.value.maximumBlankLines },
+                    set: {
+                      self.store.send(.maximumBlankLinesFilledOut(value: $0))
+                    }
+                  ),
+                  formatter: UIntNumberFormatter()
+                ).frame(width: 40)
+              }
+            )
           }
         }
       }

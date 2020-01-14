@@ -97,18 +97,6 @@ let appReducer = combine(
   )
 )
 
-class UnsignedIntegerValueFormatter: NumberFormatter {
-  override func isPartialStringValid(
-    _ partialString: String,
-    newEditingString newString: AutoreleasingUnsafeMutablePointer<NSString?>?,
-    errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?
-  ) -> Bool {
-    if partialString.isEmpty { return true }
-
-    return UInt(partialString) != nil
-  }
-}
-
 func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
   if let path = path {
     do {
