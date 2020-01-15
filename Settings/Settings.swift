@@ -6,9 +6,11 @@ import os.log
 class UIntNumberFormatter: NumberFormatter {
   override init() {
     super.init()
+
     self.allowsFloats = false
     self.minimum = 0
   }
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -81,6 +83,7 @@ public struct SettingsViewState {
 
 extension Indent: RawRepresentable {
   public typealias RawValue = String
+
   public init?(rawValue: RawValue) { return nil }
 
   public var rawValue: RawValue {
@@ -89,6 +92,7 @@ extension Indent: RawRepresentable {
     case .tabs: return "tabs"
     }
   }
+
   public var count: Int {
     get {
       switch self {
@@ -141,6 +145,7 @@ public func settingsViewReducer(
   case .prioritizeKeepingFunctionOutputTogetherFilledOut(let value):
     state.prioritizeKeepingFunctionOutputTogether = value
   }
+
   return []
 }
 
@@ -156,9 +161,11 @@ extension HorizontalAlignment {
 
 public struct SettingsView: View {
   @ObservedObject var store: Store<SettingsViewState, SettingsViewAction>
+
   public init(store: Store<SettingsViewState, SettingsViewAction>) {
     self.store = store
   }
+
   public var body: some View {
     VStack(alignment: .myAlignmentGuide, spacing: 9) {
       HStack(alignment: .top) {

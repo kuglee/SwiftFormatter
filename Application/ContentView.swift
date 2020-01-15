@@ -21,7 +21,9 @@ enum AppAction {
       self = .settingsView(newValue)
     }
   }
+  
   case rulesView(RulesViewAction)
+  
   var rulesView: RulesViewAction? {
     get {
       guard case let .rulesView(value) = self else { return nil }
@@ -78,6 +80,7 @@ extension AppState {
         newValue.blankLineBetweenMembers
     }
   }
+  
   var rulesView: RulesViewState {
     get { RulesViewState(rules: self.configuration.rules) }
     set { self.configuration.rules = newValue.rules }
