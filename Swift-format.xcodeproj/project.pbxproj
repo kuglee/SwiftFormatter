@@ -24,6 +24,11 @@
 		5D39757E22875A8500307B1E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D39757D22875A8500307B1E /* main.swift */; };
 		5D3975842287648600307B1E /* com.kuglee.swift-format.service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5D39756D228759FA00307B1E /* com.kuglee.swift-format.service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5D42A11D23C2676600A9EB26 /* ComposableArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; };
+		5D45F79623D03B0700646A64 /* ConfigurationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D45F79423D03B0700646A64 /* ConfigurationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D45F79923D03B0700646A64 /* ConfigurationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; };
+		5D45F79A23D03B0700646A64 /* ConfigurationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5D45F79F23D03B1D00646A64 /* ConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D45F79E23D03B1D00646A64 /* ConfigurationManager.swift */; };
+		5D45F7A123D03CB900646A64 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D45F7A023D03CB900646A64 /* SwiftFormatConfiguration */; };
 		5D7B228723C0A19C006595F4 /* ComposableArchitecture.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D7B228523C0A19C006595F4 /* ComposableArchitecture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D7B228A23C0A19C006595F4 /* ComposableArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; };
 		5D7B228B23C0A19C006595F4 /* ComposableArchitecture.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -54,6 +59,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5D39756C228759FA00307B1E;
 			remoteInfo = SwiftFormatXPC;
+		};
+		5D45F79723D03B0700646A64 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D45F79123D03B0700646A64;
+			remoteInfo = ConfigurationManager;
 		};
 		5D7B228823C0A19C006595F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -122,6 +134,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				5D0CA9D323C30F0F00294FCC /* Rules.framework in Embed Frameworks */,
+				5D45F79A23D03B0700646A64 /* ConfigurationManager.framework in Embed Frameworks */,
 				5D7B228B23C0A19C006595F4 /* ComposableArchitecture.framework in Embed Frameworks */,
 				5D7B229F23C0AC61006595F4 /* Settings.framework in Embed Frameworks */,
 			);
@@ -171,6 +184,10 @@
 		5D38EC1B22A2CFEA0020E392 /* Swift-format Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Swift-format Extension.entitlements"; path = "Extension/Swift-format Extension.entitlements"; sourceTree = SOURCE_ROOT; };
 		5D39756D228759FA00307B1E /* com.kuglee.swift-format.service.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "com.kuglee.swift-format.service.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D39757D22875A8500307B1E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		5D45F79223D03B0700646A64 /* ConfigurationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ConfigurationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D45F79423D03B0700646A64 /* ConfigurationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConfigurationManager.h; sourceTree = "<group>"; };
+		5D45F79523D03B0700646A64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D45F79E23D03B1D00646A64 /* ConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationManager.swift; sourceTree = "<group>"; };
 		5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ComposableArchitecture.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D7B228523C0A19C006595F4 /* ComposableArchitecture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposableArchitecture.h; sourceTree = "<group>"; };
 		5D7B228623C0A19C006595F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -199,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D0CA9D223C30F0F00294FCC /* Rules.framework in Frameworks */,
+				5D45F79923D03B0700646A64 /* ConfigurationManager.framework in Frameworks */,
 				5D7B228A23C0A19C006595F4 /* ComposableArchitecture.framework in Frameworks */,
 				5D7B229E23C0AC61006595F4 /* Settings.framework in Frameworks */,
 			);
@@ -208,6 +226,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D45F78F23D03B0700646A64 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D45F7A123D03CB900646A64 /* SwiftFormatConfiguration in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +336,16 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		5D45F79323D03B0700646A64 /* ConfigurationManager */ = {
+			isa = PBXGroup;
+			children = (
+				5D45F79423D03B0700646A64 /* ConfigurationManager.h */,
+				5D45F79E23D03B1D00646A64 /* ConfigurationManager.swift */,
+				5D45F79523D03B0700646A64 /* Info.plist */,
+			);
+			path = ConfigurationManager;
+			sourceTree = "<group>";
+		};
 		5D7B228423C0A19C006595F4 /* ComposableArchitecture */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +376,7 @@
 				5D7B228423C0A19C006595F4 /* ComposableArchitecture */,
 				5D7B229823C0AC61006595F4 /* Settings */,
 				5D0CA9CC23C30F0E00294FCC /* Rules */,
+				5D45F79323D03B0700646A64 /* ConfigurationManager */,
 				5DA2B9862286045B0051C256 /* Products */,
 				5D29C54023C8DE5C00581751 /* Frameworks */,
 			);
@@ -355,6 +392,7 @@
 				5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */,
 				5D7B229723C0AC61006595F4 /* Settings.framework */,
 				5D0CA9CB23C30F0E00294FCC /* Rules.framework */,
+				5D45F79223D03B0700646A64 /* ConfigurationManager.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -377,6 +415,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D0CA9CF23C30F0F00294FCC /* Rules.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D45F78D23D03B0700646A64 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D45F79623D03B0700646A64 /* ConfigurationManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +498,7 @@
 				5D7B228923C0A19C006595F4 /* PBXTargetDependency */,
 				5D7B229D23C0AC61006595F4 /* PBXTargetDependency */,
 				5D0CA9D123C30F0F00294FCC /* PBXTargetDependency */,
+				5D45F79823D03B0700646A64 /* PBXTargetDependency */,
 			);
 			name = "Swift-format";
 			packageProductDependencies = (
@@ -477,6 +524,27 @@
 			productName = SwiftFormatXPC;
 			productReference = 5D39756D228759FA00307B1E /* com.kuglee.swift-format.service.xpc */;
 			productType = "com.apple.product-type.xpc-service";
+		};
+		5D45F79123D03B0700646A64 /* ConfigurationManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D45F79D23D03B0700646A64 /* Build configuration list for PBXNativeTarget "ConfigurationManager" */;
+			buildPhases = (
+				5D45F78D23D03B0700646A64 /* Headers */,
+				5D45F78E23D03B0700646A64 /* Sources */,
+				5D45F78F23D03B0700646A64 /* Frameworks */,
+				5D45F79023D03B0700646A64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ConfigurationManager;
+			packageProductDependencies = (
+				5D45F7A023D03CB900646A64 /* SwiftFormatConfiguration */,
+			);
+			productName = ConfigurationManager;
+			productReference = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 		5D7B228223C0A19C006595F4 /* ComposableArchitecture */ = {
 			isa = PBXNativeTarget;
@@ -563,6 +631,10 @@
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
 					};
+					5D45F79123D03B0700646A64 = {
+						CreatedOnToolsVersion = 11.3;
+						LastSwiftMigration = 1130;
+					};
 					5D7B228223C0A19C006595F4 = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
@@ -604,6 +676,7 @@
 				5D7B228223C0A19C006595F4 /* ComposableArchitecture */,
 				5D7B229623C0AC61006595F4 /* Settings */,
 				5D0CA9CA23C30F0E00294FCC /* Rules */,
+				5D45F79123D03B0700646A64 /* ConfigurationManager */,
 			);
 		};
 /* End PBXProject section */
@@ -631,6 +704,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DEDFBF923C911BD008F97D0 /* swift-format in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D45F79023D03B0700646A64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +779,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5D45F78E23D03B0700646A64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D45F79F23D03B1D00646A64 /* ConfigurationManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5D7B227F23C0A19C006595F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -737,6 +825,11 @@
 			isa = PBXTargetDependency;
 			target = 5D39756C228759FA00307B1E /* Swift-format Service */;
 			targetProxy = 5D3975852287649400307B1E /* PBXContainerItemProxy */;
+		};
+		5D45F79823D03B0700646A64 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D45F79123D03B0700646A64 /* ConfigurationManager */;
+			targetProxy = 5D45F79723D03B0700646A64 /* PBXContainerItemProxy */;
 		};
 		5D7B228923C0A19C006595F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -956,6 +1049,65 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5D45F79B23D03B0700646A64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ConfigurationManager/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.ConfigurationManager;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5D45F79C23D03B0700646A64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = ConfigurationManager/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.ConfigurationManager;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -1279,6 +1431,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		5D45F79D23D03B0700646A64 /* Build configuration list for PBXNativeTarget "ConfigurationManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D45F79B23D03B0700646A64 /* Debug */,
+				5D45F79C23D03B0700646A64 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5D7B228F23C0A19D006595F4 /* Build configuration list for PBXNativeTarget "ComposableArchitecture" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1330,6 +1491,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		5D29C54123C8DE5C00581751 /* SwiftFormatConfiguration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
+			productName = SwiftFormatConfiguration;
+		};
+		5D45F7A023D03CB900646A64 /* SwiftFormatConfiguration */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
 			productName = SwiftFormatConfiguration;

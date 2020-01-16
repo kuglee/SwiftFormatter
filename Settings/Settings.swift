@@ -365,25 +365,3 @@ public struct SettingsView: View {
     )
   }
 }
-
-fileprivate let configFileURL: URL = FileManager.default.urls(
-  for: .libraryDirectory,
-  in: .userDomainMask
-).first!.appendingPathComponent("Preferences/swift-format.json")
-
-func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
-  if let path = path {
-    do {
-      //      let url = URL(fileURLWithPath: path)
-      let data = try Data(contentsOf: path)
-      return try JSONDecoder().decode(Configuration.self, from: data)
-    } catch {
-      os_log(
-        "Could not load configuration at %{public}@: %{public}@",
-        path.absoluteString,
-        error.localizedDescription
-      )
-    }
-  }
-  return Configuration()
-}

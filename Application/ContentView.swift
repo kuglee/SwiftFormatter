@@ -100,24 +100,6 @@ let appReducer = combine(
   )
 )
 
-func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
-  if let path = path {
-    do {
-      //      let url = URL(fileURLWithPath: path)
-      let data = try Data(contentsOf: path)
-      return try JSONDecoder().decode(Configuration.self, from: data)
-    } catch {
-      os_log(
-        "Could not load configuration at %{public}@: %{public}@",
-        path.absoluteString,
-        error.localizedDescription
-      )
-    }
-  }
-
-  return Configuration()
-}
-
 struct ContentView: View {
   @ObservedObject var store: Store<AppState, AppAction>
 
@@ -128,33 +110,13 @@ struct ContentView: View {
           value: { $0.settingsView },
           action: { .settingsView($0) }
         )
-      ).padding().tabItem { Text("Formatting") }.tag(1)
+      ).padding().tabItem { Text("Formatting") }.tag(0)
       RulesView(
         store: self.store.view(
           value: { $0.rulesView },
           action: { .rulesView($0) }
         )
-      ).padding().tabItem { Text("Rules") }.tag(2)
+      ).padding().tabItem { Text("Rules") }.tag(1)
     }.frame(width: 500, height: 500)
   }
 }
-
-fileprivate let configFileURL: URL = FileManager.default.urls(
-  for: .libraryDirectory,
-  in: .userDomainMask
-).first!.appendingPathComponent("Preferences/swift-format.json")
-
-#if DEBUG
-  struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-      ContentView(
-        store: Store(
-          initialValue: AppState(
-            configuration: loadConfiguration(fromFileAtPath: configFileURL)
-          ),
-          reducer: appReducer
-        )
-      )
-    }
-  }
-#endif
