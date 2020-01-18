@@ -36,18 +36,21 @@ public struct RulesView: View {
   }
 
   public var body: some View {
-    List {
-      ForEach(self.store.value.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
-        Toggle(
-          isOn: Binding(
-            get: { self.store.value.rules[key]! },
-            set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
-          )
-        ) { Text(key) }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-          .listRowBackground((index  % 2 == 0)
-            ? Color(NSColor.alternatingContentBackgroundColors[0])
-            : Color(NSColor.alternatingContentBackgroundColors[1]))
-      }
-    }.border(Color(.placeholderTextColor))
+    VStack(alignment: .leading, spacing: 4) {
+      Text("Linter rules:")
+      List {
+        ForEach(self.store.value.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
+          Toggle(
+            isOn: Binding(
+              get: { self.store.value.rules[key]! },
+              set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
+            )
+          ) { Text(key) }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            .listRowBackground((index  % 2 == 0)
+              ? Color(NSColor.alternatingContentBackgroundColors[0])
+              : Color(NSColor.alternatingContentBackgroundColors[1]))
+        }
+      }.border(Color(.placeholderTextColor))
+    }
   }
 }
