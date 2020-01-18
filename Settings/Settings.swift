@@ -121,8 +121,7 @@ public func settingsViewReducer(
   case .lineLengthDecremented: state.lineLength -= 1
   case .tabWidthFilledOut(let value): state.tabWidth = value
   case .tabWidthIncremented: state.tabWidth += 1
-  case .tabWidthDecremented:
-    state.tabWidth = state.tabWidth == 0 ? 0 : state.tabWidth - 1
+  case .tabWidthDecremented: state.tabWidth -= 1
   case .indentationSelected(let value): state.indentation = value
   case .indentationCountFilledOut(let value): state.indentation.count = value
   case .indentationIncremented: state.indentation.count += 1
