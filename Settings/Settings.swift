@@ -16,26 +16,26 @@ class UIntNumberFormatter: NumberFormatter {
 }
 
 public enum SettingsViewAction: Equatable {
-  case maximumBlankLinesFilledOut(value: Int)
+  case maximumBlankLinesFilledOut(Int)
   case maximumBlankLinesIncremented
   case maximumBlankLinesDecremented
-  case lineLengthFilledOut(value: Int)
+  case lineLengthFilledOut(Int)
   case lineLengthIncremented
   case lineLengthDecremented
-  case tabWidthFilledOut(value: Int)
+  case tabWidthFilledOut(Int)
   case tabWidthIncremented
   case tabWidthDecremented
-  case indentationSelected(value: Indent)
-  case indentationCountFilledOut(value: Int)
+  case indentationSelected(Indent)
+  case indentationCountFilledOut(Int)
   case indentationIncremented
   case indentationDecremented
-  case respectsExistingLineBreaksFilledOut(value: Bool)
-  case lineBreakBeforeControlFlowKeywordsFilledOut(value: Bool)
-  case lineBreakBeforeEachArgumentFilledOut(value: Bool)
-  case lineBreakBeforeEachGenericRequirementFilledOut(value: Bool)
-  case prioritizeKeepingFunctionOutputTogetherFilledOut(value: Bool)
-  case indentConditionalCompilationBlocksFilledOut(value: Bool)
-  case ignoreSingleLinePropertiesFilledOut(value: Bool)
+  case respectsExistingLineBreaksFilledOut(Bool)
+  case lineBreakBeforeControlFlowKeywordsFilledOut(Bool)
+  case lineBreakBeforeEachArgumentFilledOut(Bool)
+  case lineBreakBeforeEachGenericRequirementFilledOut(Bool)
+  case prioritizeKeepingFunctionOutputTogetherFilledOut(Bool)
+  case indentConditionalCompilationBlocksFilledOut(Bool)
+  case ignoreSingleLinePropertiesFilledOut(Bool)
 }
 
 public struct SettingsViewState {
@@ -179,7 +179,7 @@ public struct SettingsView: View {
               "",
               selection: Binding(
                 get: { self.store.value.indentation },
-                set: { self.store.send(.indentationSelected(value: $0)) }
+                set: { self.store.send(.indentationSelected($0)) }
               )
             ) {
               Text(Indent.spaces(Int()).rawValue).tag(
@@ -201,7 +201,7 @@ public struct SettingsView: View {
                   value: Binding(
                     get: { self.store.value.indentation.count },
                     set: {
-                      self.store.send(.indentationCountFilledOut(value: $0))
+                      self.store.send(.indentationCountFilledOut($0))
                     }
                   ),
                   formatter: UIntNumberFormatter()
@@ -214,7 +214,7 @@ public struct SettingsView: View {
               get: { self.store.value.indentConditionalCompilationBlocks },
               set: {
                 self.store.send(
-                  .indentConditionalCompilationBlocksFilledOut(value: $0)
+                  .indentConditionalCompilationBlocksFilledOut($0)
                 )
               }
             )
@@ -234,7 +234,7 @@ public struct SettingsView: View {
               "",
               value: Binding(
                 get: { self.store.value.tabWidth },
-                set: { self.store.send(.tabWidthFilledOut(value: $0)) }
+                set: { self.store.send(.tabWidthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
             ).multilineTextAlignment(.trailing).frame(width: 40)
@@ -254,7 +254,7 @@ public struct SettingsView: View {
               "",
               value: Binding(
                 get: { self.store.value.lineLength },
-                set: { self.store.send(.lineLengthFilledOut(value: $0)) }
+                set: { self.store.send(.lineLengthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
             ).multilineTextAlignment(.trailing).frame(width: 40)
@@ -271,7 +271,7 @@ public struct SettingsView: View {
             isOn: Binding(
               get: { self.store.value.respectsExistingLineBreaks },
               set: {
-                self.store.send(.respectsExistingLineBreaksFilledOut(value: $0))
+                self.store.send(.respectsExistingLineBreaksFilledOut($0))
               }
             )
           ) { Text("respectsExistingLineBreaks") }
@@ -280,7 +280,7 @@ public struct SettingsView: View {
               get: { self.store.value.lineBreakBeforeControlFlowKeywords },
               set: {
                 self.store.send(
-                  .lineBreakBeforeControlFlowKeywordsFilledOut(value: $0)
+                  .lineBreakBeforeControlFlowKeywordsFilledOut($0)
                 )
               }
             )
@@ -290,7 +290,7 @@ public struct SettingsView: View {
               get: { self.store.value.lineBreakBeforeEachArgument },
               set: {
                 self.store.send(
-                  .lineBreakBeforeEachArgumentFilledOut(value: $0)
+                  .lineBreakBeforeEachArgumentFilledOut($0)
                 )
               }
             )
@@ -300,7 +300,7 @@ public struct SettingsView: View {
               get: { self.store.value.lineBreakBeforeEachGenericRequirement },
               set: {
                 self.store.send(
-                  .lineBreakBeforeEachGenericRequirementFilledOut(value: $0)
+                  .lineBreakBeforeEachGenericRequirementFilledOut($0)
                 )
               }
             )
@@ -310,7 +310,7 @@ public struct SettingsView: View {
               get: { self.store.value.prioritizeKeepingFunctionOutputTogether },
               set: {
                 self.store.send(
-                  .prioritizeKeepingFunctionOutputTogetherFilledOut(value: $0)
+                  .prioritizeKeepingFunctionOutputTogetherFilledOut($0)
                 )
               }
             )
@@ -326,7 +326,7 @@ public struct SettingsView: View {
                   value: Binding(
                     get: { self.store.value.maximumBlankLines },
                     set: {
-                      self.store.send(.maximumBlankLinesFilledOut(value: $0))
+                      self.store.send(.maximumBlankLinesFilledOut($0))
                     }
                   ),
                   formatter: UIntNumberFormatter()
@@ -349,7 +349,7 @@ public struct SettingsView: View {
                   .ignoreSingleLineProperties
               },
               set: {
-                self.store.send(.ignoreSingleLinePropertiesFilledOut(value: $0))
+                self.store.send(.ignoreSingleLinePropertiesFilledOut($0))
               }
             )
           ) { Text("ignoreSingleLineProperties") }
