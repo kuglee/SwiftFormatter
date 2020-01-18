@@ -205,7 +205,7 @@ public struct SettingsView: View {
                     }
                   ),
                   formatter: UIntNumberFormatter()
-                ).frame(width: 40)
+                ).multilineTextAlignment(.trailing).frame(width: 40)
               }
             )
           }
@@ -237,7 +237,7 @@ public struct SettingsView: View {
                 set: { self.store.send(.tabWidthFilledOut(value: $0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).frame(width: 40)
+            ).multilineTextAlignment(.trailing).frame(width: 40)
           }
         )
       }
@@ -257,7 +257,7 @@ public struct SettingsView: View {
                 set: { self.store.send(.lineLengthFilledOut(value: $0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).frame(width: 40)
+            ).multilineTextAlignment(.trailing).frame(width: 40)
           }
         )
       }
@@ -330,7 +330,7 @@ public struct SettingsView: View {
                     }
                   ),
                   formatter: UIntNumberFormatter()
-                ).frame(width: 40)
+                ).multilineTextAlignment(.trailing).frame(width: 40)
               }
             )
           }
