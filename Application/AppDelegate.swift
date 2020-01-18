@@ -1,6 +1,5 @@
 import ComposableArchitecture
 import ConfigurationManager
-import SwiftFormatConfiguration
 import SwiftUI
 
 @NSApplicationMain

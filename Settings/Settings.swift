@@ -1,7 +1,6 @@
 import ComposableArchitecture
 import SwiftFormatConfiguration
 import SwiftUI
-import os.log
 
 class UIntNumberFormatter: NumberFormatter {
   override init() {

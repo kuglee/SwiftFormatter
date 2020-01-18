@@ -14,7 +14,7 @@ public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
       )
     }
   }
-  
+
   return Configuration()
 }
 
@@ -24,14 +24,14 @@ public func dumpConfiguration(configuration: Configuration = Configuration(), ou
     encoder.outputFormatting = [.prettyPrinted]
     if #available(macOS 10.13, *) {
       encoder.outputFormatting.insert(.sortedKeys)
-    }
-    
+   }
+
     let data = try encoder.encode(configuration)
     guard let jsonString = String(data: data, encoding: .utf8) else {
       print("Could not dump the default configuration: the JSON was not valid UTF-8")
       return
     }
-    
+
     if let outputFileURL = outputFileURL {
       do {
         try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
