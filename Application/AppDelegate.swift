@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled =
       false
     window.setFrameAutosaveName("Main Window")
+    window.title = "Swift-format"
 
     contentView = ContentView(
       store: Store(
