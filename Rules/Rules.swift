@@ -22,6 +22,12 @@ public func rulesViewReducer(
   }
 }
 
+extension Collection {
+  func enumeratedArray() -> Array<(offset: Int, element: Self.Element)> {
+    return Array(self.enumerated())
+  }
+}
+
 public struct RulesView: View {
   @ObservedObject var store: Store<RulesViewState, RulesViewAction>
 
@@ -31,20 +37,17 @@ public struct RulesView: View {
 
   public var body: some View {
     List {
-      ForEach(self.store.value.rules.keys.sorted(), id: \.self) { key in
+      ForEach(self.store.value.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
         Toggle(
           isOn: Binding(
             get: { self.store.value.rules[key]! },
             set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
           )
-        ) { Text(key) }
+        ) { Text(key) }.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+          .listRowBackground((index  % 2 == 0)
+            ? Color(NSColor.alternatingContentBackgroundColors[0])
+            : Color(NSColor.alternatingContentBackgroundColors[1]))
       }
-    }.frame(
-      minWidth: 0,
-      maxWidth: .infinity,
-      minHeight: 0,
-      maxHeight: .infinity,
-      alignment: .top
-    )
+    }.border(Color(.placeholderTextColor))
   }
 }
