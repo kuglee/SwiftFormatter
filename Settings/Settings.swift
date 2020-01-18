@@ -199,9 +199,7 @@ public struct SettingsView: View {
                   "",
                   value: Binding(
                     get: { self.store.value.indentation.count },
-                    set: {
-                      self.store.send(.indentationCountFilledOut($0))
-                    }
+                    set: { self.store.send(.indentationCountFilledOut($0)) }
                   ),
                   formatter: UIntNumberFormatter()
                 ).multilineTextAlignment(.trailing).frame(width: 40)
@@ -269,9 +267,7 @@ public struct SettingsView: View {
           Toggle(
             isOn: Binding(
               get: { self.store.value.respectsExistingLineBreaks },
-              set: {
-                self.store.send(.respectsExistingLineBreaksFilledOut($0))
-              }
+              set: { self.store.send(.respectsExistingLineBreaksFilledOut($0)) }
             )
           ) { Text("respectsExistingLineBreaks") }
           Toggle(
@@ -288,9 +284,7 @@ public struct SettingsView: View {
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeEachArgument },
               set: {
-                self.store.send(
-                  .lineBreakBeforeEachArgumentFilledOut($0)
-                )
+                self.store.send(.lineBreakBeforeEachArgumentFilledOut($0))
               }
             )
           ) { Text("lineBreakBeforeEachArgument") }
@@ -324,9 +318,7 @@ public struct SettingsView: View {
                   "",
                   value: Binding(
                     get: { self.store.value.maximumBlankLines },
-                    set: {
-                      self.store.send(.maximumBlankLinesFilledOut($0))
-                    }
+                    set: { self.store.send(.maximumBlankLinesFilledOut($0)) }
                   ),
                   formatter: UIntNumberFormatter()
                 ).multilineTextAlignment(.trailing).frame(width: 40)
@@ -347,9 +339,7 @@ public struct SettingsView: View {
                 self.store.value.blankLineBetweenMembers
                   .ignoreSingleLineProperties
               },
-              set: {
-                self.store.send(.ignoreSingleLinePropertiesFilledOut($0))
-              }
+              set: { self.store.send(.ignoreSingleLinePropertiesFilledOut($0)) }
             )
           ) { Text("ignoreSingleLineProperties") }
         }

@@ -1,5 +1,5 @@
-import os.log
 import SwiftFormatConfiguration
+import os.log
 
 public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
   if let path = path {
@@ -18,30 +18,33 @@ public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
   return Configuration()
 }
 
-public func dumpConfiguration(configuration: Configuration = Configuration(), outputFileURL: URL? = nil) {
+public func dumpConfiguration(
+  configuration: Configuration = Configuration(),
+  outputFileURL: URL? = nil
+) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted]
     if #available(macOS 10.13, *) {
       encoder.outputFormatting.insert(.sortedKeys)
-   }
+    }
 
     let data = try encoder.encode(configuration)
     guard let jsonString = String(data: data, encoding: .utf8) else {
-      print("Could not dump the default configuration: the JSON was not valid UTF-8")
+      print(
+        "Could not dump the default configuration: the JSON was not valid UTF-8"
+      )
       return
     }
 
     if let outputFileURL = outputFileURL {
       do {
-        try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
-      } catch {
-        print("Could not dump the default configuration: \(error)")
-      }
-    } else {
-      print(jsonString)
-    }
-  } catch {
-    print("Could not dump the default configuration: \(error)")
-  }
+        try jsonString.write(
+          to: outputFileURL,
+          atomically: false,
+          encoding: .utf8
+        )
+      } catch { print("Could not dump the default configuration: \(error)") }
+    } else { print(jsonString) }
+  } catch { print("Could not dump the default configuration: \(error)") }
 }

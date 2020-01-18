@@ -40,9 +40,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
   process.standardOutput = standardOutput
   process.standardError = standardError
 
-  do {
-    try process.run()
-  } catch {
+  do { try process.run() } catch {
     return .failure(.runError(message: error.localizedDescription))
   }
 
@@ -98,7 +96,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
       return reply(nil, error)
     }
 
-    defer {try? FileManager.default.removeItem(at: tempFileURL) }
+    defer { try? FileManager.default.removeItem(at: tempFileURL) }
 
     do {
       try source.write(to: tempFileURL, atomically: false, encoding: .utf8)
@@ -121,9 +119,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
       do {
         let formattedSource = try String(contentsOf: tempFileURL)
         return reply(formattedSource, nil)
-      } catch {
-        return reply(nil, error)
-      }
+      } catch { return reply(nil, error) }
     case .failure(let error):
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)

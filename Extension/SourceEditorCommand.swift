@@ -8,10 +8,8 @@ enum FormatterError: Error, LocalizedError {
 
   var localizedDescription: String {
     switch self {
-    case .notSwiftSource:
-      return "Error: not a Swift source file."
-    case .formatError:
-      return "Error: could not format source file."
+    case .notSwiftSource: return "Error: not a Swift source file."
+    case .formatError: return "Error: could not format source file."
     }
   }
 }
@@ -23,11 +21,10 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
   ) {
     guard
       [
-        "public.swift-source", "com.apple.dt.playground", "com.apple.dt.playgroundpage",
+        "public.swift-source", "com.apple.dt.playground",
+        "com.apple.dt.playgroundpage",
       ].contains(invocation.buffer.contentUTI)
-    else {
-      return completionHandler(FormatterError.notSwiftSource)
-    }
+    else { return completionHandler(FormatterError.notSwiftSource) }
 
     let swiftFormatServiceConnection = NSXPCConnection(
       serviceName: "com.kuglee.swift-format.service"
@@ -43,25 +40,20 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
       os_log("%{public}@", error.localizedDescription)
     } as! SwiftFormatServiceProtocol
 
-    let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
+    let previousSelection = invocation.buffer.selections[0]
+      as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
 
     swiftFormatService.format(source: source) { formattedSource, error in
-      defer {
-        swiftFormatServiceConnection.invalidate()
-      }
+      defer { swiftFormatServiceConnection.invalidate() }
 
-      if let error = error {
-        return completionHandler(error)
-      }
+      if let error = error { return completionHandler(error) }
 
       guard let formattedSource = formattedSource else {
         return completionHandler(FormatterError.formatError)
       }
 
-      if source == formattedSource {
-        return completionHandler(nil)
-      }
+      if source == formattedSource { return completionHandler(nil) }
 
       invocation.buffer.selections.removeAllObjects()
       invocation.buffer.completeBuffer = formattedSource

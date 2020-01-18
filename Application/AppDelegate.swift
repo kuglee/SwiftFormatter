@@ -2,8 +2,7 @@ import ComposableArchitecture
 import ConfigurationManager
 import SwiftUI
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+@NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
   var window: NSWindow!
   var contentView: ContentView? = nil
 

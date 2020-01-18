@@ -20,7 +20,7 @@ enum AppAction {
       self = .settingsView(newValue)
     }
   }
-  
+
   case rulesView(RulesViewAction)
   
   var rulesView: RulesViewAction? {
