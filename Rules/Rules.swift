@@ -30,23 +30,21 @@ public struct RulesView: View {
   }
 
   public var body: some View {
-    ScrollView {
-      VStack(alignment: .leading, spacing: 6) {
-        ForEach(self.store.value.rules.keys.sorted(), id: \.self) { key in
-          Toggle(
-            isOn: Binding(
-              get: { self.store.value.rules[key]! },
-              set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
-            )
-          ) { Text(key) }
-        }
-      }.frame(
-        minWidth: 0,
-        maxWidth: .infinity,
-        minHeight: 0,
-        maxHeight: .infinity,
-        alignment: .top
-      )
-    }
+    List {
+      ForEach(self.store.value.rules.keys.sorted(), id: \.self) { key in
+        Toggle(
+          isOn: Binding(
+            get: { self.store.value.rules[key]! },
+            set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
+          )
+        ) { Text(key) }
+      }
+    }.frame(
+      minWidth: 0,
+      maxWidth: .infinity,
+      minHeight: 0,
+      maxHeight: .infinity,
+      alignment: .top
+    )
   }
 }
