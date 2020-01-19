@@ -1,0 +1,17 @@
+"indentation:" = "Indentation:";
+"length:" = "Length:";
+"indentConditionalCompilationBlocks" = "Indent conditional compilation blocks";
+"tabWidth:" = "Tab Width:";
+"spaces" = "spaces";
+"lineLength:" = "Line Length:";
+"lineBreaks:" = "Line Breaks:";
+"respectsExistingLineBreaks" = "Respects existing line breaks";
+"lineBreakBeforeControlFlowKeywords" = "Line break before control flow keywords";
+"lineBreakBeforeEachArgument" = "Line break before each argument";
+"lineBreakBeforeEachGenericRequirement" = "Line break before each generic requirement";
+"prioritizeKeepingFunctionOutputTogether" = "Prioritize keeping function output together";
+"maximumBlankLines:" = "Maximum blank lines:";
+"blankLineBetweenMembers:" = "Blank line between members:";
+"ignoreSingleLineProperties" = "Ignore single line properties";
+"Spaces" = "Spaces";
+"Tabs" = "Tabs";

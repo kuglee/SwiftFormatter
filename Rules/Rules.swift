@@ -22,6 +22,20 @@ public func rulesViewReducer(
   }
 }
 
+extension StringProtocol {
+  var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
+
+  func camelCaseToWords() -> String {
+    unicodeScalars.reduce("") {
+      if CharacterSet.uppercaseLetters.contains($1) {
+        if $0.count > 0 { return ($0 + " " + String($1)) }
+      }
+
+      return $0 + String($1)
+    }
+  }
+}
+
 extension Collection {
   func enumeratedArray() -> [(offset: Int, element: Self.Element)] {
     return Array(self.enumerated())
@@ -37,7 +51,7 @@ public struct RulesView: View {
 
   public var body: some View {
     VStack(alignment: .leading, spacing: 4) {
-      Text("Linter rules:")
+      Text("Linter rules:", bundle: Bundle.current)
       List {
         ForEach(
           self.store.value.rules.keys.sorted().enumeratedArray(),
@@ -48,7 +62,7 @@ public struct RulesView: View {
               get: { self.store.value.rules[key]! },
               set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
             )
-          ) { Text(key) }.frame(
+          ) { Text(LocalizedStringKey(key), bundle: Bundle.current) }.frame(
             minWidth: 0,
             maxWidth: .infinity,
             alignment: .leading
@@ -60,5 +74,12 @@ public struct RulesView: View {
         }
       }.border(Color(.placeholderTextColor))
     }
+  }
+}
+
+extension Bundle {
+  static var current: Bundle {
+    class __ {}
+    return Bundle(for: __.self)
   }
 }
