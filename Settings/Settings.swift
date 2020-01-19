@@ -147,16 +147,6 @@ public func settingsViewReducer(
   return []
 }
 
-extension HorizontalAlignment {
-  private enum MyAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      context[.trailing]
-    }
-  }
-
-  static let myAlignmentGuide = HorizontalAlignment(MyAlignment.self)
-}
-
 public struct SettingsView: View {
   @ObservedObject var store: Store<SettingsViewState, SettingsViewAction>
 
@@ -165,30 +155,26 @@ public struct SettingsView: View {
   }
 
   public var body: some View {
-    VStack(alignment: .myAlignmentGuide, spacing: 9) {
-      HStack(alignment: .top) {
-        Text("indentation:").alignmentGuide(
-          .myAlignmentGuide,
-          computeValue: { d in d[.trailing] }
-        ).offset(y: 3)
+    VStack(alignment: .trailingAlignmentGuide, spacing: 9) {
+      HStack(alignment: .topAlignmentGuide) {
+        Text("indentation:").modifier(TrailingAlignmentStyle()).modifier(
+          TopAlignmentStyle()
+        )
         VStack(alignment: .leading, spacing: 6) {
-          HStack {
-            Text("type:")
-            Picker(
-              "",
-              selection: Binding(
-                get: { self.store.value.indentation },
-                set: { self.store.send(.indentationSelected($0)) }
-              )
-            ) {
-              Text(Indent.spaces(Int()).rawValue).tag(
-                Indent.spaces(self.store.value.indentation.count)
-              )
-              Text(Indent.tabs(Int()).rawValue).tag(
-                Indent.tabs(self.store.value.indentation.count)
-              )
-            }.labelsHidden().frame(maxWidth: 100)
-          }
+          Picker(
+            selection: Binding(
+              get: { self.store.value.indentation },
+              set: { self.store.send(.indentationSelected($0)) }
+            ),
+            label: Text("type:").modifier(TopAlignmentStyle())
+          ) {
+            Text(Indent.spaces(Int()).rawValue).tag(
+              Indent.spaces(self.store.value.indentation.count)
+            )
+            Text(Indent.tabs(Int()).rawValue).tag(
+              Indent.tabs(self.store.value.indentation.count)
+            )
+          }.frame(maxWidth: 120)
           HStack {
             Text("length:")
             Stepper(
@@ -202,7 +188,7 @@ public struct SettingsView: View {
                     set: { self.store.send(.indentationCountFilledOut($0)) }
                   ),
                   formatter: UIntNumberFormatter()
-                ).multilineTextAlignment(.trailing).frame(width: 40)
+                ).modifier(PrimaryTextFieldStyle())
               }
             )
           }
@@ -219,10 +205,7 @@ public struct SettingsView: View {
         }
       }
       HStack {
-        Text("tab width:").alignmentGuide(
-          .myAlignmentGuide,
-          computeValue: { d in d[.trailing] }
-        )
+        Text("tab width:").modifier(TrailingAlignmentStyle())
         Stepper(
           onIncrement: { self.store.send(.tabWidthIncremented) },
           onDecrement: { self.store.send(.tabWidthDecremented) },
@@ -234,15 +217,12 @@ public struct SettingsView: View {
                 set: { self.store.send(.tabWidthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).multilineTextAlignment(.trailing).frame(width: 40)
+            ).modifier(PrimaryTextFieldStyle())
           }
         )
       }
       HStack {
-        Text("line length:").alignmentGuide(
-          .myAlignmentGuide,
-          computeValue: { d in d[.trailing] }
-        )
+        Text("line length:").modifier(TrailingAlignmentStyle())
         Stepper(
           onIncrement: { self.store.send(.lineLengthIncremented) },
           onDecrement: { self.store.send(.lineLengthDecremented) },
@@ -254,15 +234,12 @@ public struct SettingsView: View {
                 set: { self.store.send(.lineLengthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).multilineTextAlignment(.trailing).frame(width: 40)
+            ).modifier(PrimaryTextFieldStyle())
           }
         )
       }
       HStack(alignment: .firstTextBaseline) {
-        Text("line breaks:").alignmentGuide(
-          .myAlignmentGuide,
-          computeValue: { d in d[.trailing] }
-        )
+        Text("line breaks:").modifier(TrailingAlignmentStyle())
         VStack(alignment: .leading, spacing: 6) {
           Toggle(
             isOn: Binding(
@@ -321,17 +298,14 @@ public struct SettingsView: View {
                     set: { self.store.send(.maximumBlankLinesFilledOut($0)) }
                   ),
                   formatter: UIntNumberFormatter()
-                ).multilineTextAlignment(.trailing).frame(width: 40)
+                ).modifier(PrimaryTextFieldStyle())
               }
             )
           }
         }
       }
       HStack(alignment: .top) {
-        Text("blankLineBetweenMembers:").alignmentGuide(
-          .myAlignmentGuide,
-          computeValue: { d in d[.trailing] }
-        )
+        Text("blankLineBetweenMembers:").modifier(TrailingAlignmentStyle())
         VStack(alignment: .leading, spacing: 6) {
           Toggle(
             isOn: Binding(
@@ -351,5 +325,45 @@ public struct SettingsView: View {
       maxHeight: .infinity,
       alignment: .top
     )
+  }
+}
+
+extension HorizontalAlignment {
+  private enum TrailingAlignment: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+      context[.leading]
+    }
+  }
+
+  static let trailingAlignmentGuide = HorizontalAlignment(
+    TrailingAlignment.self
+  )
+}
+
+struct PrimaryTextFieldStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.multilineTextAlignment(.trailing).frame(width: 40)
+  }
+}
+
+struct TrailingAlignmentStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.alignmentGuide(.trailingAlignmentGuide) { $0[.trailing] }
+  }
+}
+
+extension VerticalAlignment {
+  private enum TopAlignment: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat {
+      context[.top]
+    }
+  }
+
+  static let topAlignmentGuide = VerticalAlignment(TopAlignment.self)
+}
+
+struct TopAlignmentStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.alignmentGuide(.topAlignmentGuide) { $0[.top] }
   }
 }
