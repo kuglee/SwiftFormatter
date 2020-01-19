@@ -156,41 +156,43 @@ public struct SettingsView: View {
 
   public var body: some View {
     VStack(alignment: .trailingAlignmentGuide, spacing: 9) {
-      HStack(alignment: .topAlignmentGuide) {
+      HStack(alignment: .centerAlignmentGuide) {
         Text("indentation:").modifier(TrailingAlignmentStyle()).modifier(
-          TopAlignmentStyle()
+          CenterAlignmentStyle()
         )
         VStack(alignment: .leading, spacing: 6) {
-          Picker(
-            selection: Binding(
-              get: { self.store.value.indentation },
-              set: { self.store.send(.indentationSelected($0)) }
-            ),
-            label: Text("type:").modifier(TopAlignmentStyle())
-          ) {
-            Text(Indent.spaces(Int()).rawValue).tag(
-              Indent.spaces(self.store.value.indentation.count)
-            )
-            Text(Indent.tabs(Int()).rawValue).tag(
-              Indent.tabs(self.store.value.indentation.count)
-            )
-          }.frame(maxWidth: 120)
-          HStack {
-            Text("length:")
-            Stepper(
-              onIncrement: { self.store.send(.indentationIncremented) },
-              onDecrement: { self.store.send(.indentationDecremented) },
-              label: {
-                TextField(
-                  "",
-                  value: Binding(
-                    get: { self.store.value.indentation.count },
-                    set: { self.store.send(.indentationCountFilledOut($0)) }
-                  ),
-                  formatter: UIntNumberFormatter()
-                ).modifier(PrimaryTextFieldStyle())
-              }
-            )
+          HStack() {
+            Text("length:").modifier(CenterAlignmentStyle())
+            HStack(spacing: 0) {
+              Stepper(
+                onIncrement: { self.store.send(.indentationIncremented) },
+                onDecrement: { self.store.send(.indentationDecremented) },
+                label: {
+                  TextField(
+                    "",
+                    value: Binding(
+                      get: { self.store.value.indentation.count },
+                      set: { self.store.send(.indentationCountFilledOut($0)) }
+                    ),
+                    formatter: UIntNumberFormatter()
+                  ).modifier(PrimaryTextFieldStyle())
+                }
+              )
+              Picker(
+                "",
+                selection: Binding(
+                  get: { self.store.value.indentation },
+                  set: { self.store.send(.indentationSelected($0)) }
+                )
+              ) {
+                Text(Indent.spaces(Int()).rawValue).tag(
+                  Indent.spaces(self.store.value.indentation.count)
+                )
+                Text(Indent.tabs(Int()).rawValue).tag(
+                  Indent.tabs(self.store.value.indentation.count)
+                )
+              }.frame(maxWidth: 100)
+            }
           }
           Toggle(
             isOn: Binding(
@@ -220,6 +222,7 @@ public struct SettingsView: View {
             ).modifier(PrimaryTextFieldStyle())
           }
         )
+        Text("spaces")
       }
       HStack {
         Text("line length:").modifier(TrailingAlignmentStyle())
@@ -353,17 +356,19 @@ struct TrailingAlignmentStyle: ViewModifier {
 }
 
 extension VerticalAlignment {
-  private enum TopAlignment: AlignmentID {
+  private enum CenterAlignment: AlignmentID {
     static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      context[.top]
+      context[VerticalAlignment.center]
     }
   }
 
-  static let topAlignmentGuide = VerticalAlignment(TopAlignment.self)
+  static let centerAlignmentGuide = VerticalAlignment(CenterAlignment.self)
 }
 
-struct TopAlignmentStyle: ViewModifier {
+struct CenterAlignmentStyle: ViewModifier {
   func body(content: Content) -> some View {
-    content.alignmentGuide(.topAlignmentGuide) { $0[.top] }
+    content.alignmentGuide(.centerAlignmentGuide) {
+      $0[VerticalAlignment.center]
+    }
   }
 }
