@@ -66,14 +66,55 @@ public struct RulesView: View {
             minWidth: 0,
             maxWidth: .infinity,
             alignment: .leading
-          ).listRowBackground(
-            (index % 2 == 0)
-              ? Color(NSColor.alternatingContentBackgroundColors[0])
-              : Color(NSColor.alternatingContentBackgroundColors[1])
+          ).modifier(
+            AlternatingListBackgroundStyle(
+              background: index % 2 == 0 ? .dark : .light
+            )
           )
         }
-      }.border(Color(.placeholderTextColor))
+      }.modifier(PrimaryListBorderStyle())
     }
+  }
+}
+
+enum AlternatingBackground {
+  case dark
+  case light
+}
+
+struct PrimaryListBackgroundStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.listRowBackground(
+      Color(NSColor.alternatingContentBackgroundColors[0])
+    )
+  }
+}
+
+struct SecondaryListBackgroundStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.listRowBackground(
+      Color(NSColor.alternatingContentBackgroundColors[1])
+    )
+  }
+}
+
+struct AlternatingListBackgroundStyle: ViewModifier {
+  private var background: AlternatingBackground
+
+  init(background: AlternatingBackground) { self.background = background }
+
+  func body(content: Content) -> some View {
+    switch background {
+    case .dark: return AnyView(content.modifier(PrimaryListBackgroundStyle()))
+    case .light:
+      return AnyView(content.modifier(SecondaryListBackgroundStyle()))
+    }
+  }
+}
+
+struct PrimaryListBorderStyle: ViewModifier {
+  func body(content: Content) -> some View {
+    content.border(Color(.placeholderTextColor))
   }
 }
 
