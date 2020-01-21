@@ -17,3 +17,9 @@ public class UIntNumberFormatter: NumberFormatter {
     fatalError("init(coder:) has not been implemented")
   }
 }
+
+extension Collection {
+  public func enumeratedArray() -> [(offset: Int, element: Self.Element)] {
+    return Array(self.enumerated())
+  }
+}

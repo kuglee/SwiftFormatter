@@ -24,26 +24,6 @@ public func rulesViewReducer(
   }
 }
 
-extension StringProtocol {
-  var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
-
-  func camelCaseToWords() -> String {
-    unicodeScalars.reduce("") {
-      if CharacterSet.uppercaseLetters.contains($1) {
-        if $0.count > 0 { return ($0 + " " + String($1)) }
-      }
-
-      return $0 + String($1)
-    }
-  }
-}
-
-extension Collection {
-  func enumeratedArray() -> [(offset: Int, element: Self.Element)] {
-    return Array(self.enumerated())
-  }
-}
-
 public struct RulesView: View {
   @ObservedObject var store: Store<RulesViewState, RulesViewAction>
 
