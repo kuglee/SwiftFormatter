@@ -1,6 +1,14 @@
 import ComposableArchitecture
+import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
+
+extension Bundle {
+  static var current: Bundle {
+    class __ {}
+    return Bundle(for: __.self)
+  }
+}
 
 class UIntNumberFormatter: NumberFormatter {
   override init() {
@@ -354,54 +362,5 @@ public struct SettingsView: View {
       maxHeight: .infinity,
       alignment: .top
     )
-  }
-}
-
-extension HorizontalAlignment {
-  private enum TrailingAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      context[.leading]
-    }
-  }
-
-  static let trailingAlignmentGuide = HorizontalAlignment(
-    TrailingAlignment.self
-  )
-}
-
-struct PrimaryTextFieldStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.multilineTextAlignment(.trailing).frame(width: 40)
-  }
-}
-
-struct TrailingAlignmentStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.alignmentGuide(.trailingAlignmentGuide) { $0[.trailing] }
-  }
-}
-
-extension VerticalAlignment {
-  private enum CenterAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat {
-      context[VerticalAlignment.center]
-    }
-  }
-
-  static let centerAlignmentGuide = VerticalAlignment(CenterAlignment.self)
-}
-
-struct CenterAlignmentStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.alignmentGuide(.centerAlignmentGuide) {
-      $0[VerticalAlignment.center]
-    }
-  }
-}
-
-extension Bundle {
-  static var current: Bundle {
-    class __ {}
-    return Bundle(for: __.self)
   }
 }

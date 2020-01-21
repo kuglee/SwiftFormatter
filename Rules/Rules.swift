@@ -1,5 +1,13 @@
 import ComposableArchitecture
+import StyleGuide
 import SwiftUI
+
+extension Bundle {
+  static var current: Bundle {
+    class __ {}
+    return Bundle(for: __.self)
+  }
+}
 
 public enum RulesViewAction: Equatable {
   case ruleFilledOut(key: String, value: Bool)
@@ -74,53 +82,5 @@ public struct RulesView: View {
         }
       }.modifier(PrimaryListBorderStyle())
     }
-  }
-}
-
-enum AlternatingBackground {
-  case dark
-  case light
-}
-
-struct PrimaryListBackgroundStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.listRowBackground(
-      Color(NSColor.alternatingContentBackgroundColors[0])
-    )
-  }
-}
-
-struct SecondaryListBackgroundStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.listRowBackground(
-      Color(NSColor.alternatingContentBackgroundColors[1])
-    )
-  }
-}
-
-struct AlternatingListBackgroundStyle: ViewModifier {
-  private var background: AlternatingBackground
-
-  init(background: AlternatingBackground) { self.background = background }
-
-  func body(content: Content) -> some View {
-    switch background {
-    case .dark: return AnyView(content.modifier(PrimaryListBackgroundStyle()))
-    case .light:
-      return AnyView(content.modifier(SecondaryListBackgroundStyle()))
-    }
-  }
-}
-
-struct PrimaryListBorderStyle: ViewModifier {
-  func body(content: Content) -> some View {
-    content.border(Color(.placeholderTextColor))
-  }
-}
-
-extension Bundle {
-  static var current: Bundle {
-    class __ {}
-    return Bundle(for: __.self)
   }
 }
