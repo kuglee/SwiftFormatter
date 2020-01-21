@@ -446,13 +446,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5D29C54023C8DE5C00581751 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5D38B45922876EB100EE78C7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -554,7 +547,6 @@
 				5D765B1C23D6D0B9000ED749 /* StyleGuide */,
 				5D765B3723D6D546000ED749 /* Utility */,
 				5DA2B9862286045B0051C256 /* Products */,
-				5D29C54023C8DE5C00581751 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1062,7 +1054,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "package_dir=\"$BUILD_ROOT/../../SourcePackages/checkouts/swift-format/\"\ncd \"$package_dir\"\nswift build -c $(echo $CONFIGURATION | tr '[:upper:]' '[:lower:]')\ncp \"$package_dir/.build/debug/swift-format\" \"$BUILD_ROOT/$CONFIGURATION\"\n";
+			shellScript = "package_dir=\"$BUILD_ROOT/../../SourcePackages/checkouts/swift-format/\"\ncd \"$package_dir\"\nconfiguration=$(echo $CONFIGURATION | tr '[:upper:]' '[:lower:]')\nswift build -c $configuration\ncp \"$package_dir/.build/$configuration/swift-format\" \"$BUILD_ROOT/$CONFIGURATION\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
