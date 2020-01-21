@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Rules
 import Settings
+import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
 import os.log
@@ -116,6 +117,6 @@ struct ContentView: View {
           action: { .rulesView($0) }
         )
       ).padding().tabItem { Text("Rules") }.tag(1)
-    }.frame(width: 500, height: 500)
+    }.modifier(PrimaryTabViewStyle())
   }
 }

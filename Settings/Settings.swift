@@ -184,7 +184,7 @@ public struct SettingsView: View {
                   LocalizedStringKey(Indent.tabs(Int()).rawValue),
                   bundle: Bundle.current
                 ).tag(Indent.tabs(self.store.value.indentation.count))
-              }.frame(maxWidth: 100)
+              }.modifier(PrimaryPickerStyle())
             }
           }
           Toggle(
@@ -336,12 +336,6 @@ public struct SettingsView: View {
           ) { Text("ignoreSingleLineProperties", bundle: Bundle.current) }
         }
       }
-    }.frame(
-      minWidth: 0,
-      maxWidth: .infinity,
-      minHeight: 0,
-      maxHeight: .infinity,
-      alignment: .top
-    )
+    }.modifier(PrimaryVStackStyle())
   }
 }

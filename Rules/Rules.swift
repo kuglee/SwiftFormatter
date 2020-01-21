@@ -44,10 +44,8 @@ public struct RulesView: View {
               get: { self.store.value.rules[key]! },
               set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
             )
-          ) { Text(LocalizedStringKey(key), bundle: Bundle.current) }.frame(
-            minWidth: 0,
-            maxWidth: .infinity,
-            alignment: .leading
+          ) { Text(LocalizedStringKey(key), bundle: Bundle.current) }.modifier(
+            PrimaryToggleStyle()
           ).modifier(
             AlternatingListBackgroundStyle(
               background: index % 2 == 0 ? .dark : .light

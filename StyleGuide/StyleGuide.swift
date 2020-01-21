@@ -106,3 +106,49 @@ public struct PrimaryListBorderStyle: ViewModifier {
     content.border(Color(.placeholderTextColor))
   }
 }
+
+// MARK: - Picker Styles
+
+public struct PrimaryPickerStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.frame(maxWidth: 100)
+  }
+}
+
+// MARK: - TabView Styles
+
+public struct PrimaryTabViewStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.frame(width: 500, height: 500)
+  }
+}
+
+// MARK: - VStack Styles
+
+public struct PrimaryVStackStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.frame(
+      minWidth: 0,
+      maxWidth: .infinity,
+      minHeight: 0,
+      maxHeight: .infinity,
+      alignment: .top
+    )
+  }
+}
+
+// MARK: - Toggle Styles
+
+public struct PrimaryToggleStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+  }
+}
