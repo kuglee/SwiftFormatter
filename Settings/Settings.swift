@@ -2,26 +2,7 @@ import ComposableArchitecture
 import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
-
-extension Bundle {
-  static var current: Bundle {
-    class __ {}
-    return Bundle(for: __.self)
-  }
-}
-
-class UIntNumberFormatter: NumberFormatter {
-  override init() {
-    super.init()
-
-    self.allowsFloats = false
-    self.minimum = 0
-  }
-
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-}
+import Utility
 
 public enum SettingsViewAction: Equatable {
   case maximumBlankLinesFilledOut(Int)

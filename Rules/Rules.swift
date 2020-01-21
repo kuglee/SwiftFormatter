@@ -1,13 +1,7 @@
 import ComposableArchitecture
 import StyleGuide
 import SwiftUI
-
-extension Bundle {
-  static var current: Bundle {
-    class __ {}
-    return Bundle(for: __.self)
-  }
-}
+import Utility
 
 public enum RulesViewAction: Equatable {
   case ruleFilledOut(key: String, value: Bool)
