@@ -1,3 +1,4 @@
+import About
 import ComposableArchitecture
 import Rules
 import Settings
@@ -117,6 +118,7 @@ struct ContentView: View {
           action: { .rulesView($0) }
         )
       ).padding().tabItem { Text("Rules") }.tag(1)
+      AboutView().padding().tabItem { Text("About") }.tag(2)
     }.modifier(PrimaryTabViewStyle())
   }
 }

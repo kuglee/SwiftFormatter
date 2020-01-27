@@ -137,6 +137,11 @@ public func settingsViewReducer(
 }
 
 public struct SettingsView: View {
+  internal struct InternalConstants {
+    private class EmptyClass {}
+    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
+  }
+
   @ObservedObject var store: Store<SettingsViewState, SettingsViewAction>
 
   public init(store: Store<SettingsViewState, SettingsViewAction>) {
@@ -146,12 +151,12 @@ public struct SettingsView: View {
   public var body: some View {
     VStack(alignment: .trailingAlignmentGuide, spacing: 9) {
       HStack(alignment: .centerAlignmentGuide) {
-        Text("indentation:", bundle: Bundle.current).modifier(
+        Text("indentation:", bundle: InternalConstants.bundle).modifier(
           TrailingAlignmentStyle()
         ).modifier(CenterAlignmentStyle())
         VStack(alignment: .leading, spacing: 6) {
           HStack() {
-            Text("length:", bundle: Bundle.current).modifier(
+            Text("length:", bundle: InternalConstants.bundle).modifier(
               CenterAlignmentStyle()
             )
             HStack(spacing: 0) {
@@ -178,11 +183,11 @@ public struct SettingsView: View {
               ) {
                 Text(
                   LocalizedStringKey(Indent.spaces(Int()).rawValue),
-                  bundle: Bundle.current
+                  bundle: InternalConstants.bundle
                 ).tag(Indent.spaces(self.store.value.indentation.count))
                 Text(
                   LocalizedStringKey(Indent.tabs(Int()).rawValue),
-                  bundle: Bundle.current
+                  bundle: InternalConstants.bundle
                 ).tag(Indent.tabs(self.store.value.indentation.count))
               }.modifier(PrimaryPickerStyle())
             }
@@ -197,12 +202,12 @@ public struct SettingsView: View {
               }
             )
           ) {
-            Text("indentConditionalCompilationBlocks", bundle: Bundle.current)
+            Text("indentConditionalCompilationBlocks", bundle: InternalConstants.bundle)
           }
         }
       }
       HStack {
-        Text("tabWidth:", bundle: Bundle.current).modifier(
+        Text("tabWidth:", bundle: InternalConstants.bundle).modifier(
           TrailingAlignmentStyle()
         )
         Stepper(
@@ -219,10 +224,10 @@ public struct SettingsView: View {
             ).modifier(PrimaryTextFieldStyle())
           }
         )
-        Text("spaces", bundle: Bundle.current)
+        Text("spaces", bundle: InternalConstants.bundle)
       }
       HStack {
-        Text("lineLength:", bundle: Bundle.current).modifier(
+        Text("lineLength:", bundle: InternalConstants.bundle).modifier(
           TrailingAlignmentStyle()
         )
         Stepper(
@@ -241,7 +246,7 @@ public struct SettingsView: View {
         )
       }
       HStack(alignment: .firstTextBaseline) {
-        Text("lineBreaks:", bundle: Bundle.current).modifier(
+        Text("lineBreaks:", bundle: InternalConstants.bundle).modifier(
           TrailingAlignmentStyle()
         )
         VStack(alignment: .leading, spacing: 6) {
@@ -250,7 +255,7 @@ public struct SettingsView: View {
               get: { self.store.value.respectsExistingLineBreaks },
               set: { self.store.send(.respectsExistingLineBreaksFilledOut($0)) }
             )
-          ) { Text("respectsExistingLineBreaks", bundle: Bundle.current) }
+          ) { Text("respectsExistingLineBreaks", bundle: InternalConstants.bundle) }
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeControlFlowKeywords },
@@ -261,7 +266,7 @@ public struct SettingsView: View {
               }
             )
           ) {
-            Text("lineBreakBeforeControlFlowKeywords", bundle: Bundle.current)
+            Text("lineBreakBeforeControlFlowKeywords", bundle: InternalConstants.bundle)
           }
           Toggle(
             isOn: Binding(
@@ -270,7 +275,7 @@ public struct SettingsView: View {
                 self.store.send(.lineBreakBeforeEachArgumentFilledOut($0))
               }
             )
-          ) { Text("lineBreakBeforeEachArgument", bundle: Bundle.current) }
+          ) { Text("lineBreakBeforeEachArgument", bundle: InternalConstants.bundle) }
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeEachGenericRequirement },
@@ -283,7 +288,7 @@ public struct SettingsView: View {
           ) {
             Text(
               "lineBreakBeforeEachGenericRequirement",
-              bundle: Bundle.current
+              bundle: InternalConstants.bundle
             )
           }
           Toggle(
@@ -298,11 +303,11 @@ public struct SettingsView: View {
           ) {
             Text(
               "prioritizeKeepingFunctionOutputTogether",
-              bundle: Bundle.current
+              bundle: InternalConstants.bundle
             )
           }
           HStack {
-            Text("maximumBlankLines:", bundle: Bundle.current)
+            Text("maximumBlankLines:", bundle: InternalConstants.bundle)
             Stepper(
               onIncrement: { self.store.send(.maximumBlankLinesIncremented) },
               onDecrement: { self.store.send(.maximumBlankLinesDecremented) },
@@ -321,7 +326,7 @@ public struct SettingsView: View {
         }
       }
       HStack(alignment: .top) {
-        Text("blankLineBetweenMembers:", bundle: Bundle.current).modifier(
+        Text("blankLineBetweenMembers:", bundle: InternalConstants.bundle).modifier(
           TrailingAlignmentStyle()
         )
         VStack(alignment: .leading, spacing: 6) {
@@ -333,7 +338,7 @@ public struct SettingsView: View {
               },
               set: { self.store.send(.ignoreSingleLinePropertiesFilledOut($0)) }
             )
-          ) { Text("ignoreSingleLineProperties", bundle: Bundle.current) }
+          ) { Text("ignoreSingleLineProperties", bundle: InternalConstants.bundle) }
         }
       }
     }.modifier(PrimaryVStackStyle())

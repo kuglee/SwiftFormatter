@@ -25,6 +25,11 @@ public func rulesViewReducer(
 }
 
 public struct RulesView: View {
+  internal struct InternalConstants {
+    private class EmptyClass {}
+    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
+  }
+  
   @ObservedObject var store: Store<RulesViewState, RulesViewAction>
 
   public init(store: Store<RulesViewState, RulesViewAction>) {
@@ -33,7 +38,7 @@ public struct RulesView: View {
 
   public var body: some View {
     VStack(alignment: .leading, spacing: 4) {
-      Text("Linter rules:", bundle: Bundle.current)
+      Text("Linter rules:", bundle: InternalConstants.bundle)
       List {
         ForEach(
           self.store.value.rules.keys.sorted().enumeratedArray(),
@@ -44,7 +49,7 @@ public struct RulesView: View {
               get: { self.store.value.rules[key]! },
               set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
             )
-          ) { Text(LocalizedStringKey(key), bundle: Bundle.current) }.modifier(
+          ) { Text(LocalizedStringKey(key), bundle: InternalConstants.bundle) }.modifier(
             PrimaryToggleStyle()
           ).modifier(
             AlternatingListBackgroundStyle(

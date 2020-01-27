@@ -1,10 +1,3 @@
-extension Bundle {
-  public static var current: Bundle {
-    class __ {}
-    return Bundle(for: __.self)
-  }
-}
-
 public class UIntNumberFormatter: NumberFormatter {
   public override init() {
     super.init()
