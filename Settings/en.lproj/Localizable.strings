@@ -11,7 +11,7 @@
 "lineBreakBeforeEachGenericRequirement" = "Line break before each generic requirement";
 "prioritizeKeepingFunctionOutputTogether" = "Prioritize keeping function output together";
 "maximumBlankLines:" = "Maximum blank lines:";
-"blankLineBetweenMembers:" = "Blank line between members:";
+"lineBreakAroundMultilineExpressionChainComponents" = "Line break around multiline expression chain components";
 "ignoreSingleLineProperties" = "Ignore single line properties";
 "Spaces" = "Spaces";
 "Tabs" = "Tabs";

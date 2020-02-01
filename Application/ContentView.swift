@@ -47,7 +47,6 @@ extension AppState {
         indentation: self.configuration.indentation,
         respectsExistingLineBreaks: self.configuration
           .respectsExistingLineBreaks,
-        blankLineBetweenMembers: self.configuration.blankLineBetweenMembers,
         lineBreakBeforeControlFlowKeywords: self.configuration
           .lineBreakBeforeControlFlowKeywords,
         lineBreakBeforeEachArgument: self.configuration
@@ -57,7 +56,7 @@ extension AppState {
         prioritizeKeepingFunctionOutputTogether: self.configuration
           .prioritizeKeepingFunctionOutputTogether,
         indentConditionalCompilationBlocks: self.configuration
-          .indentConditionalCompilationBlocks
+          .indentConditionalCompilationBlocks, lineBreakAroundMultilineExpressionChainComponents: self.configuration.lineBreakAroundMultilineExpressionChainComponents
       )
     }
     set {
@@ -77,8 +76,7 @@ extension AppState {
         newValue.prioritizeKeepingFunctionOutputTogether
       self.configuration.indentConditionalCompilationBlocks =
         newValue.indentConditionalCompilationBlocks
-      self.configuration.blankLineBetweenMembers =
-        newValue.blankLineBetweenMembers
+      self.configuration.lineBreakAroundMultilineExpressionChainComponents = newValue.lineBreakAroundMultilineExpressionChainComponents
     }
   }
   

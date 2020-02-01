@@ -24,7 +24,7 @@ public enum SettingsViewAction: Equatable {
   case lineBreakBeforeEachGenericRequirementFilledOut(Bool)
   case prioritizeKeepingFunctionOutputTogetherFilledOut(Bool)
   case indentConditionalCompilationBlocksFilledOut(Bool)
-  case ignoreSingleLinePropertiesFilledOut(Bool)
+  case lineBreakAroundMultilineExpressionChainComponentsFilledOut(Bool)
 }
 
 public struct SettingsViewState {
@@ -33,12 +33,12 @@ public struct SettingsViewState {
   public var tabWidth: Int
   public var indentation: Indent
   public var respectsExistingLineBreaks: Bool
-  public var blankLineBetweenMembers: BlankLineBetweenMembersConfiguration
   public var lineBreakBeforeControlFlowKeywords: Bool
   public var lineBreakBeforeEachArgument: Bool
   public var lineBreakBeforeEachGenericRequirement: Bool
   public var prioritizeKeepingFunctionOutputTogether: Bool
   public var indentConditionalCompilationBlocks: Bool
+  public var lineBreakAroundMultilineExpressionChainComponents: Bool
 
   public init(
     maximumBlankLines: Int,
@@ -46,19 +46,18 @@ public struct SettingsViewState {
     tabWidth: Int,
     indentation: Indent,
     respectsExistingLineBreaks: Bool,
-    blankLineBetweenMembers: BlankLineBetweenMembersConfiguration,
     lineBreakBeforeControlFlowKeywords: Bool,
     lineBreakBeforeEachArgument: Bool,
     lineBreakBeforeEachGenericRequirement: Bool,
     prioritizeKeepingFunctionOutputTogether: Bool,
-    indentConditionalCompilationBlocks: Bool
+    indentConditionalCompilationBlocks: Bool,
+    lineBreakAroundMultilineExpressionChainComponents: Bool
   ) {
     self.maximumBlankLines = maximumBlankLines
     self.lineLength = lineLength
     self.tabWidth = tabWidth
     self.indentation = indentation
     self.respectsExistingLineBreaks = respectsExistingLineBreaks
-    self.blankLineBetweenMembers = blankLineBetweenMembers
     self.lineBreakBeforeControlFlowKeywords = lineBreakBeforeControlFlowKeywords
     self.lineBreakBeforeEachArgument = lineBreakBeforeEachArgument
     self.lineBreakBeforeEachGenericRequirement =
@@ -66,6 +65,7 @@ public struct SettingsViewState {
     self.prioritizeKeepingFunctionOutputTogether =
       prioritizeKeepingFunctionOutputTogether
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
+    self.lineBreakAroundMultilineExpressionChainComponents = lineBreakAroundMultilineExpressionChainComponents
   }
 }
 
@@ -117,10 +117,6 @@ public func settingsViewReducer(
   case .indentationDecremented: state.indentation.count -= 1
   case .respectsExistingLineBreaksFilledOut(let value):
     state.respectsExistingLineBreaks = value
-  case .ignoreSingleLinePropertiesFilledOut(let value):
-    state.blankLineBetweenMembers = BlankLineBetweenMembersConfiguration(
-      ignoreSingleLineProperties: value
-    )
   case .lineBreakBeforeControlFlowKeywordsFilledOut(let value):
     state.lineBreakBeforeControlFlowKeywords = value
   case .lineBreakBeforeEachArgumentFilledOut(let value):
@@ -131,6 +127,8 @@ public func settingsViewReducer(
     state.lineBreakBeforeEachGenericRequirement = value
   case .prioritizeKeepingFunctionOutputTogetherFilledOut(let value):
     state.prioritizeKeepingFunctionOutputTogether = value
+  case .lineBreakAroundMultilineExpressionChainComponentsFilledOut(let value):
+    state.lineBreakAroundMultilineExpressionChainComponents = value
   }
 
   return []
@@ -293,6 +291,18 @@ public struct SettingsView: View {
           }
           Toggle(
             isOn: Binding(
+              get: { self.store.value.lineBreakAroundMultilineExpressionChainComponents },
+              set: {
+                self.store.send(
+                  .lineBreakAroundMultilineExpressionChainComponentsFilledOut($0)
+                )
+            }
+            )
+          ) {
+            Text("lineBreakAroundMultilineExpressionChainComponents", bundle: InternalConstants.bundle)
+          }
+          Toggle(
+            isOn: Binding(
               get: { self.store.value.prioritizeKeepingFunctionOutputTogether },
               set: {
                 self.store.send(
@@ -323,22 +333,6 @@ public struct SettingsView: View {
               }
             )
           }
-        }
-      }
-      HStack(alignment: .top) {
-        Text("blankLineBetweenMembers:", bundle: InternalConstants.bundle).modifier(
-          TrailingAlignmentStyle()
-        )
-        VStack(alignment: .leading, spacing: 6) {
-          Toggle(
-            isOn: Binding(
-              get: {
-                self.store.value.blankLineBetweenMembers
-                  .ignoreSingleLineProperties
-              },
-              set: { self.store.send(.ignoreSingleLinePropertiesFilledOut($0)) }
-            )
-          ) { Text("ignoreSingleLineProperties", bundle: InternalConstants.bundle) }
         }
       }
     }.modifier(PrimaryVStackStyle())
