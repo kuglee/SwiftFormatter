@@ -105,7 +105,7 @@ struct ContentView: View {
   @ObservedObject var store: Store<AppState, AppAction>
 
   var body: some View {
-    TabView {
+    TabView(selection: .constant(2)) {
       SettingsView(
         store: self.store.view(
           value: { $0.settingsView },
