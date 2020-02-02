@@ -77,10 +77,9 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
     }
   }
 
-  private let configFileURL = FileManager.default.urls(
-    for: .libraryDirectory,
-    in: .userDomainMask
-  ).first!.appendingPathComponent("Preferences/swift-format.json")
+  private let configFileURL = FileManager.default
+    .urls(for: .libraryDirectory, in: .userDomainMask).first!
+    .appendingPathComponent("Preferences/swift-format.json")
 
   private let swiftFormatBinaryPath = Bundle.main.url(
     forResource: "swift-format",

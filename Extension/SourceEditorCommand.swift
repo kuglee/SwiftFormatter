@@ -23,7 +23,8 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
       [
         "public.swift-source", "com.apple.dt.playground",
         "com.apple.dt.playgroundpage",
-      ].contains(invocation.buffer.contentUTI)
+      ]
+      .contains(invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
     let swiftFormatServiceConnection = NSXPCConnection(
@@ -34,14 +35,14 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     )
     swiftFormatServiceConnection.resume()
 
-    let swiftFormatService = (
-      swiftFormatServiceConnection.remoteObjectProxy as AnyObject
-    ).remoteObjectProxyWithErrorHandler { error in
-      os_log("%{public}@", error.localizedDescription)
-    } as! SwiftFormatServiceProtocol
+    let swiftFormatService =
+      (swiftFormatServiceConnection.remoteObjectProxy as AnyObject)
+      .remoteObjectProxyWithErrorHandler { error in
+        os_log("%{public}@", error.localizedDescription)
+      } as! SwiftFormatServiceProtocol
 
-    let previousSelection = invocation.buffer.selections[0]
-      as! XCSourceTextRange
+    let previousSelection =
+      invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
 
     swiftFormatService.format(source: source) { formattedSource, error in

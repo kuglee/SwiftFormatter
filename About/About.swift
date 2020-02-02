@@ -12,15 +12,14 @@ public struct AboutView: View {
   public var body: some View {
     VStack(spacing: 16) {
       Text("How to use").font(.headline)
-      Text("Go to", bundle: InternalConstants.bundle)
-        + Text(" ")
+      Text("Go to", bundle: InternalConstants.bundle) + Text(" ")
         + Text("Settings", bundle: InternalConstants.bundle).bold()
         + Text(" -> ")
         + Text("Extensions", bundle: InternalConstants.bundle).bold()
-        + Text(" ")
-        + Text("and enable", bundle: InternalConstants.bundle)
+        + Text(" ") + Text("and enable", bundle: InternalConstants.bundle)
         + Text(" ")
         + Text("Swift-format", bundle: InternalConstants.bundle).bold()
-    }.frame(minHeight:0, maxHeight: .infinity, alignment: .top)
+    }
+    .frame(minHeight: 0, maxHeight: .infinity, alignment: .top)
   }
 }

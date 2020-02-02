@@ -6,10 +6,9 @@ import SwiftUI
   var window: NSWindow!
   var contentView: ContentView? = nil
 
-  let configFileURL: URL = FileManager.default.urls(
-    for: .libraryDirectory,
-    in: .userDomainMask
-  ).first!.appendingPathComponent("Preferences/swift-format.json")
+  let configFileURL: URL = FileManager.default
+    .urls(for: .libraryDirectory, in: .userDomainMask).first!
+    .appendingPathComponent("Preferences/swift-format.json")
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window = NSWindow(

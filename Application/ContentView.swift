@@ -24,7 +24,7 @@ enum AppAction {
   }
 
   case rulesView(RulesViewAction)
-  
+
   var rulesView: RulesViewAction? {
     get {
       guard case let .rulesView(value) = self else { return nil }
@@ -56,7 +56,9 @@ extension AppState {
         prioritizeKeepingFunctionOutputTogether: self.configuration
           .prioritizeKeepingFunctionOutputTogether,
         indentConditionalCompilationBlocks: self.configuration
-          .indentConditionalCompilationBlocks, lineBreakAroundMultilineExpressionChainComponents: self.configuration.lineBreakAroundMultilineExpressionChainComponents
+          .indentConditionalCompilationBlocks,
+        lineBreakAroundMultilineExpressionChainComponents: self.configuration
+          .lineBreakAroundMultilineExpressionChainComponents
       )
     }
     set {
@@ -76,10 +78,11 @@ extension AppState {
         newValue.prioritizeKeepingFunctionOutputTogether
       self.configuration.indentConditionalCompilationBlocks =
         newValue.indentConditionalCompilationBlocks
-      self.configuration.lineBreakAroundMultilineExpressionChainComponents = newValue.lineBreakAroundMultilineExpressionChainComponents
+      self.configuration.lineBreakAroundMultilineExpressionChainComponents =
+        newValue.lineBreakAroundMultilineExpressionChainComponents
     }
   }
-  
+
   var rulesView: RulesViewState {
     get { RulesViewState(rules: self.configuration.rules) }
     set { self.configuration.rules = newValue.rules }
@@ -109,14 +112,17 @@ struct ContentView: View {
           value: { $0.settingsView },
           action: { .settingsView($0) }
         )
-      ).padding().tabItem { Text("Formatting") }.tag(0)
+      )
+      .padding().tabItem { Text("Formatting") }.tag(0)
       RulesView(
         store: self.store.view(
           value: { $0.rulesView },
           action: { .rulesView($0) }
         )
-      ).padding().tabItem { Text("Rules") }.tag(1)
+      )
+      .padding().tabItem { Text("Rules") }.tag(1)
       AboutView().padding().tabItem { Text("About") }.tag(2)
-    }.modifier(PrimaryTabViewStyle())
+    }
+    .modifier(PrimaryTabViewStyle())
   }
 }

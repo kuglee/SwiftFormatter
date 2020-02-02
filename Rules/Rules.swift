@@ -29,7 +29,7 @@ public struct RulesView: View {
     private class EmptyClass {}
     static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
   }
-  
+
   @ObservedObject var store: Store<RulesViewState, RulesViewAction>
 
   public init(store: Store<RulesViewState, RulesViewAction>) {
@@ -49,15 +49,16 @@ public struct RulesView: View {
               get: { self.store.value.rules[key]! },
               set: { self.store.send(.ruleFilledOut(key: key, value: $0)) }
             )
-          ) { Text(LocalizedStringKey(key), bundle: InternalConstants.bundle) }.modifier(
-            PrimaryToggleStyle()
-          ).modifier(
+          ) { Text(LocalizedStringKey(key), bundle: InternalConstants.bundle) }
+          .modifier(PrimaryToggleStyle())
+          .modifier(
             AlternatingListBackgroundStyle(
               background: index % 2 == 0 ? .dark : .light
             )
           )
         }
-      }.modifier(PrimaryListBorderStyle())
+      }
+      .modifier(PrimaryListBorderStyle())
     }
   }
 }

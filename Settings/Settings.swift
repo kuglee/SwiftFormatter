@@ -65,7 +65,8 @@ public struct SettingsViewState {
     self.prioritizeKeepingFunctionOutputTogether =
       prioritizeKeepingFunctionOutputTogether
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
-    self.lineBreakAroundMultilineExpressionChainComponents = lineBreakAroundMultilineExpressionChainComponents
+    self.lineBreakAroundMultilineExpressionChainComponents =
+      lineBreakAroundMultilineExpressionChainComponents
   }
 }
 
@@ -149,14 +150,12 @@ public struct SettingsView: View {
   public var body: some View {
     VStack(alignment: .trailingAlignmentGuide, spacing: 9) {
       HStack(alignment: .centerAlignmentGuide) {
-        Text("indentation:", bundle: InternalConstants.bundle).modifier(
-          TrailingAlignmentStyle()
-        ).modifier(CenterAlignmentStyle())
+        Text("indentation:", bundle: InternalConstants.bundle)
+          .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
         VStack(alignment: .leading, spacing: 6) {
           HStack() {
-            Text("length:", bundle: InternalConstants.bundle).modifier(
-              CenterAlignmentStyle()
-            )
+            Text("length:", bundle: InternalConstants.bundle)
+              .modifier(CenterAlignmentStyle())
             HStack(spacing: 0) {
               Stepper(
                 onIncrement: { self.store.send(.indentationIncremented) },
@@ -169,7 +168,8 @@ public struct SettingsView: View {
                       set: { self.store.send(.indentationCountFilledOut($0)) }
                     ),
                     formatter: UIntNumberFormatter()
-                  ).modifier(PrimaryTextFieldStyle())
+                  )
+                  .modifier(PrimaryTextFieldStyle())
                 }
               )
               Picker(
@@ -182,12 +182,15 @@ public struct SettingsView: View {
                 Text(
                   LocalizedStringKey(Indent.spaces(Int()).rawValue),
                   bundle: InternalConstants.bundle
-                ).tag(Indent.spaces(self.store.value.indentation.count))
+                )
+                .tag(Indent.spaces(self.store.value.indentation.count))
                 Text(
                   LocalizedStringKey(Indent.tabs(Int()).rawValue),
                   bundle: InternalConstants.bundle
-                ).tag(Indent.tabs(self.store.value.indentation.count))
-              }.modifier(PrimaryPickerStyle())
+                )
+                .tag(Indent.tabs(self.store.value.indentation.count))
+              }
+              .modifier(PrimaryPickerStyle())
             }
           }
           Toggle(
@@ -200,14 +203,16 @@ public struct SettingsView: View {
               }
             )
           ) {
-            Text("indentConditionalCompilationBlocks", bundle: InternalConstants.bundle)
+            Text(
+              "indentConditionalCompilationBlocks",
+              bundle: InternalConstants.bundle
+            )
           }
         }
       }
       HStack {
-        Text("tabWidth:", bundle: InternalConstants.bundle).modifier(
-          TrailingAlignmentStyle()
-        )
+        Text("tabWidth:", bundle: InternalConstants.bundle)
+          .modifier(TrailingAlignmentStyle())
         Stepper(
           onIncrement: { self.store.send(.tabWidthIncremented) },
           onDecrement: { self.store.send(.tabWidthDecremented) },
@@ -219,15 +224,15 @@ public struct SettingsView: View {
                 set: { self.store.send(.tabWidthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).modifier(PrimaryTextFieldStyle())
+            )
+            .modifier(PrimaryTextFieldStyle())
           }
         )
         Text("spaces", bundle: InternalConstants.bundle)
       }
       HStack {
-        Text("lineLength:", bundle: InternalConstants.bundle).modifier(
-          TrailingAlignmentStyle()
-        )
+        Text("lineLength:", bundle: InternalConstants.bundle)
+          .modifier(TrailingAlignmentStyle())
         Stepper(
           onIncrement: { self.store.send(.lineLengthIncremented) },
           onDecrement: { self.store.send(.lineLengthDecremented) },
@@ -239,21 +244,23 @@ public struct SettingsView: View {
                 set: { self.store.send(.lineLengthFilledOut($0)) }
               ),
               formatter: UIntNumberFormatter()
-            ).modifier(PrimaryTextFieldStyle())
+            )
+            .modifier(PrimaryTextFieldStyle())
           }
         )
       }
       HStack(alignment: .firstTextBaseline) {
-        Text("lineBreaks:", bundle: InternalConstants.bundle).modifier(
-          TrailingAlignmentStyle()
-        )
+        Text("lineBreaks:", bundle: InternalConstants.bundle)
+          .modifier(TrailingAlignmentStyle())
         VStack(alignment: .leading, spacing: 6) {
           Toggle(
             isOn: Binding(
               get: { self.store.value.respectsExistingLineBreaks },
               set: { self.store.send(.respectsExistingLineBreaksFilledOut($0)) }
             )
-          ) { Text("respectsExistingLineBreaks", bundle: InternalConstants.bundle) }
+          ) {
+            Text("respectsExistingLineBreaks", bundle: InternalConstants.bundle)
+          }
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeControlFlowKeywords },
@@ -264,7 +271,10 @@ public struct SettingsView: View {
               }
             )
           ) {
-            Text("lineBreakBeforeControlFlowKeywords", bundle: InternalConstants.bundle)
+            Text(
+              "lineBreakBeforeControlFlowKeywords",
+              bundle: InternalConstants.bundle
+            )
           }
           Toggle(
             isOn: Binding(
@@ -273,7 +283,12 @@ public struct SettingsView: View {
                 self.store.send(.lineBreakBeforeEachArgumentFilledOut($0))
               }
             )
-          ) { Text("lineBreakBeforeEachArgument", bundle: InternalConstants.bundle) }
+          ) {
+            Text(
+              "lineBreakBeforeEachArgument",
+              bundle: InternalConstants.bundle
+            )
+          }
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeEachGenericRequirement },
@@ -291,15 +306,23 @@ public struct SettingsView: View {
           }
           Toggle(
             isOn: Binding(
-              get: { self.store.value.lineBreakAroundMultilineExpressionChainComponents },
+              get: {
+                self.store.value
+                  .lineBreakAroundMultilineExpressionChainComponents
+              },
               set: {
                 self.store.send(
-                  .lineBreakAroundMultilineExpressionChainComponentsFilledOut($0)
+                  .lineBreakAroundMultilineExpressionChainComponentsFilledOut(
+                    $0
+                  )
                 )
-            }
+              }
             )
           ) {
-            Text("lineBreakAroundMultilineExpressionChainComponents", bundle: InternalConstants.bundle)
+            Text(
+              "lineBreakAroundMultilineExpressionChainComponents",
+              bundle: InternalConstants.bundle
+            )
           }
           Toggle(
             isOn: Binding(
@@ -329,12 +352,14 @@ public struct SettingsView: View {
                     set: { self.store.send(.maximumBlankLinesFilledOut($0)) }
                   ),
                   formatter: UIntNumberFormatter()
-                ).modifier(PrimaryTextFieldStyle())
+                )
+                .modifier(PrimaryTextFieldStyle())
               }
             )
           }
         }
       }
-    }.modifier(PrimaryVStackStyle())
+    }
+    .modifier(PrimaryVStackStyle())
   }
 }
