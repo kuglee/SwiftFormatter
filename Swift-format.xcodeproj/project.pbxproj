@@ -52,6 +52,12 @@
 		5DA76B4123DE05750064E82B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA76B4323DE05750064E82B /* Localizable.strings */; };
 		5DA76B4523DE06230064E82B /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
 		5DA76B4623DE06230064E82B /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DB029D623E7133E00F4BDBA /* Rules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; };
+		5DB029D723E7133E00F4BDBA /* Rules.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DB029DA23E7134300F4BDBA /* Settings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; };
+		5DB029DB23E7134300F4BDBA /* Settings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DB029DE23E7139B00F4BDBA /* About.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; };
+		5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DDCA4BB23D34096003A539B /* ConfigurationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; };
 		5DDCA4BC23D34096003A539B /* ConfigurationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DDCA4CC23D34237003A539B /* SwiftFormatConfigurationDependency.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DDCA4CA23D34237003A539B /* SwiftFormatConfigurationDependency.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,23 +72,6 @@
 		5DE0CA5123CA0C0B0038F400 /* ComposableArchitecture.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DEA1EBD23D4FC6400C97AC7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DEA1EBF23D4FC6400C97AC7 /* Localizable.strings */; };
 		5DEDFBF923C911BD008F97D0 /* swift-format in Resources */ = {isa = PBXBuildFile; fileRef = 5D13159A22BD53800096BFF6 /* swift-format */; };
-		5DF3B05A23E6F29900FA1761 /* TabbedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF3B05823E6F29900FA1761 /* TabbedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5DF3B05D23E6F29900FA1761 /* TabbedView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF3B05623E6F29900FA1761 /* TabbedView.framework */; };
-		5DF3B05E23E6F29900FA1761 /* TabbedView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF3B05623E6F29900FA1761 /* TabbedView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B06323E6F2D400FA1761 /* TabbedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF3B06223E6F2D400FA1761 /* TabbedView.swift */; };
-		5DF3B06423E6F4D500FA1761 /* ComposableArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; };
-		5DF3B06523E6F4D500FA1761 /* ComposableArchitecture.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B06823E6F4D500FA1761 /* Rules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; };
-		5DF3B06923E6F4D500FA1761 /* Rules.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B06C23E6F4D600FA1761 /* Settings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; };
-		5DF3B06D23E6F4D600FA1761 /* Settings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B07023E6F4D600FA1761 /* StyleGuide.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B1B23D6D0B9000ED749 /* StyleGuide.framework */; };
-		5DF3B07123E6F4D600FA1761 /* StyleGuide.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B1B23D6D0B9000ED749 /* StyleGuide.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B07523E6F4F500FA1761 /* About.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; };
-		5DF3B07623E6F4F500FA1761 /* About.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B07923E6F96A00FA1761 /* SwiftFormatConfigurationDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDCA4C823D34237003A539B /* SwiftFormatConfigurationDependency.framework */; };
-		5DF3B07A23E6F96A00FA1761 /* SwiftFormatConfigurationDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDCA4C823D34237003A539B /* SwiftFormatConfigurationDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DF3B07F23E70C3C00FA1761 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DF3B08123E70C3C00FA1761 /* Localizable.strings */; };
 		5DFA6F1D23D4941600352363 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFA6F1F23D4941600352363 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -150,6 +139,27 @@
 			remoteGlobalIDString = 5D765B3523D6D546000ED749;
 			remoteInfo = Utility;
 		};
+		5DB029D823E7133E00F4BDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D0CA9CA23C30F0E00294FCC;
+			remoteInfo = Rules;
+		};
+		5DB029DC23E7134300F4BDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D7B229623C0AC61006595F4;
+			remoteInfo = Settings;
+		};
+		5DB029E023E7139B00F4BDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DA76B3023DDF1400064E82B;
+			remoteInfo = About;
+		};
 		5DDCA4BD23D34096003A539B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
@@ -192,55 +202,6 @@
 			remoteGlobalIDString = 5D13159922BD53800096BFF6;
 			remoteInfo = "swift-format";
 		};
-		5DF3B05B23E6F29900FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5DF3B05523E6F29900FA1761;
-			remoteInfo = TabbedView;
-		};
-		5DF3B06623E6F4D500FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D7B228223C0A19C006595F4;
-			remoteInfo = ComposableArchitecture;
-		};
-		5DF3B06A23E6F4D600FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D0CA9CA23C30F0E00294FCC;
-			remoteInfo = Rules;
-		};
-		5DF3B06E23E6F4D600FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D7B229623C0AC61006595F4;
-			remoteInfo = Settings;
-		};
-		5DF3B07223E6F4D600FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D765B1A23D6D0B9000ED749;
-			remoteInfo = StyleGuide;
-		};
-		5DF3B07723E6F4F500FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5DA76B3023DDF1400064E82B;
-			remoteInfo = About;
-		};
-		5DF3B07B23E6F96A00FA1761 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5DDCA4C723D34237003A539B;
-			remoteInfo = SwiftFormatConfigurationDependency;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -272,7 +233,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5DF3B05E23E6F29900FA1761 /* TabbedView.framework in Embed Frameworks */,
+				5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */,
+				5DB029D723E7133E00F4BDBA /* Rules.framework in Embed Frameworks */,
+				5DB029DB23E7134300F4BDBA /* Settings.framework in Embed Frameworks */,
 				5D7B228B23C0A19C006595F4 /* ComposableArchitecture.framework in Embed Frameworks */,
 				5DDCA4BC23D34096003A539B /* ConfigurationManager.framework in Embed Frameworks */,
 				5DDCA4D023D34237003A539B /* SwiftFormatConfigurationDependency.framework in Embed Frameworks */,
@@ -326,22 +289,6 @@
 				5D765B4923D6D5DD000ED749 /* Utility.framework in Embed Frameworks */,
 				5DE0CA5123CA0C0B0038F400 /* ComposableArchitecture.framework in Embed Frameworks */,
 				5D765B2E23D6D131000ED749 /* StyleGuide.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5DF3B07423E6F4D600FA1761 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				5DF3B06923E6F4D500FA1761 /* Rules.framework in Embed Frameworks */,
-				5DF3B07A23E6F96A00FA1761 /* SwiftFormatConfigurationDependency.framework in Embed Frameworks */,
-				5DF3B06523E6F4D500FA1761 /* ComposableArchitecture.framework in Embed Frameworks */,
-				5DF3B06D23E6F4D600FA1761 /* Settings.framework in Embed Frameworks */,
-				5DF3B07623E6F4F500FA1761 /* About.framework in Embed Frameworks */,
-				5DF3B07123E6F4D600FA1761 /* StyleGuide.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,11 +348,6 @@
 		5DDCA4CA23D34237003A539B /* SwiftFormatConfigurationDependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftFormatConfigurationDependency.h; sourceTree = "<group>"; };
 		5DDCA4CB23D34237003A539B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DEA1EBE23D4FC6400C97AC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DF3B05623E6F29900FA1761 /* TabbedView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TabbedView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DF3B05823E6F29900FA1761 /* TabbedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabbedView.h; sourceTree = "<group>"; };
-		5DF3B05923E6F29900FA1761 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5DF3B06223E6F2D400FA1761 /* TabbedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedView.swift; sourceTree = "<group>"; };
-		5DF3B08023E70C3C00FA1761 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DFA6F1E23D4941600352363 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -424,7 +366,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DF3B05D23E6F29900FA1761 /* TabbedView.framework in Frameworks */,
+				5DB029DE23E7139B00F4BDBA /* About.framework in Frameworks */,
+				5DB029D623E7133E00F4BDBA /* Rules.framework in Frameworks */,
+				5DB029DA23E7134300F4BDBA /* Settings.framework in Frameworks */,
 				5DDCA4BB23D34096003A539B /* ConfigurationManager.framework in Frameworks */,
 				5DDCA4CF23D34237003A539B /* SwiftFormatConfigurationDependency.framework in Frameworks */,
 				5D765B2223D6D0B9000ED749 /* StyleGuide.framework in Frameworks */,
@@ -499,19 +443,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DDCA4D523D34247003A539B /* SwiftFormatConfiguration in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5DF3B05323E6F29900FA1761 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5DF3B06823E6F4D500FA1761 /* Rules.framework in Frameworks */,
-				5DF3B07923E6F96A00FA1761 /* SwiftFormatConfigurationDependency.framework in Frameworks */,
-				5DF3B06423E6F4D500FA1761 /* ComposableArchitecture.framework in Frameworks */,
-				5DF3B06C23E6F4D600FA1761 /* Settings.framework in Frameworks */,
-				5DF3B07523E6F4F500FA1761 /* About.framework in Frameworks */,
-				5DF3B07023E6F4D600FA1761 /* StyleGuide.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,7 +583,6 @@
 				5D765B1C23D6D0B9000ED749 /* StyleGuide */,
 				5DA76B3223DDF1410064E82B /* About */,
 				5D765B3723D6D546000ED749 /* Utility */,
-				5DF3B05723E6F29900FA1761 /* TabbedView */,
 				5DA2B9862286045B0051C256 /* Products */,
 				5DA76B4423DE06230064E82B /* Frameworks */,
 			);
@@ -673,7 +603,6 @@
 				5D765B1B23D6D0B9000ED749 /* StyleGuide.framework */,
 				5D765B3623D6D546000ED749 /* Utility.framework */,
 				5DA76B3123DDF1400064E82B /* About.framework */,
-				5DF3B05623E6F29900FA1761 /* TabbedView.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -713,17 +642,6 @@
 				5DDCA4CB23D34237003A539B /* Info.plist */,
 			);
 			path = SwiftFormatConfigurationDependency;
-			sourceTree = "<group>";
-		};
-		5DF3B05723E6F29900FA1761 /* TabbedView */ = {
-			isa = PBXGroup;
-			children = (
-				5DF3B05823E6F29900FA1761 /* TabbedView.h */,
-				5DF3B06223E6F2D400FA1761 /* TabbedView.swift */,
-				5DF3B05923E6F29900FA1761 /* Info.plist */,
-				5DF3B08123E70C3C00FA1761 /* Localizable.strings */,
-			);
-			path = TabbedView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -793,14 +711,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5DF3B05123E6F29900FA1761 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5DF3B05A23E6F29900FA1761 /* TabbedView.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -860,7 +770,9 @@
 				5DDCA4BE23D34096003A539B /* PBXTargetDependency */,
 				5DDCA4CE23D34237003A539B /* PBXTargetDependency */,
 				5D765B2123D6D0B9000ED749 /* PBXTargetDependency */,
-				5DF3B05C23E6F29900FA1761 /* PBXTargetDependency */,
+				5DB029D923E7133E00F4BDBA /* PBXTargetDependency */,
+				5DB029DD23E7134300F4BDBA /* PBXTargetDependency */,
+				5DB029E123E7139B00F4BDBA /* PBXTargetDependency */,
 			);
 			name = "Swift-format";
 			packageProductDependencies = (
@@ -1049,31 +961,6 @@
 			productReference = 5DDCA4C823D34237003A539B /* SwiftFormatConfigurationDependency.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		5DF3B05523E6F29900FA1761 /* TabbedView */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5DF3B06123E6F29900FA1761 /* Build configuration list for PBXNativeTarget "TabbedView" */;
-			buildPhases = (
-				5DF3B05123E6F29900FA1761 /* Headers */,
-				5DF3B05223E6F29900FA1761 /* Sources */,
-				5DF3B05323E6F29900FA1761 /* Frameworks */,
-				5DF3B05423E6F29900FA1761 /* Resources */,
-				5DF3B07423E6F4D600FA1761 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5DF3B06723E6F4D500FA1761 /* PBXTargetDependency */,
-				5DF3B06B23E6F4D600FA1761 /* PBXTargetDependency */,
-				5DF3B06F23E6F4D600FA1761 /* PBXTargetDependency */,
-				5DF3B07323E6F4D600FA1761 /* PBXTargetDependency */,
-				5DF3B07823E6F4F500FA1761 /* PBXTargetDependency */,
-				5DF3B07C23E6F96A00FA1761 /* PBXTargetDependency */,
-			);
-			name = TabbedView;
-			productName = TabbedView;
-			productReference = 5DF3B05623E6F29900FA1761 /* TabbedView.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1133,10 +1020,6 @@
 					5DDCA4C723D34237003A539B = {
 						CreatedOnToolsVersion = 11.3;
 					};
-					5DF3B05523E6F29900FA1761 = {
-						CreatedOnToolsVersion = 11.3.1;
-						LastSwiftMigration = 1130;
-					};
 				};
 			};
 			buildConfigurationList = 5DA2B9802286045B0051C256 /* Build configuration list for PBXProject "Swift-format" */;
@@ -1167,7 +1050,6 @@
 				5D765B1A23D6D0B9000ED749 /* StyleGuide */,
 				5D765B3523D6D546000ED749 /* Utility */,
 				5DA76B3023DDF1400064E82B /* About */,
-				5DF3B05523E6F29900FA1761 /* TabbedView */,
 			);
 		};
 /* End PBXProject section */
@@ -1248,14 +1130,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5DF3B05423E6F29900FA1761 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5DF3B07F23E70C3C00FA1761 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1375,14 +1249,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5DF3B05223E6F29900FA1761 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5DF3B06323E6F2D400FA1761 /* TabbedView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1431,6 +1297,21 @@
 			target = 5D765B3523D6D546000ED749 /* Utility */;
 			targetProxy = 5DA76B4723DE06230064E82B /* PBXContainerItemProxy */;
 		};
+		5DB029D923E7133E00F4BDBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D0CA9CA23C30F0E00294FCC /* Rules */;
+			targetProxy = 5DB029D823E7133E00F4BDBA /* PBXContainerItemProxy */;
+		};
+		5DB029DD23E7134300F4BDBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D7B229623C0AC61006595F4 /* Settings */;
+			targetProxy = 5DB029DC23E7134300F4BDBA /* PBXContainerItemProxy */;
+		};
+		5DB029E123E7139B00F4BDBA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DA76B3023DDF1400064E82B /* About */;
+			targetProxy = 5DB029E023E7139B00F4BDBA /* PBXContainerItemProxy */;
+		};
 		5DDCA4BE23D34096003A539B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5D45F79123D03B0700646A64 /* ConfigurationManager */;
@@ -1460,41 +1341,6 @@
 			isa = PBXTargetDependency;
 			target = 5D13159922BD53800096BFF6 /* swift-format */;
 			targetProxy = 5DEDFBF723C911B9008F97D0 /* PBXContainerItemProxy */;
-		};
-		5DF3B05C23E6F29900FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5DF3B05523E6F29900FA1761 /* TabbedView */;
-			targetProxy = 5DF3B05B23E6F29900FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B06723E6F4D500FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D7B228223C0A19C006595F4 /* ComposableArchitecture */;
-			targetProxy = 5DF3B06623E6F4D500FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B06B23E6F4D600FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D0CA9CA23C30F0E00294FCC /* Rules */;
-			targetProxy = 5DF3B06A23E6F4D600FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B06F23E6F4D600FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D7B229623C0AC61006595F4 /* Settings */;
-			targetProxy = 5DF3B06E23E6F4D600FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B07323E6F4D600FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D765B1A23D6D0B9000ED749 /* StyleGuide */;
-			targetProxy = 5DF3B07223E6F4D600FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B07823E6F4F500FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5DA76B3023DDF1400064E82B /* About */;
-			targetProxy = 5DF3B07723E6F4F500FA1761 /* PBXContainerItemProxy */;
-		};
-		5DF3B07C23E6F96A00FA1761 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5DDCA4C723D34237003A539B /* SwiftFormatConfigurationDependency */;
-			targetProxy = 5DF3B07B23E6F96A00FA1761 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1527,14 +1373,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				5DEA1EBE23D4FC6400C97AC7 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		5DF3B08123E70C3C00FA1761 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5DF3B08023E70C3C00FA1761 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2305,65 +2143,6 @@
 			};
 			name = Release;
 		};
-		5DF3B05F23E6F29900FA1761 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = C89KNBM28S;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TabbedView/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.TabbedView;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		5DF3B06023E6F29900FA1761 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = C89KNBM28S;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = TabbedView/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.TabbedView;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2480,15 +2259,6 @@
 			buildConfigurations = (
 				5DDCA4D223D34237003A539B /* Debug */,
 				5DDCA4D323D34237003A539B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5DF3B06123E6F29900FA1761 /* Build configuration list for PBXNativeTarget "TabbedView" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5DF3B05F23E6F29900FA1761 /* Debug */,
-				5DF3B06023E6F29900FA1761 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
