@@ -28,7 +28,8 @@ import SwiftUI
     contentView = ContentView(
       store: Store(
         initialValue: AppState(
-          configuration: loadConfiguration(fromFileAtPath: configFileURL)
+          configuration: loadConfiguration(fromFileAtPath: configFileURL),
+          selectedTab: 2
         ),
         reducer: appReducer
       )

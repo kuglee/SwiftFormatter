@@ -1,3 +1,5 @@
+import Foundation
+
 public class UIntNumberFormatter: NumberFormatter {
   public override init() {
     super.init()
