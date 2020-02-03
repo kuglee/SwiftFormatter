@@ -5,6 +5,7 @@ import SwiftUI
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
   var window: NSWindow!
   var contentView: ContentView? = nil
+  var didRunBefore = false
 
   let configFileURL: URL = FileManager.default
     .urls(for: .libraryDirectory, in: .userDomainMask).first!
@@ -25,11 +26,14 @@ import SwiftUI
     window.setFrameAutosaveName("Main Window")
     window.title = "Swift-format"
 
+    didRunBefore = self.getDidRunBefore()
+    let selectedTab = !self.didRunBefore ? 2 : 0
+
     contentView = ContentView(
       store: Store(
         initialValue: AppState(
           configuration: loadConfiguration(fromFileAtPath: configFileURL),
-          selectedTab: 2
+          selectedTab: selectedTab
         ),
         reducer: appReducer
       )
@@ -44,9 +48,22 @@ import SwiftUI
       configuration: contentView!.store.value.configuration,
       outputFileURL: configFileURL
     )
+
+    if !self.didRunBefore { self.setDidRunBefore() }
   }
 
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication)
     -> Bool
   { true }
+
+  func getDidRunBefore() -> Bool {
+    let userDefaults = UserDefaults.standard
+
+    return userDefaults.bool(forKey: "didRunBefore")
+  }
+
+  func setDidRunBefore() {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(true, forKey: "didRunBefore")
+  }
 }
