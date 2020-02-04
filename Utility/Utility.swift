@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 public class UIntNumberFormatter: NumberFormatter {
   public override init() {
@@ -17,4 +17,35 @@ extension Collection {
   public func enumeratedArray() -> [(offset: Int, element: Self.Element)] {
     return Array(self.enumerated())
   }
+}
+
+extension View {
+  public func toolTip(
+    _ key: String,
+    tableName: String? = nil,
+    bundle: Bundle? = nil,
+    comment: String? = nil
+  ) -> some View {
+    let localizedString = NSLocalizedString(
+      key,
+      tableName: tableName,
+      bundle: bundle ?? Bundle(),
+      comment: comment ?? ""
+    )
+
+    return self.background(TooltipView(toolTip: localizedString))
+  }
+}
+
+private struct TooltipView: NSViewRepresentable {
+  let toolTip: String
+
+  func makeNSView(context: NSViewRepresentableContext<TooltipView>) -> NSView {
+    NSView()
+  }
+
+  func updateNSView(
+    _ nsView: NSView,
+    context: NSViewRepresentableContext<TooltipView>
+  ) { nsView.toolTip = self.toolTip }
 }

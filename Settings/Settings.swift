@@ -172,6 +172,7 @@ public struct SettingsView: View {
                   .modifier(PrimaryTextFieldStyle())
                 }
               )
+              .toolTip("LENGTH_TOOLTIP", bundle: InternalConstants.bundle)
               Picker(
                 "",
                 selection: Binding(
@@ -190,6 +191,7 @@ public struct SettingsView: View {
                 )
                 .tag(Indent.tabs(self.store.value.indentation.count))
               }
+              .toolTip("WHITESPACE_TOOLTIP", bundle: InternalConstants.bundle)
               .modifier(PrimaryPickerStyle())
             }
           }
@@ -208,6 +210,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "INDENT_CONDITIONAL_COMPILATION_BLOCKS_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
         }
       }
       HStack {
@@ -228,6 +234,7 @@ public struct SettingsView: View {
             .modifier(PrimaryTextFieldStyle())
           }
         )
+        .toolTip("TAB_WIDTH_TOOLTIP", bundle: InternalConstants.bundle)
         Text("spaces", bundle: InternalConstants.bundle)
       }
       HStack {
@@ -248,6 +255,7 @@ public struct SettingsView: View {
             .modifier(PrimaryTextFieldStyle())
           }
         )
+        .toolTip("LINE_LENGTH_TOOLTIP", bundle: InternalConstants.bundle)
       }
       HStack(alignment: .firstTextBaseline) {
         Text("lineBreaks:", bundle: InternalConstants.bundle)
@@ -261,6 +269,10 @@ public struct SettingsView: View {
           ) {
             Text("respectsExistingLineBreaks", bundle: InternalConstants.bundle)
           }
+          .toolTip(
+            "RESPECTS_EXISTING_LINE_BREAKS",
+            bundle: InternalConstants.bundle
+          )
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeControlFlowKeywords },
@@ -276,6 +288,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "LINE_BREAK_BEFORE_CONTROL_FLOW_KEYWORDS_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeEachArgument },
@@ -289,6 +305,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "LINE_BREAK_BEFORE_EACH_ARGUMENT_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
           Toggle(
             isOn: Binding(
               get: { self.store.value.lineBreakBeforeEachGenericRequirement },
@@ -304,6 +324,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "LINE_BREAK_BEFORE_EACH_GENERIC_REQUIREMENT_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
           Toggle(
             isOn: Binding(
               get: {
@@ -324,6 +348,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "LINE_BREAK_AROUND_MULTILINE_EXPRESSION_CHAIN_COMPONENTS_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
           Toggle(
             isOn: Binding(
               get: { self.store.value.prioritizeKeepingFunctionOutputTogether },
@@ -339,6 +367,10 @@ public struct SettingsView: View {
               bundle: InternalConstants.bundle
             )
           }
+          .toolTip(
+            "PRIORITIZE_KEEPING_FUNCTION_OUTPUT_TOGETHER_TOOLTIP",
+            bundle: InternalConstants.bundle
+          )
           HStack {
             Text("maximumBlankLines:", bundle: InternalConstants.bundle)
             Stepper(
@@ -355,6 +387,10 @@ public struct SettingsView: View {
                 )
                 .modifier(PrimaryTextFieldStyle())
               }
+            )
+            .toolTip(
+              "MAXIMUM_BLANK_LINES_TOOLTIP",
+              bundle: InternalConstants.bundle
             )
           }
         }
