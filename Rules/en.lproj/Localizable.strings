@@ -6,6 +6,7 @@
 "BlankLineBetweenMembers" = "Blank line between members";
 "DoNotUseSemicolons" = "Do not use semicolons";
 "DontRepeatTypeInStaticProperties" = "Don't repeat type in static properties";
+"FileprivateAtFileScope" = "Fileprivate at file scope";
 "FullyIndirectEnum" = "Fully indirect enum";
 "GroupNumericLiterals" = "Group numeric literals" ;
 "IdentifiersMustBeASCII" = "Identifiers must be ASCII";
