@@ -9,6 +9,21 @@ import SwiftUI
 public struct AppState {
   public var configuration: Configuration
   public var selectedTab: Int
+
+  public init(configuration: Configuration, selectedTab: Int) {
+    self.selectedTab = selectedTab
+    self.configuration = configuration
+
+    var defaultConfiguration = Configuration()
+
+    for rule in configuration.rules {
+      if defaultConfiguration.rules[rule.key] != nil {
+        defaultConfiguration.rules[rule.key] = rule.value
+      }
+    }
+
+    self.configuration.rules = defaultConfiguration.rules
+  }
 }
 
 enum AppAction {
