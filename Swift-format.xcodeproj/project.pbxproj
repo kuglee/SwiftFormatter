@@ -584,7 +584,6 @@
 				5DA76B3223DDF1410064E82B /* About */,
 				5D765B3723D6D546000ED749 /* Utility */,
 				5DA2B9862286045B0051C256 /* Products */,
-				5DA76B4423DE06230064E82B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -626,13 +625,6 @@
 				5DA76B4323DE05750064E82B /* Localizable.strings */,
 			);
 			path = About;
-			sourceTree = "<group>";
-		};
-		5DA76B4423DE06230064E82B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5DDCA4C923D34237003A539B /* SwiftFormatConfigurationDependency */ = {
