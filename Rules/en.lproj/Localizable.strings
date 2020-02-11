@@ -1,4 +1,4 @@
-"Linter rules:" = "Linter rules:";
+"Formatting and linting rules:" = "Formatting and linting rules:";
 "AllPublicDeclarationsHaveDocumentation" = "All public declarations have documentation";
 "AlwaysUseLowerCamelCase" = "Always use lower camel case";
 "AmbiguousTrailingClosureOverload" = "Ambiguous trailing closure overload";
