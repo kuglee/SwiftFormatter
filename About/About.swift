@@ -2,7 +2,7 @@ import SwiftUI
 import Utility
 
 public struct AboutView: View {
-  internal struct InternalConstants {
+  internal enum InternalConstants {
     private class EmptyClass {}
     static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
   }
@@ -10,15 +10,21 @@ public struct AboutView: View {
   public init() {}
 
   public var body: some View {
-    VStack(spacing: 16) {
-      Text("How to use").font(.headline)
-      Text("Go to", bundle: InternalConstants.bundle) + Text(" ")
-        + Text("Settings", bundle: InternalConstants.bundle).bold()
-        + Text(" -> ")
-        + Text("Extensions", bundle: InternalConstants.bundle).bold()
-        + Text(" ") + Text("and enable", bundle: InternalConstants.bundle)
-        + Text(" ")
-        + Text("Swift-format", bundle: InternalConstants.bundle).bold()
+    VStack(alignment: .leading, spacing: 12) {
+      VStack(alignment: .leading, spacing: 6) {
+        Text("How to install").bold()
+        Text(
+          "Choose Apple menu  > System Preferences, then click Extensions and enable the Swift-format extension.",
+          bundle: InternalConstants.bundle
+        )
+      }
+      VStack(alignment: .leading, spacing: 6) {
+        Text("How to use").bold()
+        Text(
+          "In Xcode choose Editor > Swift-format > Format Source from the menu bar.",
+          bundle: InternalConstants.bundle
+        )
+      }
     }
     .frame(minHeight: 0, maxHeight: .infinity, alignment: .top)
   }

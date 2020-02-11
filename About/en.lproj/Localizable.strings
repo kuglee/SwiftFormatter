@@ -1,6 +1,4 @@
+"How to install" = "How to install";
+"Choose Apple menu  > System Preferences, then click Extensions and enable the Swift-format extension." = "Choose Apple menu  > System Preferences, then click Extensions and enable the Swift-format extension.";
 "How to use" = "How to use";
-"Go to" = "Go to";
-"Settings" = "Settings";
-"Extensions" = "Extensions";
-"and enable" = "and enable";
-"Swift-format" = " Swift-format";
+"In Xcode choose Editor > Swift-format > Format Source from the menu bar." = "In Xcode choose Editor > Swift-format > Format Source from the menu bar.";
