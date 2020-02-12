@@ -37,7 +37,7 @@ public struct RulesView: View {
   }
 
   public var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
+    VStack(alignment: .leading, spacing: .grid(2)) {
       Text("Formatting and linting rules:", bundle: InternalConstants.bundle)
       List {
         ForEach(

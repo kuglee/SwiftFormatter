@@ -148,11 +148,11 @@ public struct SettingsView: View {
   }
 
   public var body: some View {
-    VStack(alignment: .trailingAlignmentGuide, spacing: 9) {
+    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(3)) {
       HStack(alignment: .centerAlignmentGuide) {
         Text("indentation:", bundle: InternalConstants.bundle)
           .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: .grid(2)) {
           HStack() {
             Text("length:", bundle: InternalConstants.bundle)
               .modifier(CenterAlignmentStyle())
@@ -260,7 +260,7 @@ public struct SettingsView: View {
       HStack(alignment: .firstTextBaseline) {
         Text("lineBreaks:", bundle: InternalConstants.bundle)
           .modifier(TrailingAlignmentStyle())
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: .grid(2)) {
           Toggle(
             isOn: Binding(
               get: { self.store.value.respectsExistingLineBreaks },

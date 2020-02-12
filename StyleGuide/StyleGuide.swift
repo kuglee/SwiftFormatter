@@ -1,5 +1,11 @@
 import SwiftUI
 
+extension CGFloat {
+  public static func grid(_ n: Int) -> CGFloat {
+    return CGFloat(n) * 3
+  }
+}
+
 // MARK: - Alignments
 
 extension HorizontalAlignment {
