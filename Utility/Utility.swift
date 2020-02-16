@@ -49,3 +49,10 @@ private struct TooltipView: NSViewRepresentable {
     context: NSViewRepresentableContext<TooltipView>
   ) { nsView.toolTip = self.toolTip }
 }
+
+extension Bundle {
+  public var displayName: String {
+    let name = object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+    return name ?? object(forInfoDictionaryKey: kCFBundleNameKey as String) as! String
+  }
+}

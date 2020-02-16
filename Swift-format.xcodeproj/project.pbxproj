@@ -31,6 +31,8 @@
 		5D576FD823F9BDFF0005E1B5 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5D576FD723F9BDFF0005E1B5 /* CasePaths */; };
 		5D576FD923F9BF1D0005E1B5 /* CasePathsDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; };
 		5D576FDA23F9BF1D0005E1B5 /* CasePathsDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5D576FDE23F9CCEC0005E1B5 /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
+		5D576FDF23F9CCEC0005E1B5 /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D765B1F23D6D0B9000ED749 /* StyleGuide.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D765B1D23D6D0B9000ED749 /* StyleGuide.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D765B2223D6D0B9000ED749 /* StyleGuide.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B1B23D6D0B9000ED749 /* StyleGuide.framework */; };
 		5D765B2323D6D0B9000ED749 /* StyleGuide.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B1B23D6D0B9000ED749 /* StyleGuide.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -111,6 +113,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5D576FCA23F9BDC90005E1B5;
 			remoteInfo = CasePathsDependency;
+		};
+		5D576FE023F9CCED0005E1B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D765B3523D6D546000ED749;
+			remoteInfo = Utility;
 		};
 		5D765B2023D6D0B9000ED749 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -273,6 +282,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5D576FDF23F9CCEC0005E1B5 /* Utility.framework in Embed Frameworks */,
 				5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */,
 				5DB029D723E7133E00F4BDBA /* Rules.framework in Embed Frameworks */,
 				5DB029DB23E7134300F4BDBA /* Settings.framework in Embed Frameworks */,
@@ -411,6 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D576FDE23F9CCEC0005E1B5 /* Utility.framework in Frameworks */,
 				5DB029DE23E7139B00F4BDBA /* About.framework in Frameworks */,
 				5D576FD223F9BDC90005E1B5 /* CasePathsDependency.framework in Frameworks */,
 				5DB029D623E7133E00F4BDBA /* Rules.framework in Frameworks */,
@@ -849,6 +860,7 @@
 				5DB029DD23E7134300F4BDBA /* PBXTargetDependency */,
 				5DB029E123E7139B00F4BDBA /* PBXTargetDependency */,
 				5D576FD123F9BDC90005E1B5 /* PBXTargetDependency */,
+				5D576FE123F9CCED0005E1B5 /* PBXTargetDependency */,
 			);
 			name = "Swift-format";
 			packageProductDependencies = (
@@ -1390,6 +1402,11 @@
 			isa = PBXTargetDependency;
 			target = 5D576FCA23F9BDC90005E1B5 /* CasePathsDependency */;
 			targetProxy = 5D576FDB23F9BF1D0005E1B5 /* PBXContainerItemProxy */;
+		};
+		5D576FE123F9CCED0005E1B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D765B3523D6D546000ED749 /* Utility */;
+			targetProxy = 5D576FE023F9CCED0005E1B5 /* PBXContainerItemProxy */;
 		};
 		5D765B2123D6D0B9000ED749 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
