@@ -1,4 +1,5 @@
 import About
+import CasePaths
 import ComposableArchitecture
 import Rules
 import Settings
@@ -28,43 +29,8 @@ public struct AppState {
 
 enum AppAction {
   case settingsView(SettingsViewAction)
-
-  var settingsView: SettingsViewAction? {
-    get {
-      guard case let .settingsView(value) = self else { return nil }
-      return value
-    }
-    set {
-      guard case .settingsView = self, let newValue = newValue else { return }
-      self = .settingsView(newValue)
-    }
-  }
-
   case rulesView(RulesViewAction)
-
-  var rulesView: RulesViewAction? {
-    get {
-      guard case let .rulesView(value) = self else { return nil }
-      return value
-    }
-    set {
-      guard case .rulesView = self, let newValue = newValue else { return }
-      self = .rulesView(newValue)
-    }
-  }
-
   case tabView(TabViewAction)
-
-  var tabView: TabViewAction? {
-    get {
-      guard case let .tabView(value) = self else { return nil }
-      return value
-    }
-    set {
-      guard case .tabView = self, let newValue = newValue else { return }
-      self = .tabView(newValue)
-    }
-  }
 }
 
 extension AppState {
@@ -142,14 +108,14 @@ let appReducer = combine(
   pullback(
     settingsViewReducer,
     value: \AppState.settingsView,
-    action: \AppAction.settingsView
+    action: /AppAction.settingsView
   ),
   pullback(
     rulesViewReducer,
     value: \AppState.rulesView,
-    action: \AppAction.rulesView
+    action: /AppAction.rulesView
   ),
-  pullback(tabViewReducer, value: \AppState.tabView, action: \AppAction.tabView)
+  pullback(tabViewReducer, value: \AppState.tabView, action: /AppAction.tabView)
 )
 
 struct ContentView: View {

@@ -1,3 +1,4 @@
+import CasePaths
 import Combine
 import SwiftUI
 
@@ -97,19 +98,15 @@ public func combine<Value, Action>(
 public func pullback<LocalValue, GlobalValue, LocalAction, GlobalAction>(
   _ reducer: @escaping Reducer<LocalValue, LocalAction>,
   value: WritableKeyPath<GlobalValue, LocalValue>,
-  action: WritableKeyPath<GlobalAction, LocalAction?>
+  action: CasePath<GlobalAction, LocalAction>
 ) -> Reducer<GlobalValue, GlobalAction> {
   return { globalValue, globalAction in
-    guard let localAction = globalAction[keyPath: action] else { return [] }
+    guard let localAction = action.extract(from: globalAction) else { return [] }
     let localEffects = reducer(&globalValue[keyPath: value], localAction)
 
     return localEffects.map { localEffect in
-      localEffect.map { localAction -> GlobalAction in
-        var globalAction = globalAction
-        globalAction[keyPath: action] = localAction
-        return globalAction
-      }
-      .eraseToEffect()
+      localEffect.map(action.embed)
+        .eraseToEffect()
     }
   }
 }
@@ -128,3 +125,17 @@ public func logging<Value, Action>(
       }] + effects
   }
 }
+
+extension Publisher {
+  func cancellable<Id: Hashable>(id: Id) -> AnyPublisher<Output, Failure> {
+    return Deferred { () -> PassthroughSubject<Output, Failure> in
+      cancellables[id]?.cancel()
+      let subject = PassthroughSubject<Output, Failure>()
+      cancellables[id] = self.subscribe(subject)
+      return subject
+    }
+    .eraseToAnyPublisher()
+  }
+}
+
+private var cancellables: [AnyHashable: AnyCancellable] = [:]
