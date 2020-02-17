@@ -8,20 +8,10 @@ import Utility
   var contentView: ContentView? = nil
   var didRunBefore = false
 
-  private let applicationSupportDirectory: URL = FileManager.default
-    .urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-
-  private let configFileName = "swift-format.json"
-
-  private let appName = Bundle.main.displayName
-
-  private func getConfigFileDirectory() -> URL {
-    self.applicationSupportDirectory.appendingPathComponent(self.appName)
-  }
-
-  private func getConfigFileURL() -> URL {
-    self.getConfigFileDirectory().appendingPathComponent(self.configFileName)
-  }
+  private let configFileURL: URL = FileManager.default
+    .urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(
+      Bundle.main.displayName
+    ).appendingPathComponent("swift-format.json")
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window = NSWindow(
@@ -44,7 +34,7 @@ import Utility
     contentView = ContentView(
       store: Store(
         initialValue: AppState(
-          configuration: loadConfiguration(fromFileAtPath: self.getConfigFileURL()),
+          configuration: loadConfiguration(fromFileAtPath: self.configFileURL),
           selectedTab: selectedTab
         ),
         reducer: appReducer
@@ -58,11 +48,11 @@ import Utility
   func applicationWillTerminate(_ aNotification: Notification) {
     // only creates the directory if it doesn't exist
     try? FileManager.default.createDirectory(
-      at: self.getConfigFileDirectory(), withIntermediateDirectories: false)
+      at: self.configFileURL.deletingLastPathComponent(), withIntermediateDirectories: false)
 
     dumpConfiguration(
       configuration: contentView!.store.value.configuration,
-      outputFileURL: self.getConfigFileURL()
+      outputFileURL: self.configFileURL
     )
 
     if !self.didRunBefore { self.setDidRunBefore() }
