@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import ConfigurationManager
+import SwiftFormatConfiguration
 import SwiftUI
 import Utility
 
@@ -7,11 +8,6 @@ import Utility
   var window: NSWindow!
   var contentView: ContentView? = nil
   var didRunBefore = false
-
-  private let configFileURL: URL = FileManager.default
-    .urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appendingPathComponent(
-      Bundle.main.displayName
-    ).appendingPathComponent("swift-format.json")
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     window = NSWindow(
@@ -34,10 +30,12 @@ import Utility
     contentView = ContentView(
       store: Store(
         initialValue: AppState(
-          configuration: loadConfiguration(fromFileAtPath: self.configFileURL),
+          configuration: loadConfiguration(
+            fromFileAtPath: AppConstants.configFileURL
+          ),
           selectedTab: selectedTab
         ),
-        reducer: appReducer
+        reducer: with(appReducer, saveMiddleware)
       )
     )
 
@@ -46,15 +44,6 @@ import Utility
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
-    // only creates the directory if it doesn't exist
-    try? FileManager.default.createDirectory(
-      at: self.configFileURL.deletingLastPathComponent(), withIntermediateDirectories: false)
-
-    dumpConfiguration(
-      configuration: contentView!.store.value.configuration,
-      outputFileURL: self.configFileURL
-    )
-
     if !self.didRunBefore { self.setDidRunBefore() }
   }
 

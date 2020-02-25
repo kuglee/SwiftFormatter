@@ -136,7 +136,7 @@ public func settingsViewReducer(
 }
 
 public struct SettingsView: View {
-  internal struct InternalConstants {
+  internal enum InternalConstants {
     private class EmptyClass {}
     static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
   }

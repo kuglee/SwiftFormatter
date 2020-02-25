@@ -1,11 +1,13 @@
 import About
 import CasePaths
 import ComposableArchitecture
+import ConfigurationManager
 import Rules
 import Settings
 import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
+import Utility
 
 public struct AppState {
   public var configuration: Configuration
@@ -27,7 +29,7 @@ public struct AppState {
   }
 }
 
-enum AppAction {
+public enum AppAction {
   case settingsView(SettingsViewAction)
   case rulesView(RulesViewAction)
   case tabView(TabViewAction)
@@ -90,9 +92,9 @@ extension AppState {
   }
 }
 
-enum TabViewAction: Equatable { case tabSelected(Int) }
+public enum TabViewAction: Equatable { case tabSelected(Int) }
 
-struct TabViewState { var selectedTab: Int }
+public struct TabViewState { var selectedTab: Int }
 
 func tabViewReducer(state: inout TabViewState, action: TabViewAction)
   -> [Effect<TabViewAction>]
@@ -101,6 +103,28 @@ func tabViewReducer(state: inout TabViewState, action: TabViewAction)
   case .tabSelected(let selectedTab):
     state.selectedTab = selectedTab
     return []
+  }
+}
+
+public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>)
+  -> Reducer<AppState, AppAction>
+{
+  return { state, action in
+    switch action {
+    case .settingsView, .rulesView:
+      let effects = reducer(&state, action)
+      let newState = state
+      return [
+        .fireAndForget {
+          dumpConfiguration(
+            configuration: newState.configuration,
+            outputFileURL: AppConstants.configFileURL,
+            createIntermediateDirectories: true
+          )
+        }
+      ] + effects
+    default: return reducer(&state, action)
+    }
   }
 }
 

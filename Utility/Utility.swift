@@ -1,5 +1,19 @@
 import SwiftUI
 
+public enum AppConstants {
+  public static let applicationSupportDirectory = FileManager.default.urls(
+    for: .applicationSupportDirectory,
+    in: .userDomainMask
+  ).first!.appendingPathComponent(Bundle.main.displayName)
+  public static let configFilename = "swift-format.json"
+
+  public static var configFileURL: URL {
+    AppConstants.applicationSupportDirectory.appendingPathComponent(
+      AppConstants.configFilename
+    )
+  }
+}
+
 public class UIntNumberFormatter: NumberFormatter {
   public override init() {
     super.init()
@@ -37,7 +51,7 @@ extension View {
   }
 }
 
-private struct TooltipView: NSViewRepresentable {
+fileprivate struct TooltipView: NSViewRepresentable {
   let toolTip: String
 
   func makeNSView(context: NSViewRepresentableContext<TooltipView>) -> NSView {
@@ -53,6 +67,11 @@ private struct TooltipView: NSViewRepresentable {
 extension Bundle {
   public var displayName: String {
     let name = object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
-    return name ?? object(forInfoDictionaryKey: kCFBundleNameKey as String) as! String
+    return name ?? object(forInfoDictionaryKey: kCFBundleNameKey as String)
+      as! String
   }
+}
+
+public func with<A, B>(_ a: A, _ f: (A) throws -> B) rethrows -> B {
+  return try f(a)
 }

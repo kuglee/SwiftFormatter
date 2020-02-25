@@ -1,4 +1,5 @@
 import Foundation
+import Utility
 import os.log
 
 extension FileManager {
@@ -77,10 +78,6 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
     }
   }
 
-  private let configFileURL = FileManager.default
-    .urls(for: .libraryDirectory, in: .userDomainMask).first!
-    .appendingPathComponent("Preferences/swift-format.json")
-
   private let swiftFormatBinaryPath = Bundle.main.url(
     forResource: "swift-format",
     withExtension: ""
@@ -107,8 +104,10 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
     var arguments = [String]()
     arguments.append(contentsOf: ["-i", tempFileURL.path])
 
-    if FileManager.default.fileExists(atPath: self.configFileURL.path) {
-      arguments.append(contentsOf: ["--configuration", self.configFileURL.path])
+    if FileManager.default.fileExists(atPath: AppConstants.configFileURL.path) {
+      arguments.append(contentsOf: [
+        "--configuration", AppConstants.configFileURL.path,
+      ])
     }
 
     let result = run(command: swiftFormatBinaryPath, with: arguments)

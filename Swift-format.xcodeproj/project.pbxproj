@@ -68,6 +68,8 @@
 		5DB029DB23E7134300F4BDBA /* Settings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DB029DE23E7139B00F4BDBA /* About.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; };
 		5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DBCEB5C2404F729007FF4B6 /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
+		5DBCEB5D2404F729007FF4B6 /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DDCA4BB23D34096003A539B /* ConfigurationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; };
 		5DDCA4BC23D34096003A539B /* ConfigurationManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D45F79223D03B0700646A64 /* ConfigurationManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DDCA4CC23D34237003A539B /* SwiftFormatConfigurationDependency.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DDCA4CA23D34237003A539B /* SwiftFormatConfigurationDependency.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -198,6 +200,13 @@
 			remoteGlobalIDString = 5DA76B3023DDF1400064E82B;
 			remoteInfo = About;
 		};
+		5DBCEB5E2404F729007FF4B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D765B3523D6D546000ED749;
+			remoteInfo = Utility;
+		};
 		5DDCA4BD23D34096003A539B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
@@ -321,6 +330,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DBCEB602404F729007FF4B6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5DBCEB5D2404F729007FF4B6 /* Utility.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DDCA4DA23D34253003A539B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,6 +457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DBCEB5C2404F729007FF4B6 /* Utility.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,11 +897,13 @@
 				5D397569228759FA00307B1E /* Sources */,
 				5D39756A228759FA00307B1E /* Frameworks */,
 				5D39756B228759FA00307B1E /* Resources */,
+				5DBCEB602404F729007FF4B6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5DEDFBF823C911B9008F97D0 /* PBXTargetDependency */,
+				5DBCEB5F2404F729007FF4B6 /* PBXTargetDependency */,
 			);
 			name = "Swift-format Service";
 			productName = SwiftFormatXPC;
@@ -1463,6 +1486,11 @@
 			target = 5DA76B3023DDF1400064E82B /* About */;
 			targetProxy = 5DB029E023E7139B00F4BDBA /* PBXContainerItemProxy */;
 		};
+		5DBCEB5F2404F729007FF4B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D765B3523D6D546000ED749 /* Utility */;
+			targetProxy = 5DBCEB5E2404F729007FF4B6 /* PBXContainerItemProxy */;
+		};
 		5DDCA4BE23D34096003A539B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5D45F79123D03B0700646A64 /* ConfigurationManager */;
@@ -1690,6 +1718,7 @@
 					"@loader_path/../Frameworks",
 					./,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.service";
 				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
@@ -1713,6 +1742,7 @@
 					"@loader_path/../Frameworks",
 					./,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.service";
 				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
 				SKIP_INSTALL = YES;
@@ -2204,6 +2234,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SKIP_INSTALL = YES;
@@ -2228,6 +2259,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SKIP_INSTALL = YES;

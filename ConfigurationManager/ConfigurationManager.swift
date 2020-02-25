@@ -20,7 +20,8 @@ public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
 
 public func dumpConfiguration(
   configuration: Configuration = Configuration(),
-  outputFileURL: URL? = nil
+  outputFileURL: URL,
+  createIntermediateDirectories: Bool = false
 ) {
   do {
     let encoder = JSONEncoder()
@@ -37,14 +38,19 @@ public func dumpConfiguration(
       return
     }
 
-    if let outputFileURL = outputFileURL {
-      do {
-        try jsonString.write(
-          to: outputFileURL,
-          atomically: false,
-          encoding: .utf8
+    do {
+      if createIntermediateDirectories {
+        try? FileManager.default.createDirectory(
+          at: outputFileURL.deletingLastPathComponent(),
+          withIntermediateDirectories: true
         )
-      } catch { print("Could not dump the default configuration: \(error)") }
-    } else { print(jsonString) }
+      }
+
+      try jsonString.write(
+        to: outputFileURL,
+        atomically: false,
+        encoding: .utf8
+      )
+    } catch { print("Could not dump the default configuration: \(error)") }
   } catch { print("Could not dump the default configuration: \(error)") }
 }
