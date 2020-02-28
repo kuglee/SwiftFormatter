@@ -119,7 +119,7 @@ public struct PrimaryPickerStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(maxWidth: 100)
+    content.frame(maxWidth: 110)
   }
 }
 
@@ -129,7 +129,7 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(width: 500, height: 500)
+    content.frame(width: 600, height: 500)
   }
 }
 

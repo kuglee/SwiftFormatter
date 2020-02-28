@@ -56,7 +56,8 @@ extension AppState {
         indentConditionalCompilationBlocks: self.configuration
           .indentConditionalCompilationBlocks,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
-          .lineBreakAroundMultilineExpressionChainComponents
+          .lineBreakAroundMultilineExpressionChainComponents,
+        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy
       )
     }
     set {
@@ -78,6 +79,7 @@ extension AppState {
         newValue.indentConditionalCompilationBlocks
       self.configuration.lineBreakAroundMultilineExpressionChainComponents =
         newValue.lineBreakAroundMultilineExpressionChainComponents
+      self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
     }
   }
 

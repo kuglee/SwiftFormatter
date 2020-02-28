@@ -1,5 +1,6 @@
 import CasePaths
 import ComposableArchitecture
+import FileScopedDeclarationPrivacy
 import Indentation
 import LineBreaks
 import LineLength
@@ -14,6 +15,7 @@ public enum SettingsViewAction: Equatable {
   case tabWidthView(TabWidthViewAction)
   case lineLengthView(LineLengthViewAction)
   case lineBreaksView(LineBreaksViewAction)
+  case fileScopedDeclarationPrivacyView(FileScopedDeclarationPrivacyViewAction)
 }
 
 public struct SettingsViewState {
@@ -28,6 +30,7 @@ public struct SettingsViewState {
   public var prioritizeKeepingFunctionOutputTogether: Bool
   public var indentConditionalCompilationBlocks: Bool
   public var lineBreakAroundMultilineExpressionChainComponents: Bool
+  public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
 
   public init(
     maximumBlankLines: Int,
@@ -40,7 +43,8 @@ public struct SettingsViewState {
     lineBreakBeforeEachGenericRequirement: Bool,
     prioritizeKeepingFunctionOutputTogether: Bool,
     indentConditionalCompilationBlocks: Bool,
-    lineBreakAroundMultilineExpressionChainComponents: Bool
+    lineBreakAroundMultilineExpressionChainComponents: Bool,
+    fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
   ) {
     self.maximumBlankLines = maximumBlankLines
     self.lineLength = lineLength
@@ -56,6 +60,7 @@ public struct SettingsViewState {
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
     self.lineBreakAroundMultilineExpressionChainComponents =
       lineBreakAroundMultilineExpressionChainComponents
+    self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
   }
 }
 
@@ -115,6 +120,16 @@ extension SettingsViewState {
         newValue.lineBreakAroundMultilineExpressionChainComponents
     }
   }
+
+  var fileScopedDeclarationPrivacyView: FileScopedDeclarationPrivacyViewState {
+    get {
+      FileScopedDeclarationPrivacyViewState(
+        accessLevel: self.fileScopedDeclarationPrivacy.accessLevel)
+    }
+    set {
+      self.fileScopedDeclarationPrivacy.accessLevel = newValue.accessLevel
+    }
+  }
 }
 
 public let settingsViewReducer = combine(
@@ -137,6 +152,11 @@ public let settingsViewReducer = combine(
     lineBreaksViewReducer,
     value: \SettingsViewState.lineBreaksView,
     action: /SettingsViewAction.lineBreaksView
+  ),
+  pullback(
+    fileScopedDeclarationPrivacyViewReducer,
+    value: \SettingsViewState.fileScopedDeclarationPrivacyView,
+    action: /SettingsViewAction.fileScopedDeclarationPrivacyView
   )
 )
 
@@ -176,6 +196,12 @@ public struct SettingsView: View {
         store: self.store.view(
           value: { $0.lineBreaksView },
           action: { .lineBreaksView($0) }
+        )
+      )
+      FileScopedDeclarationPrivacyViewView(
+        store: self.store.view(
+          value: { $0.fileScopedDeclarationPrivacyView },
+          action: { .fileScopedDeclarationPrivacyView($0) }
         )
       )
     }

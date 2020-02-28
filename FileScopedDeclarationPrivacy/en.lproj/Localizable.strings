@@ -1,0 +1,2 @@
+"FileScopedDeclarationPrivacy:" = "File Scoped Declaration Privacy:";
+"FILE_SCOPED_DECLARATION_PRIVACY_ACCESS_LEVEL" = "Determines the formal access level (i.e., the level specified in source code) for file-scoped declarations whose effective access level is private to the containing file.";
