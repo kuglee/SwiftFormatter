@@ -1,5 +1,5 @@
 # Swift-format
-Xcode extension for swift-format.
+Xcode extension for [swift-format](https://github.com/apple/swift-format).
 
 It only supports macOS Catalina (10.15).
 
