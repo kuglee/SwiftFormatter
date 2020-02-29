@@ -2,7 +2,7 @@ import SwiftUI
 
 extension CGFloat {
   public static func grid(_ n: Int) -> CGFloat {
-    return CGFloat(n) * 3
+    return CGFloat(n) * 2
   }
 }
 
@@ -129,7 +129,21 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(width: 600, height: 500)
+    content
+      .frame(width: 600, height: 500)
+      .padding(.horizontal, .grid(10))
+      .padding(.top, .grid(5))
+      .padding(.bottom, .grid(10))
+  }
+}
+
+// MARK: - TabItem Styles
+
+public struct PrimaryTabItemStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.padding(.grid(6))
   }
 }
 

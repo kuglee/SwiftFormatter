@@ -173,7 +173,7 @@ public struct SettingsView: View {
   }
 
   public var body: some View {
-    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(3)) {
+    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(4)) {
       IndentationView(
         store: self.store.view(
           value: { $0.indentationView },

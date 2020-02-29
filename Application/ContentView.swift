@@ -160,15 +160,19 @@ struct ContentView: View {
           action: { .settingsView($0) }
         )
       )
-      .padding().tabItem { Text("Formatting") }.tag(0)
+      .modifier(PrimaryTabItemStyle())
+      .tabItem { Text("Formatting") }.tag(0)
       RulesView(
         store: self.store.view(
           value: { $0.rulesView },
           action: { .rulesView($0) }
         )
       )
-      .padding().tabItem { Text("Rules") }.tag(1)
-      AboutView().padding().tabItem { Text("About") }.tag(2)
+      .modifier(PrimaryTabItemStyle())
+      .tabItem { Text("Rules") }.tag(1)
+      AboutView()
+        .modifier(PrimaryTabItemStyle())
+        .tabItem { Text("About") }.tag(2)
     }
     .modifier(PrimaryTabViewStyle())
   }
