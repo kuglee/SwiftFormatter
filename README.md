@@ -1,1 +1,1 @@
-## WIP
+## Xcode extension for swift-format
