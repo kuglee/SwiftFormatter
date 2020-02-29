@@ -30,7 +30,8 @@ public struct SettingsViewState {
   public var prioritizeKeepingFunctionOutputTogether: Bool
   public var indentConditionalCompilationBlocks: Bool
   public var lineBreakAroundMultilineExpressionChainComponents: Bool
-  public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
+  public var fileScopedDeclarationPrivacy:
+    FileScopedDeclarationPrivacyConfiguration
 
   public init(
     maximumBlankLines: Int,
@@ -124,11 +125,10 @@ extension SettingsViewState {
   var fileScopedDeclarationPrivacyView: FileScopedDeclarationPrivacyViewState {
     get {
       FileScopedDeclarationPrivacyViewState(
-        accessLevel: self.fileScopedDeclarationPrivacy.accessLevel)
+        accessLevel: self.fileScopedDeclarationPrivacy.accessLevel
+      )
     }
-    set {
-      self.fileScopedDeclarationPrivacy.accessLevel = newValue.accessLevel
-    }
+    set { self.fileScopedDeclarationPrivacy.accessLevel = newValue.accessLevel }
   }
 }
 

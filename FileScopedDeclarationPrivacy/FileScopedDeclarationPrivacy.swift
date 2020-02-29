@@ -18,15 +18,17 @@ extension FileScopedDeclarationPrivacyConfiguration.AccessLevel {
 }
 
 public enum FileScopedDeclarationPrivacyViewAction: Equatable {
-  case accessLevelSelected(FileScopedDeclarationPrivacyConfiguration.AccessLevel)
+  case accessLevelSelected(
+    FileScopedDeclarationPrivacyConfiguration.AccessLevel
+  )
 }
 
 public struct FileScopedDeclarationPrivacyViewState {
   public var accessLevel: FileScopedDeclarationPrivacyConfiguration.AccessLevel
 
-  public init(accessLevel: FileScopedDeclarationPrivacyConfiguration.AccessLevel) {
-    self.accessLevel = accessLevel
-  }
+  public init(
+    accessLevel: FileScopedDeclarationPrivacyConfiguration.AccessLevel
+  ) { self.accessLevel = accessLevel }
 }
 
 public func fileScopedDeclarationPrivacyViewReducer(
@@ -34,8 +36,7 @@ public func fileScopedDeclarationPrivacyViewReducer(
   action: FileScopedDeclarationPrivacyViewAction
 ) -> [Effect<FileScopedDeclarationPrivacyViewAction>] {
   switch action {
-  case .accessLevelSelected(let value):
-    state.accessLevel = value
+  case .accessLevelSelected(let value): state.accessLevel = value
   }
 
   return []
@@ -48,13 +49,17 @@ public struct FileScopedDeclarationPrivacyViewView: View {
   }
 
   @ObservedObject var store:
-    Store<FileScopedDeclarationPrivacyViewState, FileScopedDeclarationPrivacyViewAction>
+    Store<
+      FileScopedDeclarationPrivacyViewState,
+      FileScopedDeclarationPrivacyViewAction
+    >
 
   public init(
-    store: Store<FileScopedDeclarationPrivacyViewState, FileScopedDeclarationPrivacyViewAction>
-  ) {
-    self.store = store
-  }
+    store: Store<
+      FileScopedDeclarationPrivacyViewState,
+      FileScopedDeclarationPrivacyViewAction
+    >
+  ) { self.store = store }
 
   public var body: some View {
     HStack(alignment: .centerAlignmentGuide, spacing: 0) {
@@ -69,16 +74,22 @@ public struct FileScopedDeclarationPrivacyViewView: View {
       ) {
         Text(
           LocalizedStringKey(
-            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`.rawValue),
+            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`
+              .rawValue
+          ),
           bundle: InternalConstants.bundle
         )
         .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`)
         Text(
           LocalizedStringKey(
-            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`.rawValue),
+            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
+              .rawValue
+          ),
           bundle: InternalConstants.bundle
         )
-        .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`)
+        .tag(
+          FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
+        )
       }
       .toolTip(
         "FILE_SCOPED_DECLARATION_PRIVACY_ACCESS_LEVEL",

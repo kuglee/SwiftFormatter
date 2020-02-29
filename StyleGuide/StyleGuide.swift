@@ -1,9 +1,7 @@
 import SwiftUI
 
 extension CGFloat {
-  public static func grid(_ n: Int) -> CGFloat {
-    return CGFloat(n) * 2
-  }
+  public static func grid(_ n: Int) -> CGFloat { return CGFloat(n) * 2 }
 }
 
 // MARK: - Alignments
@@ -129,11 +127,8 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content
-      .frame(width: 600, height: 500)
-      .padding(.horizontal, .grid(10))
-      .padding(.top, .grid(5))
-      .padding(.bottom, .grid(10))
+    content.frame(width: 600, height: 500).padding(.horizontal, .grid(10))
+      .padding(.top, .grid(5)).padding(.bottom, .grid(10))
   }
 }
 
@@ -142,9 +137,7 @@ public struct PrimaryTabViewStyle: ViewModifier {
 public struct PrimaryTabItemStyle: ViewModifier {
   public init() {}
 
-  public func body(content: Content) -> some View {
-    content.padding(.grid(6))
-  }
+  public func body(content: Content) -> some View { content.padding(.grid(6)) }
 }
 
 // MARK: - VStack Styles

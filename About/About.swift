@@ -1,5 +1,5 @@
-import SwiftUI
 import StyleGuide
+import SwiftUI
 import Utility
 
 public struct AboutView: View {
