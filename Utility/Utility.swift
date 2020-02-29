@@ -4,7 +4,7 @@ public enum AppConstants {
   public static let applicationSupportDirectory = FileManager.default.urls(
     for: .applicationSupportDirectory,
     in: .userDomainMask
-  ).first!.appendingPathComponent(Bundle.main.displayName)
+  ).first!.appendingPathComponent("Swift-format")
   public static let configFilename = "swift-format.json"
 
   public static var configFileURL: URL {
@@ -62,14 +62,6 @@ fileprivate struct TooltipView: NSViewRepresentable {
     _ nsView: NSView,
     context: NSViewRepresentableContext<TooltipView>
   ) { nsView.toolTip = self.toolTip }
-}
-
-extension Bundle {
-  public var displayName: String {
-    let name = object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
-    return name ?? object(forInfoDictionaryKey: kCFBundleNameKey as String)
-      as! String
-  }
 }
 
 public func with<A, B>(_ a: A, _ f: (A) throws -> B) rethrows -> B {
