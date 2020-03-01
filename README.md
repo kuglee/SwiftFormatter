@@ -8,5 +8,7 @@ Build from source or download the [latest version](https://github.com/kuglee/Swi
  
 ## Building from source
 1. Download the swift-toolchain version swift-DEVELOPMENT-SNAPSHOT-2020-01-29-a.
-2. Select the toolchain in Xcode > Toolchains from the menu bar.
-2. Build the project.
+2. git clone https://github.com/apple/swift-format.git
+3. cd swift-format
+4. TOOLCHAINS="org.swift.50202001291a" swift build
+5. Build the project in Xcode
