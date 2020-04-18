@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
+        "state": {
+          "branch": null,
+          "revision": "9f04d1ff1afbccd02279338a2c91e5f27c45e93a",
+          "version": "0.0.5"
+        }
+      },
+      {
         "package": "CasePaths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths",
         "state": {
@@ -15,7 +24,7 @@
         "repositoryURL": "https://github.com/apple/swift-format",
         "state": {
           "branch": "master",
-          "revision": "ee754276f3c575183c669b7e7cc74806e10adb1f",
+          "revision": "80ce1ed2170a473cb3bc139dfdf2d17f51c927da",
           "version": null
         }
       },
@@ -23,18 +32,9 @@
         "package": "SwiftSyntax",
         "repositoryURL": "https://github.com/apple/swift-syntax",
         "state": {
-          "branch": "swift-DEVELOPMENT-SNAPSHOT-2020-01-29-a",
-          "revision": "16f6af54d9ad3cfcb35cd557288783dded1107fd",
-          "version": null
-        }
-      },
-      {
-        "package": "swift-tools-support-core",
-        "repositoryURL": "https://github.com/apple/swift-tools-support-core.git",
-        "state": {
           "branch": null,
-          "revision": "693aba4c4c9dcc4767cc853a0dd38bf90ad8c258",
-          "version": "0.0.1"
+          "revision": "0688b9cfc4c3dd234e4f55f1f056b2affc849873",
+          "version": "0.50200.0"
         }
       }
     ]

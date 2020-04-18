@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D08627C240BA4DF0055AC68 /* swift-format in Resources */ = {isa = PBXBuildFile; fileRef = 5D08627B240BA4DE0055AC68 /* swift-format */; };
 		5D0CA9CF23C30F0F00294FCC /* Rules.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D0CA9CD23C30F0F00294FCC /* Rules.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D0CA9D823C30F2300294FCC /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0CA9D723C30F2300294FCC /* Rules.swift */; };
 		5D1AB85222B75D6E00F15F08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */; };
@@ -15,7 +14,6 @@
 		5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85522B75D7000F15F08 /* Assets.xcassets */; };
 		5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */; };
 		5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85A22B75D7000F15F08 /* Main.storyboard */; };
-		5D317F9D22B81C9700086216 /* Swift-format Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5DA2B99A2286048F0051C256 /* Swift-format Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5D38B46022876FA900EE78C7 /* SwiftFormatServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D38B45F22876FA900EE78C7 /* SwiftFormatServiceProtocol.swift */; };
 		5D38B46122876FA900EE78C7 /* SwiftFormatServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D38B45F22876FA900EE78C7 /* SwiftFormatServiceProtocol.swift */; };
 		5D38B46422876FB900EE78C7 /* SwiftFormatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D38B46222876FB800EE78C7 /* SwiftFormatService.swift */; };
@@ -62,15 +60,18 @@
 		5DA76B4123DE05750064E82B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA76B4323DE05750064E82B /* Localizable.strings */; };
 		5DA76B4523DE06230064E82B /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
 		5DA76B4623DE06230064E82B /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DAAAA68244B2BBE00BCEF22 /* Swift-format Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5DA2B99A2286048F0051C256 /* Swift-format Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5DAAAA6C244B2E4800BCEF22 /* swift-format in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5DB068CA244AF6D8006CA5C5 /* swift-format */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5DB029D623E7133E00F4BDBA /* Rules.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; };
 		5DB029D723E7133E00F4BDBA /* Rules.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D0CA9CB23C30F0E00294FCC /* Rules.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DB029DA23E7134300F4BDBA /* Settings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; };
 		5DB029DB23E7134300F4BDBA /* Settings.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B229723C0AC61006595F4 /* Settings.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DB029DE23E7139B00F4BDBA /* About.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; };
 		5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DB068C0244AF2FC006CA5C5 /* CasePathsDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; };
+		5DB068C1244AF2FC006CA5C5 /* CasePathsDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DBCEB5C2404F729007FF4B6 /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
 		5DBCEB5D2404F729007FF4B6 /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DBCEB622405B983007FF4B6 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5DBCEB612405B983007FF4B6 /* CasePaths */; };
 		5DBCEB7F2405BC53007FF4B6 /* Indentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBCEB7D2405BC53007FF4B6 /* Indentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DBCEB822405BC53007FF4B6 /* Indentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBCEB7B2405BC53007FF4B6 /* Indentation.framework */; };
 		5DBCEB832405BC53007FF4B6 /* Indentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DBCEB7B2405BC53007FF4B6 /* Indentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -248,6 +249,13 @@
 			remoteGlobalIDString = 5D765B3523D6D546000ED749;
 			remoteInfo = Utility;
 		};
+		5DAAAA69244B2BBF00BCEF22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DA2B9992286048F0051C256;
+			remoteInfo = "Swift-format Extension";
+		};
 		5DB029D823E7133E00F4BDBA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
@@ -268,6 +276,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5DA76B3023DDF1400064E82B;
 			remoteInfo = About;
+		};
+		5DB068C2244AF2FC006CA5C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D576FCA23F9BDC90005E1B5;
+			remoteInfo = CasePathsDependency;
+		};
+		5DB068E4244B2788006CA5C5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DB068C9244AF6D8006CA5C5;
+			remoteInfo = "swift-format";
 		};
 		5DBCEB5E2404F729007FF4B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -503,17 +525,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5D317F9C22B81C6600086216 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				5D317F9D22B81C9700086216 /* Swift-format Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5D32F4C52286D5ED00547FD2 /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,6 +585,7 @@
 				5DBCEB8A2405BCDF007FF4B6 /* Indentation.framework in Embed Frameworks */,
 				5D7B22A723C0EE02006595F4 /* ComposableArchitecture.framework in Embed Frameworks */,
 				5DBCEBAE2405BE10007FF4B6 /* LineBreaks.framework in Embed Frameworks */,
+				5DB068C1244AF2FC006CA5C5 /* CasePathsDependency.framework in Embed Frameworks */,
 				5DDCA4DC23D34258003A539B /* SwiftFormatConfigurationDependency.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -589,6 +601,27 @@
 				5D576FB323F3D6260005E1B5 /* StyleGuide.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DAAAA6B244B2BBF00BCEF22 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5DAAAA68244B2BBE00BCEF22 /* Swift-format Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DB068DE244B0497006CA5C5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				5DAAAA6C244B2E4800BCEF22 /* swift-format in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5DBCEB602404F729007FF4B6 /* Embed Frameworks */ = {
@@ -696,7 +729,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5D08627B240BA4DE0055AC68 /* swift-format */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = "swift-format"; path = "swift-format/.build/x86_64-apple-macosx/debug/swift-format"; sourceTree = "<group>"; };
 		5D0CA9CB23C30F0E00294FCC /* Rules.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rules.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D0CA9CD23C30F0F00294FCC /* Rules.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rules.h; sourceTree = "<group>"; };
 		5D0CA9CE23C30F0F00294FCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -746,6 +778,7 @@
 		5DA76B3423DDF1410064E82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DA76B3D23DDF15B0064E82B /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		5DA76B4223DE05750064E82B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DB068CA244AF6D8006CA5C5 /* swift-format */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "swift-format"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DBCEB7B2405BC53007FF4B6 /* Indentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Indentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DBCEB7D2405BC53007FF4B6 /* Indentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Indentation.h; sourceTree = "<group>"; };
 		5DBCEB7E2405BC53007FF4B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -861,7 +894,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DBCEB892405BCDF007FF4B6 /* Indentation.framework in Frameworks */,
-				5DBCEB622405B983007FF4B6 /* CasePaths in Frameworks */,
 				5DBCEC042405BFE8007FF4B6 /* LineLength.framework in Frameworks */,
 				5D765B2923D6D122000ED749 /* StyleGuide.framework in Frameworks */,
 				5D765B4423D6D5D8000ED749 /* Utility.framework in Frameworks */,
@@ -869,6 +901,7 @@
 				5DBCEBE02405BF2E007FF4B6 /* TabWidth.framework in Frameworks */,
 				5D42A11D23C2676600A9EB26 /* ComposableArchitecture.framework in Frameworks */,
 				5DBCEC4724085744007FF4B6 /* FileScopedDeclarationPrivacy.framework in Frameworks */,
+				5DB068C0244AF2FC006CA5C5 /* CasePathsDependency.framework in Frameworks */,
 				5DDCA4DB23D34258003A539B /* SwiftFormatConfigurationDependency.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1101,7 +1134,7 @@
 				5DBCEBEC2405BFC2007FF4B6 /* LineLength */,
 				5DBCEC24240849C6007FF4B6 /* FileScopedDeclarationPrivacy */,
 				5DA2B9862286045B0051C256 /* Products */,
-				5D08627B240BA4DE0055AC68 /* swift-format */,
+				5DAAAA67244B2BBE00BCEF22 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1125,6 +1158,7 @@
 				5DBCEBC72405BEFC007FF4B6 /* TabWidth.framework */,
 				5DBCEBEB2405BFC2007FF4B6 /* LineLength.framework */,
 				5DBCEC23240849C6007FF4B6 /* FileScopedDeclarationPrivacy.framework */,
+				5DB068CA244AF6D8006CA5C5 /* swift-format */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1148,6 +1182,13 @@
 				5DA76B4323DE05750064E82B /* Localizable.strings */,
 			);
 			path = About;
+			sourceTree = "<group>";
+		};
+		5DAAAA67244B2BBE00BCEF22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5DBCEB7C2405BC53007FF4B6 /* Indentation */ = {
@@ -1363,8 +1404,8 @@
 				5D1AB84B22B75D6E00F15F08 /* Sources */,
 				5D1AB84C22B75D6E00F15F08 /* Frameworks */,
 				5D1AB84D22B75D6E00F15F08 /* Resources */,
-				5D317F9C22B81C6600086216 /* Embed App Extensions */,
 				5D7B228C23C0A19D006595F4 /* Embed Frameworks */,
+				5DAAAA6B244B2BBF00BCEF22 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -1383,6 +1424,7 @@
 				5DBCEBCD2405BEFC007FF4B6 /* PBXTargetDependency */,
 				5DBCEBF12405BFC2007FF4B6 /* PBXTargetDependency */,
 				5DBCEC29240849C6007FF4B6 /* PBXTargetDependency */,
+				5DAAAA6A244B2BBF00BCEF22 /* PBXTargetDependency */,
 			);
 			name = "Swift-format";
 			packageProductDependencies = (
@@ -1399,10 +1441,12 @@
 				5D39756A228759FA00307B1E /* Frameworks */,
 				5D39756B228759FA00307B1E /* Resources */,
 				5DBCEB602404F729007FF4B6 /* Embed Frameworks */,
+				5DB068DE244B0497006CA5C5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5DB068E5244B2788006CA5C5 /* PBXTargetDependency */,
 				5DBCEB5F2404F729007FF4B6 /* PBXTargetDependency */,
 			);
 			name = "Swift-format Service";
@@ -1531,10 +1575,10 @@
 				5DBCEBE32405BF2F007FF4B6 /* PBXTargetDependency */,
 				5DBCEC072405BFE8007FF4B6 /* PBXTargetDependency */,
 				5DBCEC4A24085744007FF4B6 /* PBXTargetDependency */,
+				5DB068C3244AF2FC006CA5C5 /* PBXTargetDependency */,
 			);
 			name = Settings;
 			packageProductDependencies = (
-				5DBCEB612405B983007FF4B6 /* CasePaths */,
 			);
 			productName = Settings;
 			productReference = 5D7B229723C0AC61006595F4 /* Settings.framework */;
@@ -1580,6 +1624,22 @@
 			productName = About;
 			productReference = 5DA76B3123DDF1400064E82B /* About.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		5DB068C9244AF6D8006CA5C5 /* swift-format */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DB068CE244AF6D8006CA5C5 /* Build configuration list for PBXNativeTarget "swift-format" */;
+			buildPhases = (
+				5DB068D8244AFE36006CA5C5 /* Fix linking */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DB068D4244AF72C006CA5C5 /* PBXTargetDependency */,
+			);
+			name = "swift-format";
+			productName = "swift-format";
+			productReference = 5DB068CA244AF6D8006CA5C5 /* swift-format */;
+			productType = "com.apple.product-type.tool";
 		};
 		5DBCEB7A2405BC53007FF4B6 /* Indentation */ = {
 			isa = PBXNativeTarget;
@@ -1720,8 +1780,8 @@
 		5DA2B97D2286045B0051C256 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = kuglee;
 				TargetAttributes = {
 					5D0CA9CA23C30F0E00294FCC = {
@@ -1769,6 +1829,9 @@
 					5DA76B3023DDF1400064E82B = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
+					};
+					5DB068C9244AF6D8006CA5C5 = {
+						CreatedOnToolsVersion = 11.4.1;
 					};
 					5DBCEB7A2405BC53007FF4B6 = {
 						CreatedOnToolsVersion = 11.3.1;
@@ -1829,6 +1892,7 @@
 				5DBCEBEA2405BFC2007FF4B6 /* LineLength */,
 				5DBCEB9E2405BDDA007FF4B6 /* LineBreaks */,
 				5DBCEC22240849C6007FF4B6 /* FileScopedDeclarationPrivacy */,
+				5DB068C9244AF6D8006CA5C5 /* swift-format */,
 			);
 		};
 /* End PBXProject section */
@@ -1857,7 +1921,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D08627C240BA4DF0055AC68 /* swift-format in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1959,6 +2022,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5DB068D8244AFE36006CA5C5 /* Fix linking */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fix linking";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change \"@rpath/lib_InternalSwiftSyntaxParser.dylib\" $DT_TOOLCHAIN_DIR/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib $BUILT_PRODUCTS_DIR/$TARGET_NAME\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5D0CA9C723C30F0E00294FCC /* Sources */ = {
@@ -2168,6 +2252,11 @@
 			target = 5D765B3523D6D546000ED749 /* Utility */;
 			targetProxy = 5DA76B4723DE06230064E82B /* PBXContainerItemProxy */;
 		};
+		5DAAAA6A244B2BBF00BCEF22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DA2B9992286048F0051C256 /* Swift-format Extension */;
+			targetProxy = 5DAAAA69244B2BBF00BCEF22 /* PBXContainerItemProxy */;
+		};
 		5DB029D923E7133E00F4BDBA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5D0CA9CA23C30F0E00294FCC /* Rules */;
@@ -2182,6 +2271,20 @@
 			isa = PBXTargetDependency;
 			target = 5DA76B3023DDF1400064E82B /* About */;
 			targetProxy = 5DB029E023E7139B00F4BDBA /* PBXContainerItemProxy */;
+		};
+		5DB068C3244AF2FC006CA5C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D576FCA23F9BDC90005E1B5 /* CasePathsDependency */;
+			targetProxy = 5DB068C2244AF2FC006CA5C5 /* PBXContainerItemProxy */;
+		};
+		5DB068D4244AF72C006CA5C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5DB068D3244AF72C006CA5C5 /* swift-format */;
+		};
+		5DB068E5244B2788006CA5C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DB068C9244AF6D8006CA5C5 /* swift-format */;
+			targetProxy = 5DB068E4244B2788006CA5C5 /* PBXContainerItemProxy */;
 		};
 		5DBCEB5F2404F729007FF4B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2491,6 +2594,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2505,8 +2609,10 @@
 					"$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -2517,6 +2623,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2531,8 +2638,10 @@
 					"$(DT_TOOLCHAIN_DIR)/usr/lib/swift/macosx",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -2541,6 +2650,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
@@ -2554,6 +2664,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.service";
 				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2565,6 +2676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
@@ -2578,6 +2690,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.service";
 				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
@@ -3054,6 +3167,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Extension/Swift-format Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
@@ -3070,6 +3184,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3079,6 +3194,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Extension/Swift-format Extension.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
@@ -3095,6 +3211,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kuglee.swift-format.extension";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -3156,6 +3273,32 @@
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5DB068CF244AF6D8006CA5C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5DB068D0244AF6D8006CA5C5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -3621,6 +3764,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		5DB068CE244AF6D8006CA5C5 /* Build configuration list for PBXNativeTarget "swift-format" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DB068CF244AF6D8006CA5C5 /* Debug */,
+				5DB068D0244AF6D8006CA5C5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5DBCEB842405BC53007FF4B6 /* Build configuration list for PBXNativeTarget "Indentation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3702,10 +3854,10 @@
 			package = 5D576FB623F9BD760005E1B5 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePaths;
 		};
-		5DBCEB612405B983007FF4B6 /* CasePaths */ = {
+		5DB068D3244AF72C006CA5C5 /* swift-format */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5D576FB623F9BD760005E1B5 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
-			productName = CasePaths;
+			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
+			productName = "swift-format";
 		};
 		5DDCA4D423D34247003A539B /* SwiftFormatConfiguration */ = {
 			isa = XCSwiftPackageProductDependency;
