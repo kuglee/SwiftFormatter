@@ -1442,6 +1442,7 @@
 				5D39756B228759FA00307B1E /* Resources */,
 				5DBCEB602404F729007FF4B6 /* Embed Frameworks */,
 				5DB068DE244B0497006CA5C5 /* CopyFiles */,
+				5D5E0DF424543A60004DE93C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2024,6 +2025,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5D5E0DF424543A60004DE93C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"$DT_TOOLCHAIN_DIR/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/\n";
+		};
 		5DB068D8244AFE36006CA5C5 /* Fix linking */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2040,7 +2058,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "install_name_tool -change \"@rpath/lib_InternalSwiftSyntaxParser.dylib\" $DT_TOOLCHAIN_DIR/usr/lib/swift/macosx/lib_InternalSwiftSyntaxParser.dylib $BUILT_PRODUCTS_DIR/$TARGET_NAME\n";
+			shellScript = "install_name_tool -change \"@rpath/lib_InternalSwiftSyntaxParser.dylib\" \"@executable_path/lib_InternalSwiftSyntaxParser.dylib\" $BUILT_PRODUCTS_DIR/$TARGET_NAME\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
