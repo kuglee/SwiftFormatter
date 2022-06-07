@@ -29,11 +29,6 @@ public func tabWidthViewReducer(
 }
 
 public struct TabWidthView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store: Store<TabWidthViewState, TabWidthViewAction>
 
   public init(store: Store<TabWidthViewState, TabWidthViewAction>) {
@@ -42,7 +37,7 @@ public struct TabWidthView: View {
 
   public var body: some View {
     HStack {
-      Text("tabWidth:", bundle: InternalConstants.bundle)
+      Text("Tab Width:")
         .modifier(TrailingAlignmentStyle())
       Stepper(
         onIncrement: { self.store.send(.tabWidthIncremented) },
@@ -59,8 +54,8 @@ public struct TabWidthView: View {
           .modifier(PrimaryTextFieldStyle())
         }
       )
-      .toolTip("TAB_WIDTH_TOOLTIP", bundle: InternalConstants.bundle)
-      Text("spaces", bundle: InternalConstants.bundle)
+      .toolTip("The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation.")
+      Text("spaces")
     }
   }
 }

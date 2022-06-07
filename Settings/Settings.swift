@@ -161,11 +161,6 @@ public let settingsViewReducer = combine(
 )
 
 public struct SettingsView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store: Store<SettingsViewState, SettingsViewAction>
 
   public init(store: Store<SettingsViewState, SettingsViewAction>) {

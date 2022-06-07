@@ -29,11 +29,6 @@ public func lineLengthViewReducer(
 }
 
 public struct LineLengthView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store: Store<LineLengthViewState, LineLengthViewAction>
 
   public init(store: Store<LineLengthViewState, LineLengthViewAction>) {
@@ -42,7 +37,7 @@ public struct LineLengthView: View {
 
   public var body: some View {
     HStack {
-      Text("lineLength:", bundle: InternalConstants.bundle)
+      Text("Line Length:")
         .modifier(TrailingAlignmentStyle())
       Stepper(
         onIncrement: { self.store.send(.lineLengthIncremented) },
@@ -59,7 +54,7 @@ public struct LineLengthView: View {
           .modifier(PrimaryTextFieldStyle())
         }
       )
-      .toolTip("LINE_LENGTH_TOOLTIP", bundle: InternalConstants.bundle)
+      .toolTip("The maximum allowed length of a line, in characters")
     }
   }
 }

@@ -72,11 +72,6 @@ public func lineBreaksViewReducer(
 }
 
 public struct LineBreaksView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store: Store<LineBreaksViewState, LineBreaksViewAction>
 
   public init(store: Store<LineBreaksViewState, LineBreaksViewAction>) {
@@ -85,7 +80,7 @@ public struct LineBreaksView: View {
 
   public var body: some View {
     HStack(alignment: .firstTextBaseline) {
-      Text("lineBreaks:", bundle: InternalConstants.bundle)
+      Text("Line breaks:")
         .modifier(TrailingAlignmentStyle())
       VStack(alignment: .leading, spacing: .grid(2)) {
         Toggle(
@@ -94,11 +89,10 @@ public struct LineBreaksView: View {
             set: { self.store.send(.respectsExistingLineBreaksFilledOut($0)) }
           )
         ) {
-          Text("respectsExistingLineBreaks", bundle: InternalConstants.bundle)
+          Text("Respects existing line breaks")
         }
         .toolTip(
-          "RESPECTS_EXISTING_LINE_BREAKS",
-          bundle: InternalConstants.bundle
+          "Indicates whether or not existing line breaks in the source code should be honored (if they are valid according to the style guidelines being enforced). If this settings is false, then the formatter will be more opinionated by only inserting line breaks where absolutely necessary and removing any others, effectively canonicalizing the output."
         )
         Toggle(
           isOn: Binding(
@@ -108,14 +102,10 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text(
-            "lineBreakBeforeControlFlowKeywords",
-            bundle: InternalConstants.bundle
-          )
+          Text( "Line break before control flow keywords")
         }
         .toolTip(
-          "LINE_BREAK_BEFORE_CONTROL_FLOW_KEYWORDS_TOOLTIP",
-          bundle: InternalConstants.bundle
+          "Determines the line-breaking behavior for control flow keywords that follow a closing brace, like else and catch. If true, a line break will be added before the keyword, forcing it onto its own line. If false, the keyword will be placed after the closing brace (separated by a space)."
         )
         Toggle(
           isOn: Binding(
@@ -123,11 +113,10 @@ public struct LineBreaksView: View {
             set: { self.store.send(.lineBreakBeforeEachArgumentFilledOut($0)) }
           )
         ) {
-          Text("lineBreakBeforeEachArgument", bundle: InternalConstants.bundle)
+          Text("Line break before each argument")
         }
         .toolTip(
-          "LINE_BREAK_BEFORE_EACH_ARGUMENT_TOOLTIP",
-          bundle: InternalConstants.bundle
+          "Determines the line-breaking behavior for generic arguments and function arguments when a declaration is wrapped onto multiple lines. If true, a line break will be added before each argument, forcing the entire argument list to be laid out vertically. If false, arguments will be laid out horizontally first, with line breaks only being fired when the line length would be exceeded."
         )
         Toggle(
           isOn: Binding(
@@ -139,14 +128,10 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text(
-            "lineBreakBeforeEachGenericRequirement",
-            bundle: InternalConstants.bundle
-          )
+          Text("Line break before each generic requirement")
         }
         .toolTip(
-          "LINE_BREAK_BEFORE_EACH_GENERIC_REQUIREMENT_TOOLTIP",
-          bundle: InternalConstants.bundle
+          "Determines the line-breaking behavior for generic requirements when the requirements list is wrapped onto multiple lines. If true, a line break will be added before each requirement, forcing the entire requirements list to be laid out vertically. If false, requirements will be laid out horizontally first, with line breaks only being fired when the line length would be exceeded."
         )
         Toggle(
           isOn: Binding(
@@ -160,14 +145,10 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text(
-            "lineBreakAroundMultilineExpressionChainComponents",
-            bundle: InternalConstants.bundle
-          )
+          Text("Line break around multiline expression chain components" )
         }
         .toolTip(
-          "LINE_BREAK_AROUND_MULTILINE_EXPRESSION_CHAIN_COMPONENTS_TOOLTIP",
-          bundle: InternalConstants.bundle
+          "Determines whether line breaks should be forced before and after multiline components of dot-chained expressions, such as function calls and subscripts chained together through member access (i.e. \".\" expressions). When any component is multiline and this option is true, a line break is forced before the \".\" of the component and after the component's closing delimiter (i.e. right paren, right bracket, right brace, etc.)."
         )
         Toggle(
           isOn: Binding(
@@ -179,17 +160,13 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text(
-            "prioritizeKeepingFunctionOutputTogether",
-            bundle: InternalConstants.bundle
-          )
+          Text("Prioritize keeping function output together")
         }
         .toolTip(
-          "PRIORITIZE_KEEPING_FUNCTION_OUTPUT_TOGETHER_TOOLTIP",
-          bundle: InternalConstants.bundle
+          "Determines if function-like declaration outputs should be prioritized to be together with the function signature right (closing) parenthesis. If false, function output (i.e. throws, return type) is not prioritized to be together with the signature's right parenthesis, and when the line length would be exceeded, a line break will be fired after the function signature first, indenting the declaration output one additional level. If true, A line break will be fired further up in the function's declaration (e.g. generic parameters, parameters) before breaking on the function's output."
         )
         HStack {
-          Text("maximumBlankLines:", bundle: InternalConstants.bundle)
+          Text("Maximum blank lines")
           Stepper(
             onIncrement: { self.store.send(.maximumBlankLinesIncremented) },
             onDecrement: { self.store.send(.maximumBlankLinesDecremented) },
@@ -206,8 +183,7 @@ public struct LineBreaksView: View {
             }
           )
           .toolTip(
-            "MAXIMUM_BLANK_LINES_TOOLTIP",
-            bundle: InternalConstants.bundle
+            "The maximum number of consecutive blank lines that are allowed to be present in a source file. Any number larger than this will be collapsed down to the maximum."
           )
         }
       }

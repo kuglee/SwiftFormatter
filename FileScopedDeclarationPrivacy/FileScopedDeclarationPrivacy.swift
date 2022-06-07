@@ -43,11 +43,6 @@ public func fileScopedDeclarationPrivacyViewReducer(
 }
 
 public struct FileScopedDeclarationPrivacyViewView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store:
     Store<
       FileScopedDeclarationPrivacyViewState,
@@ -63,7 +58,7 @@ public struct FileScopedDeclarationPrivacyViewView: View {
 
   public var body: some View {
     HStack(alignment: .centerAlignmentGuide, spacing: 0) {
-      Text("FileScopedDeclarationPrivacy:", bundle: InternalConstants.bundle)
+      Text("File Scoped Declaration Privacy:")
         .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
       Picker(
         "",
@@ -72,29 +67,14 @@ public struct FileScopedDeclarationPrivacyViewView: View {
           set: { self.store.send(.accessLevelSelected($0)) }
         )
       ) {
-        Text(
-          LocalizedStringKey(
-            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`
-              .rawValue
-          ),
-          bundle: InternalConstants.bundle
-        )
+        Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`.rawValue)
         .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`)
-        Text(
-          LocalizedStringKey(
-            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
-              .rawValue
-          ),
-          bundle: InternalConstants.bundle
-        )
-        .tag(
+        Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate` .rawValue)
+          .tag(
           FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
         )
       }
-      .toolTip(
-        "FILE_SCOPED_DECLARATION_PRIVACY_ACCESS_LEVEL",
-        bundle: InternalConstants.bundle
-      )
+      .toolTip("Determines the formal access level (i.e., the level specified in source code) for file-scoped declarations whose effective access level is private to the containing file.")
       .modifier(PrimaryPickerStyle())
     }
   }

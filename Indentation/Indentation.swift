@@ -67,11 +67,6 @@ public func indentationViewReducer(
 }
 
 public struct IndentationView: View {
-  internal enum InternalConstants {
-    private class EmptyClass {}
-    static let bundle = Bundle(for: InternalConstants.EmptyClass.self)
-  }
-
   @ObservedObject var store: Store<IndentationViewState, IndentationViewAction>
 
   public init(store: Store<IndentationViewState, IndentationViewAction>) {
@@ -80,11 +75,11 @@ public struct IndentationView: View {
 
   public var body: some View {
     HStack(alignment: .centerAlignmentGuide) {
-      Text("indentation:", bundle: InternalConstants.bundle)
+      Text("indentation:")
         .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
       VStack(alignment: .leading, spacing: .grid(2)) {
         HStack() {
-          Text("length:", bundle: InternalConstants.bundle)
+          Text("length:")
             .modifier(CenterAlignmentStyle())
           HStack(spacing: 0) {
             Stepper(
@@ -102,7 +97,7 @@ public struct IndentationView: View {
                 .modifier(PrimaryTextFieldStyle())
               }
             )
-            .toolTip("LENGTH_TOOLTIP", bundle: InternalConstants.bundle)
+            .toolTip("The amount of whitespace that should be added when indenting one level")
             Picker(
               "",
               selection: Binding(
@@ -110,18 +105,12 @@ public struct IndentationView: View {
                 set: { self.store.send(.indentationSelected($0)) }
               )
             ) {
-              Text(
-                LocalizedStringKey(Indent.spaces(Int()).rawValue),
-                bundle: InternalConstants.bundle
-              )
+              Text(Indent.spaces(Int()).rawValue)
               .tag(Indent.spaces(self.store.value.indentation.count))
-              Text(
-                LocalizedStringKey(Indent.tabs(Int()).rawValue),
-                bundle: InternalConstants.bundle
-              )
+              Text(Indent.tabs(Int()).rawValue)
               .tag(Indent.tabs(self.store.value.indentation.count))
             }
-            .toolTip("WHITESPACE_TOOLTIP", bundle: InternalConstants.bundle)
+            .toolTip("The type of whitespace that should be added when indenting")
             .modifier(PrimaryPickerStyle())
           }
         }
@@ -133,15 +122,10 @@ public struct IndentationView: View {
             }
           )
         ) {
-          Text(
-            "indentConditionalCompilationBlocks",
-            bundle: InternalConstants.bundle
-          )
+          Text("Indent conditional compilation blocks")
         }
         .toolTip(
-          "INDENT_CONDITIONAL_COMPILATION_BLOCKS_TOOLTIP",
-          bundle: InternalConstants.bundle
-        )
+          "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented.")
       }
     }
   }

@@ -1,8 +1,0 @@
-"indentation:" = "Indentation:";
-"length:" = "Length:";
-"indentConditionalCompilationBlocks" = "Indent conditional compilation blocks";
-"Spaces" = "Spaces";
-"Tabs" = "Tabs";
-"LENGTH_TOOLTIP" = "The amount of whitespace that should be added when indenting one level";
-"WHITESPACE_TOOLTIP" = "The type of whitespace that should be added when indenting";
-"INDENT_CONDITIONAL_COMPILATION_BLOCKS_TOOLTIP" = "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented.";
