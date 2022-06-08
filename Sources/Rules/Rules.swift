@@ -21,6 +21,7 @@ public let rulesViewReducer = Reducer<RulesViewState, RulesViewAction, Void> { s
 
 public struct RulesView: View {
   let store: Store<RulesViewState, RulesViewAction>
+
   public init(store: Store<RulesViewState, RulesViewAction>) { self.store = store }
 
   public var body: some View {
@@ -54,8 +55,13 @@ extension String {
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return self }
 
     let range = NSRange(startIndex..., in: self)
+
     return regex.stringByReplacingMatches(
-      in: self, options: replacingOptions, range: range, withTemplate: template)
+      in: self,
+      options: replacingOptions,
+      range: range,
+      withTemplate: template
+    )
   }
 
   var separateCamelCase: String {
@@ -63,9 +69,8 @@ extension String {
   }
 
   var sentenceCase: String {
-    self.split(separator: " ").map { $0 == $0.uppercased() ? String($0) : $0.lowercased() }.joined(
-      separator: " "
-    ).capitalizingFirstLetter()
+    self.split(separator: " ").map { $0 == $0.uppercased() ? String($0) : $0.lowercased() }
+      .joined(separator: " ").capitalizingFirstLetter()
   }
 
   func capitalizingFirstLetter() -> String { self.prefix(1).capitalized + self.dropFirst() }

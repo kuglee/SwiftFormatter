@@ -51,7 +51,8 @@ extension AppState {
     get {
       SettingsViewState(
         maximumBlankLines: self.configuration.maximumBlankLines,
-        lineLength: self.configuration.lineLength, tabWidth: self.configuration.tabWidth,
+        lineLength: self.configuration.lineLength,
+        tabWidth: self.configuration.tabWidth,
         indentation: self.configuration.indentation,
         respectsExistingLineBreaks: self.configuration.respectsExistingLineBreaks,
         lineBreakBeforeControlFlowKeywords: self.configuration.lineBreakBeforeControlFlowKeywords,
@@ -64,7 +65,8 @@ extension AppState {
         indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
           .lineBreakAroundMultilineExpressionChainComponents,
-        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy)
+        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy
+      )
     }
     set {
       self.configuration.maximumBlankLines = newValue.maximumBlankLines
@@ -111,22 +113,30 @@ public let tabViewReducer = Reducer<TabViewState, TabViewAction, Void> { state, 
   }
 }
 
-let appReducer = Reducer<AppState, AppAction, Void>.combine(
-  Reducer { state, action, _ in
-    switch action {
-    case .setDidRunBefore(let value):
-      state.didRunBefore = value
-      return .fireAndForget { setDidRunBefore() }
-    case .settingsView(_): return .none
-    case .rulesView(_): return .none
-    case .tabView(_): return .none
-    }
-  },
-  settingsViewReducer.pullback(
-    state: \AppState.settingsView, action: /AppAction.settingsView, environment: {}),
-  rulesViewReducer.pullback(
-    state: \AppState.rulesView, action: /AppAction.rulesView, environment: {}),
-  tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {}))
+let appReducer = Reducer<AppState, AppAction, Void>
+  .combine(
+    Reducer { state, action, _ in
+      switch action {
+      case .setDidRunBefore(let value):
+        state.didRunBefore = value
+        return .fireAndForget { setDidRunBefore() }
+      case .settingsView(_): return .none
+      case .rulesView(_): return .none
+      case .tabView(_): return .none
+      }
+    },
+    settingsViewReducer.pullback(
+      state: \AppState.settingsView,
+      action: /AppAction.settingsView,
+      environment: {}
+    ),
+    rulesViewReducer.pullback(
+      state: \AppState.rulesView,
+      action: /AppAction.rulesView,
+      environment: {}
+    ),
+    tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {})
+  )
 
 public struct ContentView: View {
   let store: Store<AppState, AppAction>
@@ -135,17 +145,20 @@ public struct ContentView: View {
     WithViewStore(self.store) { viewStore in
       TabView(
         selection: Binding(
-          get: { viewStore.selectedTab }, set: { viewStore.send(.tabView(.tabSelected($0))) })
+          get: { viewStore.selectedTab },
+          set: { viewStore.send(.tabView(.tabSelected($0))) }
+        )
       ) {
         SettingsView(
           store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
-        ).modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
+        )
+        .modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
         RulesView(store: self.store.scope(state: { $0.rulesView }, action: { .rulesView($0) }))
           .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
         AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
-      }.modifier(PrimaryTabViewStyle()).navigationTitle("Swift Formatter").onAppear {
-        if !viewStore.didRunBefore { viewStore.send(.setDidRunBefore(value: true)) }
       }
+      .modifier(PrimaryTabViewStyle()).navigationTitle("Swift Formatter")
+      .onAppear { if !viewStore.didRunBefore { viewStore.send(.setDidRunBefore(value: true)) } }
     }
   }
 }
@@ -160,9 +173,13 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         return .concatenate(
           .fireAndForget {
             dumpConfiguration(
-              configuration: newState.configuration, outputFileURL: AppConstants.configFileURL,
-              createIntermediateDirectories: true)
-          }, effects)
+              configuration: newState.configuration,
+              outputFileURL: AppConstants.configFileURL,
+              createIntermediateDirectories: true
+            )
+          },
+          effects
+        )
       default: return self(&state, action, environment)
       }
     }

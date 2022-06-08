@@ -16,17 +16,20 @@ enum FormatterError: Error, LocalizedError {
 
 class SourceEditorCommand: NSObject, XCSourceEditorCommand {
   func perform(
-    with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void
+    with invocation: XCSourceEditorCommandInvocation,
+    completionHandler: @escaping (Error?) -> Void
   ) {
     guard
-      ["public.swift-source", "com.apple.dt.playground", "com.apple.dt.playgroundpage"].contains(
-        invocation.buffer.contentUTI)
+      ["public.swift-source", "com.apple.dt.playground", "com.apple.dt.playgroundpage"]
+        .contains(invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
     let swiftFormatterServiceConnection = NSXPCConnection(
-      serviceName: "com.kuglee.SwiftFormatter.service")
+      serviceName: "com.kuglee.SwiftFormatter.service"
+    )
     swiftFormatterServiceConnection.remoteObjectInterface = NSXPCInterface(
-      with: SwiftFormatterServiceProtocol.self)
+      with: SwiftFormatterServiceProtocol.self
+    )
     swiftFormatterServiceConnection.resume()
 
     let swiftFormatterService =

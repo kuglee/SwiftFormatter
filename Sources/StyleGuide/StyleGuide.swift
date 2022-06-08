@@ -171,7 +171,12 @@ public struct PrimaryVStackStyle: ViewModifier {
 
   public func body(content: Content) -> some View {
     content.frame(
-      minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+      minWidth: 0,
+      maxWidth: .infinity,
+      minHeight: 0,
+      maxHeight: .infinity,
+      alignment: .top
+    )
   }
 }
 

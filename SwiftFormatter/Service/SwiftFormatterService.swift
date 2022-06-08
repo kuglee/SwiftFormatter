@@ -4,8 +4,8 @@ import os.log
 
 extension FileManager {
   func temporaryFileURL(fileName: String = UUID().uuidString) -> URL? {
-    return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(
-      fileName)
+    return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
+      .appendingPathComponent(fileName)
   }
 }
 
@@ -36,7 +36,8 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
   process.standardOutput = standardOutput
   process.standardError = standardError
 
-  do { try process.run() } catch { return .failure(.runError(message: error.localizedDescription)) }
+  do { try process.run() }
+  catch { return .failure(.runError(message: error.localizedDescription)) }
 
   let standardOutputData = standardOutput.fileHandleForReading.readDataToEndOfFile()
   let output = String(data: standardOutputData, encoding: .utf8)
@@ -48,8 +49,11 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
   if process.terminationStatus != 0 {
     return .failure(
       .commandError(
-        command: process.executableURL!.lastPathComponent, errorMessage: errorMessage,
-        exitStatus: Int(process.terminationStatus)))
+        command: process.executableURL!.lastPathComponent,
+        errorMessage: errorMessage,
+        exitStatus: Int(process.terminationStatus)
+      )
+    )
   }
 
   return .success(output)
@@ -67,18 +71,23 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
   }
 
   private let swiftFormatBinaryPath = Bundle.main.url(
-    forResource: "swift-format", withExtension: "")!
+    forResource: "swift-format",
+    withExtension: ""
+  )!
 
   func format(source: String, reply: @escaping (String?, Error?) -> Void) {
     guard let tempFileURL = FileManager.default.temporaryFileURL() else {
-      let error = SwiftFormatterServiceError.tempFileNotFound(message: "The temp file is not found!")
+      let error = SwiftFormatterServiceError.tempFileNotFound(
+        message: "The temp file is not found!"
+      )
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)
     }
 
     defer { try? FileManager.default.removeItem(at: tempFileURL) }
 
-    do { try source.write(to: tempFileURL, atomically: false, encoding: .utf8) } catch {
+    do { try source.write(to: tempFileURL, atomically: false, encoding: .utf8) }
+    catch {
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)
     }
@@ -97,7 +106,8 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
       do {
         let formattedSource = try String(contentsOf: tempFileURL)
         return reply(formattedSource, nil)
-      } catch { return reply(nil, error) }
+      }
+      catch { return reply(nil, error) }
     case .failure(let error):
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)

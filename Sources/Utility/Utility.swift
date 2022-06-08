@@ -1,9 +1,9 @@
 import SwiftUI
 
 public enum AppConstants {
-  public static let applicationSupportDirectory = FileManager.default.urls(
-    for: .applicationSupportDirectory, in: .userDomainMask
-  ).first!.appendingPathComponent("Swift Formatter")
+  public static let applicationSupportDirectory = FileManager.default
+    .urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+    .appendingPathComponent("Swift Formatter")
   public static let configFilename = "swift-format.json"
 
   public static var configFileURL: URL {
