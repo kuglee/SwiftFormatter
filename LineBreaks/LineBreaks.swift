@@ -102,7 +102,7 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text( "Line break before control flow keywords")
+          Text("Line break before control flow keywords")
         }
         .toolTip(
           "Determines the line-breaking behavior for control flow keywords that follow a closing brace, like else and catch. If true, a line break will be added before the keyword, forcing it onto its own line. If false, the keyword will be placed after the closing brace (separated by a space)."
@@ -145,7 +145,7 @@ public struct LineBreaksView: View {
             }
           )
         ) {
-          Text("Line break around multiline expression chain components" )
+          Text("Line break around multiline expression chain components")
         }
         .toolTip(
           "Determines whether line breaks should be forced before and after multiline components of dot-chained expressions, such as function calls and subscripts chained together through member access (i.e. \".\" expressions). When any component is multiline and this option is true, a line break is forced before the \".\" of the component and after the component's closing delimiter (i.e. right paren, right bracket, right brace, etc.)."

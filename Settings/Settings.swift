@@ -9,7 +9,6 @@ import SwiftFormatConfiguration
 import SwiftUI
 import TabWidth
 import Utility
-import SwiftFormatConfiguration
 
 public enum SettingsViewAction: Equatable {
   case indentationView(IndentationViewAction)
@@ -31,8 +30,7 @@ public struct SettingsViewState {
   public var prioritizeKeepingFunctionOutputTogether: Bool
   public var indentConditionalCompilationBlocks: Bool
   public var lineBreakAroundMultilineExpressionChainComponents: Bool
-  public var fileScopedDeclarationPrivacy:
-    FileScopedDeclarationPrivacyConfiguration
+  public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
 
   public init(
     maximumBlankLines: Int,

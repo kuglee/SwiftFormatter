@@ -68,13 +68,15 @@ public struct FileScopedDeclarationPrivacyViewView: View {
         )
       ) {
         Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`.rawValue)
-        .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`)
-        Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate` .rawValue)
+          .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`private`)
+        Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`.rawValue)
           .tag(
-          FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
-        )
+            FileScopedDeclarationPrivacyConfiguration.AccessLevel.`fileprivate`
+          )
       }
-      .toolTip("Determines the formal access level (i.e., the level specified in source code) for file-scoped declarations whose effective access level is private to the containing file.")
+      .toolTip(
+        "Determines the formal access level (i.e., the level specified in source code) for file-scoped declarations whose effective access level is private to the containing file."
+      )
       .modifier(PrimaryPickerStyle())
     }
   }

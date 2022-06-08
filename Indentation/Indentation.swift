@@ -78,7 +78,7 @@ public struct IndentationView: View {
       Text("indentation:")
         .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
       VStack(alignment: .leading, spacing: .grid(2)) {
-        HStack() {
+        HStack {
           Text("length:")
             .modifier(CenterAlignmentStyle())
           HStack(spacing: 0) {
@@ -106,9 +106,9 @@ public struct IndentationView: View {
               )
             ) {
               Text(Indent.spaces(Int()).rawValue)
-              .tag(Indent.spaces(self.store.value.indentation.count))
+                .tag(Indent.spaces(self.store.value.indentation.count))
               Text(Indent.tabs(Int()).rawValue)
-              .tag(Indent.tabs(self.store.value.indentation.count))
+                .tag(Indent.tabs(self.store.value.indentation.count))
             }
             .toolTip("The type of whitespace that should be added when indenting")
             .modifier(PrimaryPickerStyle())
@@ -125,7 +125,8 @@ public struct IndentationView: View {
           Text("Indent conditional compilation blocks")
         }
         .toolTip(
-          "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented.")
+          "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented."
+        )
       }
     }
   }

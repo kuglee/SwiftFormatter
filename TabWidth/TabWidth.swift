@@ -54,7 +54,9 @@ public struct TabWidthView: View {
           .modifier(PrimaryTextFieldStyle())
         }
       )
-      .toolTip("The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation.")
+      .toolTip(
+        "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
+      )
       Text("spaces")
     }
   }
