@@ -38,15 +38,21 @@ public enum IndentationViewAction: Equatable {
   case indentationIncremented
   case indentationDecremented
   case indentConditionalCompilationBlocksFilledOut(Bool)
+  case indentSwitchCaseLabelsFilledOut(Bool)
 }
 
 public struct IndentationViewState {
   public var indentation: Indent
   public var indentConditionalCompilationBlocks: Bool
+  public var indentSwitchCaseLabels: Bool
 
-  public init(indentation: Indent, indentConditionalCompilationBlocks: Bool) {
+  public init(
+    indentation: Indent, indentConditionalCompilationBlocks: Bool,
+    indentSwitchCaseLabels: Bool
+  ) {
     self.indentation = indentation
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
+    self.indentSwitchCaseLabels = indentSwitchCaseLabels
   }
 }
 
@@ -61,6 +67,8 @@ public func indentationViewReducer(
   case .indentationDecremented: state.indentation.count -= 1
   case .indentConditionalCompilationBlocksFilledOut(let value):
     state.indentConditionalCompilationBlocks = value
+  case .indentSwitchCaseLabelsFilledOut(let value):
+    state.indentSwitchCaseLabels = value
   }
 
   return []
@@ -126,6 +134,19 @@ public struct IndentationView: View {
         }
         .toolTip(
           "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented."
+        )
+        Toggle(
+          isOn: Binding(
+            get: { self.store.value.indentSwitchCaseLabels },
+            set: {
+              self.store.send(.indentSwitchCaseLabelsFilledOut($0))
+            }
+          )
+        ) {
+          Text("Indent switch case labels")
+        }
+        .toolTip(
+          "Determines if `case` statements should be indented compared to the containing `switch` block"
         )
       }
     }

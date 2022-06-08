@@ -75,6 +75,8 @@ extension AppState {
           .prioritizeKeepingFunctionOutputTogether,
         indentConditionalCompilationBlocks: self.configuration
           .indentConditionalCompilationBlocks,
+        indentSwitchCaseLabels: self.configuration
+          .indentSwitchCaseLabels,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
           .lineBreakAroundMultilineExpressionChainComponents,
         fileScopedDeclarationPrivacy: self.configuration
@@ -98,6 +100,8 @@ extension AppState {
         newValue.prioritizeKeepingFunctionOutputTogether
       self.configuration.indentConditionalCompilationBlocks =
         newValue.indentConditionalCompilationBlocks
+      self.configuration.indentSwitchCaseLabels =
+        newValue.indentSwitchCaseLabels
       self.configuration.lineBreakAroundMultilineExpressionChainComponents =
         newValue.lineBreakAroundMultilineExpressionChainComponents
       self.configuration.fileScopedDeclarationPrivacy =

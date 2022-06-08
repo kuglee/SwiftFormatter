@@ -29,6 +29,7 @@ public struct SettingsViewState {
   public var lineBreakBeforeEachGenericRequirement: Bool
   public var prioritizeKeepingFunctionOutputTogether: Bool
   public var indentConditionalCompilationBlocks: Bool
+  public var indentSwitchCaseLabels: Bool
   public var lineBreakAroundMultilineExpressionChainComponents: Bool
   public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
 
@@ -43,6 +44,7 @@ public struct SettingsViewState {
     lineBreakBeforeEachGenericRequirement: Bool,
     prioritizeKeepingFunctionOutputTogether: Bool,
     indentConditionalCompilationBlocks: Bool,
+    indentSwitchCaseLabels: Bool,
     lineBreakAroundMultilineExpressionChainComponents: Bool,
     fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
   ) {
@@ -58,6 +60,7 @@ public struct SettingsViewState {
     self.prioritizeKeepingFunctionOutputTogether =
       prioritizeKeepingFunctionOutputTogether
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
+    self.indentSwitchCaseLabels = indentSwitchCaseLabels
     self.lineBreakAroundMultilineExpressionChainComponents =
       lineBreakAroundMultilineExpressionChainComponents
     self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
@@ -69,14 +72,16 @@ extension SettingsViewState {
     get {
       IndentationViewState(
         indentation: self.indentation,
-        indentConditionalCompilationBlocks: self
-          .indentConditionalCompilationBlocks
+        indentConditionalCompilationBlocks: self.indentConditionalCompilationBlocks,
+        indentSwitchCaseLabels: self.indentSwitchCaseLabels
       )
     }
     set {
       self.indentation = newValue.indentation
       self.indentConditionalCompilationBlocks =
         newValue.indentConditionalCompilationBlocks
+      self.indentSwitchCaseLabels =
+        newValue.indentSwitchCaseLabels
     }
   }
 
