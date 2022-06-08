@@ -33,7 +33,7 @@ public struct RulesView: View {
 
   public var body: some View {
     VStack(alignment: .leading, spacing: .grid(2)) {
-      Text("Formatting and linting rules:")
+      Text("Formatting rules:")
       List {
         ForEach(
           self.store.value.rules.keys.sorted().enumeratedArray(),

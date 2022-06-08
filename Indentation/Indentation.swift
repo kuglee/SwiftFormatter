@@ -75,11 +75,11 @@ public struct IndentationView: View {
 
   public var body: some View {
     HStack(alignment: .centerAlignmentGuide) {
-      Text("indentation:")
+      Text("Indentation:")
         .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
       VStack(alignment: .leading, spacing: .grid(2)) {
         HStack {
-          Text("length:")
+          Text("Length:")
             .modifier(CenterAlignmentStyle())
           HStack(spacing: 0) {
             Stepper(
