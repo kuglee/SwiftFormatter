@@ -149,8 +149,6 @@
 		5DDCA4DC23D34258003A539B /* SwiftFormatConfigurationDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DDCA4C823D34237003A539B /* SwiftFormatConfigurationDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DE0CA5023CA0C0B0038F400 /* ComposableArchitecture.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; };
 		5DE0CA5123CA0C0B0038F400 /* ComposableArchitecture.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7B228323C0A19C006595F4 /* ComposableArchitecture.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DEA1EBD23D4FC6400C97AC7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DEA1EBF23D4FC6400C97AC7 /* Localizable.strings */; };
-		5DFA6F1D23D4941600352363 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFA6F1F23D4941600352363 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -809,8 +807,6 @@
 		5DDCA4C823D34237003A539B /* SwiftFormatConfigurationDependency.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftFormatConfigurationDependency.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DDCA4CA23D34237003A539B /* SwiftFormatConfigurationDependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftFormatConfigurationDependency.h; sourceTree = "<group>"; };
 		5DDCA4CB23D34237003A539B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5DEA1EBE23D4FC6400C97AC7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DFA6F1E23D4941600352363 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -994,7 +990,6 @@
 				5D0CA9CD23C30F0F00294FCC /* Rules.h */,
 				5D0CA9D723C30F2300294FCC /* Rules.swift */,
 				5D0CA9CE23C30F0F00294FCC /* Info.plist */,
-				5DFA6F1F23D4941600352363 /* Localizable.strings */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -1006,7 +1001,6 @@
 				5D1AB85322B75D6E00F15F08 /* ContentView.swift */,
 				5D1AB85522B75D7000F15F08 /* Assets.xcassets */,
 				5D1AB85A22B75D7000F15F08 /* Main.storyboard */,
-				5DEA1EBF23D4FC6400C97AC7 /* Localizable.strings */,
 				5D1AB85D22B75D7000F15F08 /* Info.plist */,
 				5D1AB85722B75D7000F15F08 /* Preview Content */,
 			);
@@ -1902,7 +1896,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DFA6F1D23D4941600352363 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1911,7 +1904,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */,
-				5DEA1EBD23D4FC6400C97AC7 /* Localizable.strings in Resources */,
 				5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */,
 				5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */,
 			);
@@ -2471,22 +2463,6 @@
 				5D1AB85B22B75D7000F15F08 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5DEA1EBF23D4FC6400C97AC7 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5DEA1EBE23D4FC6400C97AC7 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		5DFA6F1F23D4941600352363 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5DFA6F1E23D4941600352363 /* en */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
