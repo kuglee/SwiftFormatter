@@ -4,8 +4,8 @@ import os.log
 
 extension FileManager {
   func temporaryFileURL(fileName: String = UUID().uuidString) -> URL? {
-    return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-      .appendingPathComponent(fileName)
+    return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(
+      fileName)
   }
 }
 
@@ -17,21 +17,16 @@ enum CommandError: Error, LocalizedError {
     switch self {
     case .runError(let error): return error
     case .commandError(let command, let errorMessage, let exitStatus):
-      var description =
-        "Error: \(command) failed with exit status \(exitStatus)."
+      var description = "Error: \(command) failed with exit status \(exitStatus)."
 
-      if let errorMessage = errorMessage {
-        description += " Error message: \(errorMessage)"
-      }
+      if let errorMessage = errorMessage { description += " Error message: \(errorMessage)" }
 
       return description
     }
   }
 }
 
-func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
-  String?, CommandError
-> {
+func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String?, CommandError> {
   let process = Process()
   process.executableURL = lauchPath
   process.arguments = arguments
@@ -41,15 +36,11 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
   process.standardOutput = standardOutput
   process.standardError = standardError
 
-  do { try process.run() } catch {
-    return .failure(.runError(message: error.localizedDescription))
-  }
+  do { try process.run() } catch { return .failure(.runError(message: error.localizedDescription)) }
 
-  let standardOutputData = standardOutput.fileHandleForReading
-    .readDataToEndOfFile()
+  let standardOutputData = standardOutput.fileHandleForReading.readDataToEndOfFile()
   let output = String(data: standardOutputData, encoding: .utf8)
-  let standardErrorData = standardError.fileHandleForReading
-    .readDataToEndOfFile()
+  let standardErrorData = standardError.fileHandleForReading.readDataToEndOfFile()
   let errorMessage = String(data: standardErrorData, encoding: .utf8)
 
   process.waitUntilExit()
@@ -57,11 +48,8 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
   if process.terminationStatus != 0 {
     return .failure(
       .commandError(
-        command: process.executableURL!.lastPathComponent,
-        errorMessage: errorMessage,
-        exitStatus: Int(process.terminationStatus)
-      )
-    )
+        command: process.executableURL!.lastPathComponent, errorMessage: errorMessage,
+        exitStatus: Int(process.terminationStatus)))
   }
 
   return .success(output)
@@ -79,24 +67,18 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
   }
 
   private let swiftFormatBinaryPath = Bundle.main.url(
-    forResource: "swift-format",
-    withExtension: ""
-  )!
+    forResource: "swift-format", withExtension: "")!
 
   func format(source: String, reply: @escaping (String?, Error?) -> Void) {
     guard let tempFileURL = FileManager.default.temporaryFileURL() else {
-      let error = SwiftFormatServiceError.tempFileNotFound(
-        message: "The temp file is not found!"
-      )
+      let error = SwiftFormatServiceError.tempFileNotFound(message: "The temp file is not found!")
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)
     }
 
     defer { try? FileManager.default.removeItem(at: tempFileURL) }
 
-    do {
-      try source.write(to: tempFileURL, atomically: false, encoding: .utf8)
-    } catch {
+    do { try source.write(to: tempFileURL, atomically: false, encoding: .utf8) } catch {
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)
     }
@@ -105,9 +87,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<
     arguments.append(contentsOf: ["-i", tempFileURL.path])
 
     if FileManager.default.fileExists(atPath: AppConstants.configFileURL.path) {
-      arguments.append(contentsOf: [
-        "--configuration", AppConstants.configFileURL.path,
-      ])
+      arguments.append(contentsOf: ["--configuration", AppConstants.configFileURL.path])
     }
 
     let result = run(command: swiftFormatBinaryPath, with: arguments)

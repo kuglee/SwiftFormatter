@@ -1,15 +1,13 @@
 import SwiftUI
 
 public enum AppConstants {
-  public static let applicationSupportDirectory = FileManager.default
-    .urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-    .appendingPathComponent("Swift-format")
+  public static let applicationSupportDirectory = FileManager.default.urls(
+    for: .applicationSupportDirectory, in: .userDomainMask
+  ).first!.appendingPathComponent("Swift-format")
   public static let configFilename = "swift-format.json"
 
   public static var configFileURL: URL {
-    AppConstants.applicationSupportDirectory.appendingPathComponent(
-      AppConstants.configFilename
-    )
+    AppConstants.applicationSupportDirectory.appendingPathComponent(AppConstants.configFilename)
   }
 }
 
@@ -21,9 +19,7 @@ public class UIntNumberFormatter: NumberFormatter {
     self.minimum = 0
   }
 
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
+  required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 }
 
 extension Collection {
@@ -34,35 +30,23 @@ extension Collection {
 
 extension View {
   public func toolTip(
-    _ key: String,
-    tableName: String? = nil,
-    bundle: Bundle? = nil,
-    comment: String? = nil
+    _ key: String, tableName: String? = nil, bundle: Bundle? = nil, comment: String? = nil
   ) -> some View {
     let localizedString = NSLocalizedString(
-      key,
-      tableName: tableName,
-      bundle: bundle ?? Bundle(),
-      comment: comment ?? ""
-    )
+      key, tableName: tableName, bundle: bundle ?? Bundle(), comment: comment ?? "")
 
     return self.background(TooltipView(toolTip: localizedString))
   }
 }
 
-fileprivate struct TooltipView: NSViewRepresentable {
+private struct TooltipView: NSViewRepresentable {
   let toolTip: String
 
-  func makeNSView(context: NSViewRepresentableContext<TooltipView>) -> NSView {
-    NSView()
+  func makeNSView(context: NSViewRepresentableContext<TooltipView>) -> NSView { NSView() }
+
+  func updateNSView(_ nsView: NSView, context: NSViewRepresentableContext<TooltipView>) {
+    nsView.toolTip = self.toolTip
   }
-
-  func updateNSView(
-    _ nsView: NSView,
-    context: NSViewRepresentableContext<TooltipView>
-  ) { nsView.toolTip = self.toolTip }
 }
 
-public func with<A, B>(_ a: A, _ f: (A) throws -> B) rethrows -> B {
-  return try f(a)
-}
+public func with<A, B>(_ a: A, _ f: (A) throws -> B) rethrows -> B { return try f(a) }

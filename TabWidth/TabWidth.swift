@@ -15,10 +15,9 @@ public struct TabWidthViewState {
   public init(tabWidth: Int) { self.tabWidth = tabWidth }
 }
 
-public func tabWidthViewReducer(
-  state: inout TabWidthViewState,
-  action: TabWidthViewAction
-) -> [Effect<TabWidthViewAction>] {
+public func tabWidthViewReducer(state: inout TabWidthViewState, action: TabWidthViewAction)
+  -> [Effect<TabWidthViewAction>]
+{
   switch action {
   case .tabWidthFilledOut(let value): state.tabWidth = value
   case .tabWidthIncremented: state.tabWidth += 1
@@ -31,14 +30,11 @@ public func tabWidthViewReducer(
 public struct TabWidthView: View {
   @ObservedObject var store: Store<TabWidthViewState, TabWidthViewAction>
 
-  public init(store: Store<TabWidthViewState, TabWidthViewAction>) {
-    self.store = store
-  }
+  public init(store: Store<TabWidthViewState, TabWidthViewAction>) { self.store = store }
 
   public var body: some View {
     HStack {
-      Text("Tab Width:")
-        .modifier(TrailingAlignmentStyle())
+      Text("Tab Width:").modifier(TrailingAlignmentStyle())
       Stepper(
         onIncrement: { self.store.send(.tabWidthIncremented) },
         onDecrement: { self.store.send(.tabWidthDecremented) },
@@ -46,15 +42,11 @@ public struct TabWidthView: View {
           TextField(
             "",
             value: Binding(
-              get: { self.store.value.tabWidth },
-              set: { self.store.send(.tabWidthFilledOut($0)) }
-            ),
+              get: { self.store.value.tabWidth }, set: { self.store.send(.tabWidthFilledOut($0)) }),
             formatter: UIntNumberFormatter()
-          )
-          .modifier(PrimaryTextFieldStyle())
+          ).modifier(PrimaryTextFieldStyle())
         }
-      )
-      .toolTip(
+      ).toolTip(
         "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
       )
       Text("spaces")

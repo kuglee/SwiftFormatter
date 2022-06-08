@@ -1,13 +1,10 @@
 import Foundation
 
 class ServiceDelegate: NSObject, NSXPCListenerDelegate {
-  func listener(
-    _ listener: NSXPCListener,
-    shouldAcceptNewConnection newConnection: NSXPCConnection
-  ) -> Bool {
-    newConnection.exportedInterface = NSXPCInterface(
-      with: SwiftFormatServiceProtocol.self
-    )
+  func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection)
+    -> Bool
+  {
+    newConnection.exportedInterface = NSXPCInterface(with: SwiftFormatServiceProtocol.self)
     newConnection.exportedObject = SwiftFormatService()
     newConnection.resume()
 

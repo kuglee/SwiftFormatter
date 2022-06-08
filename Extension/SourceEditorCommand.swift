@@ -16,33 +16,25 @@ enum FormatterError: Error, LocalizedError {
 
 class SourceEditorCommand: NSObject, XCSourceEditorCommand {
   func perform(
-    with invocation: XCSourceEditorCommandInvocation,
-    completionHandler: @escaping (Error?) -> Void
+    with invocation: XCSourceEditorCommandInvocation, completionHandler: @escaping (Error?) -> Void
   ) {
     guard
-      [
-        "public.swift-source", "com.apple.dt.playground",
-        "com.apple.dt.playgroundpage",
-      ]
-      .contains(invocation.buffer.contentUTI)
+      ["public.swift-source", "com.apple.dt.playground", "com.apple.dt.playgroundpage"].contains(
+        invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
     let swiftFormatServiceConnection = NSXPCConnection(
-      serviceName: "com.kuglee.swift-format.service"
-    )
+      serviceName: "com.kuglee.swift-format.service")
     swiftFormatServiceConnection.remoteObjectInterface = NSXPCInterface(
-      with: SwiftFormatServiceProtocol.self
-    )
+      with: SwiftFormatServiceProtocol.self)
     swiftFormatServiceConnection.resume()
 
     let swiftFormatService =
       (swiftFormatServiceConnection.remoteObjectProxy as AnyObject)
-      .remoteObjectProxyWithErrorHandler { error in
-        os_log("%{public}@", error.localizedDescription)
+      .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription)
       } as! SwiftFormatServiceProtocol
 
-    let previousSelection =
-      invocation.buffer.selections[0] as! XCSourceTextRange
+    let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
 
     swiftFormatService.format(source: source) { formattedSource, error in

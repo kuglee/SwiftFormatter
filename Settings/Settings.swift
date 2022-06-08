@@ -34,18 +34,11 @@ public struct SettingsViewState {
   public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
 
   public init(
-    maximumBlankLines: Int,
-    lineLength: Int,
-    tabWidth: Int,
-    indentation: Indent,
-    respectsExistingLineBreaks: Bool,
-    lineBreakBeforeControlFlowKeywords: Bool,
-    lineBreakBeforeEachArgument: Bool,
-    lineBreakBeforeEachGenericRequirement: Bool,
-    prioritizeKeepingFunctionOutputTogether: Bool,
-    indentConditionalCompilationBlocks: Bool,
-    indentSwitchCaseLabels: Bool,
-    lineBreakAroundMultilineExpressionChainComponents: Bool,
+    maximumBlankLines: Int, lineLength: Int, tabWidth: Int, indentation: Indent,
+    respectsExistingLineBreaks: Bool, lineBreakBeforeControlFlowKeywords: Bool,
+    lineBreakBeforeEachArgument: Bool, lineBreakBeforeEachGenericRequirement: Bool,
+    prioritizeKeepingFunctionOutputTogether: Bool, indentConditionalCompilationBlocks: Bool,
+    indentSwitchCaseLabels: Bool, lineBreakAroundMultilineExpressionChainComponents: Bool,
     fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
   ) {
     self.maximumBlankLines = maximumBlankLines
@@ -55,10 +48,8 @@ public struct SettingsViewState {
     self.respectsExistingLineBreaks = respectsExistingLineBreaks
     self.lineBreakBeforeControlFlowKeywords = lineBreakBeforeControlFlowKeywords
     self.lineBreakBeforeEachArgument = lineBreakBeforeEachArgument
-    self.lineBreakBeforeEachGenericRequirement =
-      lineBreakBeforeEachGenericRequirement
-    self.prioritizeKeepingFunctionOutputTogether =
-      prioritizeKeepingFunctionOutputTogether
+    self.lineBreakBeforeEachGenericRequirement = lineBreakBeforeEachGenericRequirement
+    self.prioritizeKeepingFunctionOutputTogether = prioritizeKeepingFunctionOutputTogether
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
     self.indentSwitchCaseLabels = indentSwitchCaseLabels
     self.lineBreakAroundMultilineExpressionChainComponents =
@@ -73,15 +64,12 @@ extension SettingsViewState {
       IndentationViewState(
         indentation: self.indentation,
         indentConditionalCompilationBlocks: self.indentConditionalCompilationBlocks,
-        indentSwitchCaseLabels: self.indentSwitchCaseLabels
-      )
+        indentSwitchCaseLabels: self.indentSwitchCaseLabels)
     }
     set {
       self.indentation = newValue.indentation
-      self.indentConditionalCompilationBlocks =
-        newValue.indentConditionalCompilationBlocks
-      self.indentSwitchCaseLabels =
-        newValue.indentSwitchCaseLabels
+      self.indentConditionalCompilationBlocks = newValue.indentConditionalCompilationBlocks
+      self.indentSwitchCaseLabels = newValue.indentSwitchCaseLabels
     }
   }
 
@@ -100,25 +88,19 @@ extension SettingsViewState {
       LineBreaksViewState(
         maximumBlankLines: self.maximumBlankLines,
         respectsExistingLineBreaks: self.respectsExistingLineBreaks,
-        lineBreakBeforeControlFlowKeywords: self
-          .lineBreakBeforeControlFlowKeywords,
+        lineBreakBeforeControlFlowKeywords: self.lineBreakBeforeControlFlowKeywords,
         lineBreakBeforeEachArgument: self.lineBreakBeforeEachArgument,
-        lineBreakBeforeEachGenericRequirement: self
-          .lineBreakBeforeEachGenericRequirement,
-        prioritizeKeepingFunctionOutputTogether: self
-          .prioritizeKeepingFunctionOutputTogether,
+        lineBreakBeforeEachGenericRequirement: self.lineBreakBeforeEachGenericRequirement,
+        prioritizeKeepingFunctionOutputTogether: self.prioritizeKeepingFunctionOutputTogether,
         lineBreakAroundMultilineExpressionChainComponents: self
-          .lineBreakAroundMultilineExpressionChainComponents
-      )
+          .lineBreakAroundMultilineExpressionChainComponents)
     }
     set {
       self.maximumBlankLines = newValue.maximumBlankLines
       self.respectsExistingLineBreaks = newValue.respectsExistingLineBreaks
-      self.lineBreakBeforeControlFlowKeywords =
-        newValue.lineBreakBeforeControlFlowKeywords
+      self.lineBreakBeforeControlFlowKeywords = newValue.lineBreakBeforeControlFlowKeywords
       self.lineBreakBeforeEachArgument = newValue.lineBreakBeforeEachArgument
-      self.lineBreakBeforeEachGenericRequirement =
-        newValue.lineBreakBeforeEachGenericRequirement
+      self.lineBreakBeforeEachGenericRequirement = newValue.lineBreakBeforeEachGenericRequirement
       self.prioritizeKeepingFunctionOutputTogether =
         newValue.prioritizeKeepingFunctionOutputTogether
       self.lineBreakAroundMultilineExpressionChainComponents =
@@ -129,8 +111,7 @@ extension SettingsViewState {
   var fileScopedDeclarationPrivacyView: FileScopedDeclarationPrivacyViewState {
     get {
       FileScopedDeclarationPrivacyViewState(
-        accessLevel: self.fileScopedDeclarationPrivacy.accessLevel
-      )
+        accessLevel: self.fileScopedDeclarationPrivacy.accessLevel)
     }
     set { self.fileScopedDeclarationPrivacy.accessLevel = newValue.accessLevel }
   }
@@ -138,72 +119,41 @@ extension SettingsViewState {
 
 public let settingsViewReducer = combine(
   pullback(
-    indentationViewReducer,
-    value: \SettingsViewState.indentationView,
-    action: /SettingsViewAction.indentationView
-  ),
+    indentationViewReducer, value: \SettingsViewState.indentationView,
+    action: /SettingsViewAction.indentationView),
   pullback(
-    tabWidthViewReducer,
-    value: \SettingsViewState.tabWidthView,
-    action: /SettingsViewAction.tabWidthView
-  ),
+    tabWidthViewReducer, value: \SettingsViewState.tabWidthView,
+    action: /SettingsViewAction.tabWidthView),
   pullback(
-    lineLengthViewReducer,
-    value: \SettingsViewState.lineLengthView,
-    action: /SettingsViewAction.lineLengthView
-  ),
+    lineLengthViewReducer, value: \SettingsViewState.lineLengthView,
+    action: /SettingsViewAction.lineLengthView),
   pullback(
-    lineBreaksViewReducer,
-    value: \SettingsViewState.lineBreaksView,
-    action: /SettingsViewAction.lineBreaksView
-  ),
+    lineBreaksViewReducer, value: \SettingsViewState.lineBreaksView,
+    action: /SettingsViewAction.lineBreaksView),
   pullback(
     fileScopedDeclarationPrivacyViewReducer,
     value: \SettingsViewState.fileScopedDeclarationPrivacyView,
-    action: /SettingsViewAction.fileScopedDeclarationPrivacyView
-  )
-)
+    action: /SettingsViewAction.fileScopedDeclarationPrivacyView))
 
 public struct SettingsView: View {
   @ObservedObject var store: Store<SettingsViewState, SettingsViewAction>
 
-  public init(store: Store<SettingsViewState, SettingsViewAction>) {
-    self.store = store
-  }
+  public init(store: Store<SettingsViewState, SettingsViewAction>) { self.store = store }
 
   public var body: some View {
     VStack(alignment: .trailingAlignmentGuide, spacing: .grid(4)) {
       IndentationView(
-        store: self.store.view(
-          value: { $0.indentationView },
-          action: { .indentationView($0) }
-        )
-      )
+        store: self.store.view(value: { $0.indentationView }, action: { .indentationView($0) }))
       TabWidthView(
-        store: self.store.view(
-          value: { $0.tabWidthView },
-          action: { .tabWidthView($0) }
-        )
-      )
+        store: self.store.view(value: { $0.tabWidthView }, action: { .tabWidthView($0) }))
       LineLengthView(
-        store: self.store.view(
-          value: { $0.lineLengthView },
-          action: { .lineLengthView($0) }
-        )
-      )
+        store: self.store.view(value: { $0.lineLengthView }, action: { .lineLengthView($0) }))
       LineBreaksView(
-        store: self.store.view(
-          value: { $0.lineBreaksView },
-          action: { .lineBreaksView($0) }
-        )
-      )
+        store: self.store.view(value: { $0.lineBreaksView }, action: { .lineBreaksView($0) }))
       FileScopedDeclarationPrivacyViewView(
         store: self.store.view(
           value: { $0.fileScopedDeclarationPrivacyView },
-          action: { .fileScopedDeclarationPrivacyView($0) }
-        )
-      )
-    }
-    .modifier(PrimaryVStackStyle())
+          action: { .fileScopedDeclarationPrivacyView($0) }))
+    }.modifier(PrimaryVStackStyle())
   }
 }

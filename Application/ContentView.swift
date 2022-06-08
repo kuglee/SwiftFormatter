@@ -10,24 +10,12 @@ import SwiftUI
 import Utility
 
 let formatterRulesKeys: [String] = [
-  "DoNotUseSemicolons",
-  "FileScopedDeclarationPrivacy",
-  "FullyIndirectEnum",
-  "GroupNumericLiterals",
-  "NoAccessLevelOnExtensionDeclaration",
-  "NoCasesWithOnlyFallthrough",
-  "NoEmptyTrailingClosureParentheses",
-  "NoLabelsInCasePatterns",
-  "NoParensAroundConditions",
-  "NoVoidReturnOnFunctionSignature",
-  "OneCasePerLine",
-  "OneVariableDeclarationPerLine",
-  "OrderedImports",
-  "ReturnVoidInsteadOfEmptyTuple",
-  "UseEarlyExits",
-  "UseShorthandTypeNames",
-  "UseSingleLinePropertyGetter",
-  "UseTripleSlashForDocumentationComments",
+  "DoNotUseSemicolons", "FileScopedDeclarationPrivacy", "FullyIndirectEnum", "GroupNumericLiterals",
+  "NoAccessLevelOnExtensionDeclaration", "NoCasesWithOnlyFallthrough",
+  "NoEmptyTrailingClosureParentheses", "NoLabelsInCasePatterns", "NoParensAroundConditions",
+  "NoVoidReturnOnFunctionSignature", "OneCasePerLine", "OneVariableDeclarationPerLine",
+  "OrderedImports", "ReturnVoidInsteadOfEmptyTuple", "UseEarlyExits", "UseShorthandTypeNames",
+  "UseSingleLinePropertyGetter", "UseTripleSlashForDocumentationComments",
   "UseWhereClausesInForLoops",
 ]
 
@@ -60,52 +48,40 @@ extension AppState {
     get {
       SettingsViewState(
         maximumBlankLines: self.configuration.maximumBlankLines,
-        lineLength: self.configuration.lineLength,
-        tabWidth: self.configuration.tabWidth,
+        lineLength: self.configuration.lineLength, tabWidth: self.configuration.tabWidth,
         indentation: self.configuration.indentation,
-        respectsExistingLineBreaks: self.configuration
-          .respectsExistingLineBreaks,
-        lineBreakBeforeControlFlowKeywords: self.configuration
-          .lineBreakBeforeControlFlowKeywords,
-        lineBreakBeforeEachArgument: self.configuration
-          .lineBreakBeforeEachArgument,
+        respectsExistingLineBreaks: self.configuration.respectsExistingLineBreaks,
+        lineBreakBeforeControlFlowKeywords: self.configuration.lineBreakBeforeControlFlowKeywords,
+        lineBreakBeforeEachArgument: self.configuration.lineBreakBeforeEachArgument,
         lineBreakBeforeEachGenericRequirement: self.configuration
           .lineBreakBeforeEachGenericRequirement,
         prioritizeKeepingFunctionOutputTogether: self.configuration
           .prioritizeKeepingFunctionOutputTogether,
-        indentConditionalCompilationBlocks: self.configuration
-          .indentConditionalCompilationBlocks,
-        indentSwitchCaseLabels: self.configuration
-          .indentSwitchCaseLabels,
+        indentConditionalCompilationBlocks: self.configuration.indentConditionalCompilationBlocks,
+        indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
           .lineBreakAroundMultilineExpressionChainComponents,
-        fileScopedDeclarationPrivacy: self.configuration
-          .fileScopedDeclarationPrivacy
-      )
+        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy)
     }
     set {
       self.configuration.maximumBlankLines = newValue.maximumBlankLines
       self.configuration.lineLength = newValue.lineLength
       self.configuration.tabWidth = newValue.tabWidth
       self.configuration.indentation = newValue.indentation
-      self.configuration.respectsExistingLineBreaks =
-        newValue.respectsExistingLineBreaks
+      self.configuration.respectsExistingLineBreaks = newValue.respectsExistingLineBreaks
       self.configuration.lineBreakBeforeControlFlowKeywords =
         newValue.lineBreakBeforeControlFlowKeywords
-      self.configuration.lineBreakBeforeEachArgument =
-        newValue.lineBreakBeforeEachArgument
+      self.configuration.lineBreakBeforeEachArgument = newValue.lineBreakBeforeEachArgument
       self.configuration.lineBreakBeforeEachGenericRequirement =
         newValue.lineBreakBeforeEachGenericRequirement
       self.configuration.prioritizeKeepingFunctionOutputTogether =
         newValue.prioritizeKeepingFunctionOutputTogether
       self.configuration.indentConditionalCompilationBlocks =
         newValue.indentConditionalCompilationBlocks
-      self.configuration.indentSwitchCaseLabels =
-        newValue.indentSwitchCaseLabels
+      self.configuration.indentSwitchCaseLabels = newValue.indentSwitchCaseLabels
       self.configuration.lineBreakAroundMultilineExpressionChainComponents =
         newValue.lineBreakAroundMultilineExpressionChainComponents
-      self.configuration.fileScopedDeclarationPrivacy =
-        newValue.fileScopedDeclarationPrivacy
+      self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
     }
   }
 
@@ -124,9 +100,7 @@ public enum TabViewAction: Equatable { case tabSelected(Int) }
 
 public struct TabViewState { var selectedTab: Int }
 
-func tabViewReducer(state: inout TabViewState, action: TabViewAction)
-  -> [Effect<TabViewAction>]
-{
+func tabViewReducer(state: inout TabViewState, action: TabViewAction) -> [Effect<TabViewAction>] {
   switch action {
   case .tabSelected(let selectedTab):
     state.selectedTab = selectedTab
@@ -134,9 +108,9 @@ func tabViewReducer(state: inout TabViewState, action: TabViewAction)
   }
 }
 
-public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>)
-  -> Reducer<AppState, AppAction>
-{
+public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>) -> Reducer<
+  AppState, AppAction
+> {
   return { state, action in
     switch action {
     case .settingsView, .rulesView:
@@ -145,10 +119,8 @@ public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>)
       return [
         .fireAndForget {
           dumpConfiguration(
-            configuration: newState.configuration,
-            outputFileURL: AppConstants.configFileURL,
-            createIntermediateDirectories: true
-          )
+            configuration: newState.configuration, outputFileURL: AppConstants.configFileURL,
+            createIntermediateDirectories: true)
         }
       ] + effects
     default: return reducer(&state, action)
@@ -157,18 +129,9 @@ public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>)
 }
 
 let appReducer = combine(
-  pullback(
-    settingsViewReducer,
-    value: \AppState.settingsView,
-    action: /AppAction.settingsView
-  ),
-  pullback(
-    rulesViewReducer,
-    value: \AppState.rulesView,
-    action: /AppAction.rulesView
-  ),
-  pullback(tabViewReducer, value: \AppState.tabView, action: /AppAction.tabView)
-)
+  pullback(settingsViewReducer, value: \AppState.settingsView, action: /AppAction.settingsView),
+  pullback(rulesViewReducer, value: \AppState.rulesView, action: /AppAction.rulesView),
+  pullback(tabViewReducer, value: \AppState.tabView, action: /AppAction.tabView))
 
 struct ContentView: View {
   @ObservedObject var store: Store<AppState, AppAction>
@@ -176,27 +139,14 @@ struct ContentView: View {
   var body: some View {
     TabView(
       selection: Binding(
-        get: { self.store.value.selectedTab },
-        set: { self.store.send(.tabView(.tabSelected($0))) }
-      )
+        get: { self.store.value.selectedTab }, set: { self.store.send(.tabView(.tabSelected($0))) })
     ) {
       SettingsView(
-        store: self.store.view(
-          value: { $0.settingsView },
-          action: { .settingsView($0) }
-        )
-      )
-      .modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
-      RulesView(
-        store: self.store.view(
-          value: { $0.rulesView },
-          action: { .rulesView($0) }
-        )
-      )
-      .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
-      AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }
-        .tag(2)
-    }
-    .modifier(PrimaryTabViewStyle())
+        store: self.store.view(value: { $0.settingsView }, action: { .settingsView($0) })
+      ).modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
+      RulesView(store: self.store.view(value: { $0.rulesView }, action: { .rulesView($0) }))
+        .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
+      AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
+    }.modifier(PrimaryTabViewStyle())
   }
 }

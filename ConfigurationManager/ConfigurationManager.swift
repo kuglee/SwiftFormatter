@@ -8,10 +8,8 @@ public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
       return try JSONDecoder().decode(Configuration.self, from: data)
     } catch {
       os_log(
-        "Could not load configuration at %{public}@: %{public}@",
-        path.absoluteString,
-        error.localizedDescription
-      )
+        "Could not load configuration at %{public}@: %{public}@", path.absoluteString,
+        error.localizedDescription)
     }
   }
 
@@ -19,38 +17,27 @@ public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
 }
 
 public func dumpConfiguration(
-  configuration: Configuration = Configuration(),
-  outputFileURL: URL,
+  configuration: Configuration = Configuration(), outputFileURL: URL,
   createIntermediateDirectories: Bool = false
 ) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted]
-    if #available(macOS 10.13, *) {
-      encoder.outputFormatting.insert(.sortedKeys)
-    }
+    if #available(macOS 10.13, *) { encoder.outputFormatting.insert(.sortedKeys) }
 
     let data = try encoder.encode(configuration)
     guard let jsonString = String(data: data, encoding: .utf8) else {
-      print(
-        "Could not dump the default configuration: the JSON was not valid UTF-8"
-      )
+      print("Could not dump the default configuration: the JSON was not valid UTF-8")
       return
     }
 
     do {
       if createIntermediateDirectories {
         try? FileManager.default.createDirectory(
-          at: outputFileURL.deletingLastPathComponent(),
-          withIntermediateDirectories: true
-        )
+          at: outputFileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
       }
 
-      try jsonString.write(
-        to: outputFileURL,
-        atomically: false,
-        encoding: .utf8
-      )
+      try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
     } catch { print("Could not dump the default configuration: \(error)") }
   } catch { print("Could not dump the default configuration: \(error)") }
 }

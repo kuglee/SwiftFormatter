@@ -17,7 +17,6 @@ public struct AboutView: View {
         Text("How to use").bold()
         Text("In Xcode choose Editor > Swift-format > Format Source from the menu bar.")
       }
-    }
-    .frame(minHeight: 0, maxHeight: .infinity, alignment: .top)
+    }.frame(minHeight: 0, maxHeight: .infinity, alignment: .top)
   }
 }

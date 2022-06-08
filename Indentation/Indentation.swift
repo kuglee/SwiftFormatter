@@ -47,8 +47,7 @@ public struct IndentationViewState {
   public var indentSwitchCaseLabels: Bool
 
   public init(
-    indentation: Indent, indentConditionalCompilationBlocks: Bool,
-    indentSwitchCaseLabels: Bool
+    indentation: Indent, indentConditionalCompilationBlocks: Bool, indentSwitchCaseLabels: Bool
   ) {
     self.indentation = indentation
     self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
@@ -56,10 +55,9 @@ public struct IndentationViewState {
   }
 }
 
-public func indentationViewReducer(
-  state: inout IndentationViewState,
-  action: IndentationViewAction
-) -> [Effect<IndentationViewAction>] {
+public func indentationViewReducer(state: inout IndentationViewState, action: IndentationViewAction)
+  -> [Effect<IndentationViewAction>]
+{
   switch action {
   case .indentationSelected(let value): state.indentation = value
   case .indentationCountFilledOut(let value): state.indentation.count = value
@@ -67,8 +65,7 @@ public func indentationViewReducer(
   case .indentationDecremented: state.indentation.count -= 1
   case .indentConditionalCompilationBlocksFilledOut(let value):
     state.indentConditionalCompilationBlocks = value
-  case .indentSwitchCaseLabelsFilledOut(let value):
-    state.indentSwitchCaseLabels = value
+  case .indentSwitchCaseLabelsFilledOut(let value): state.indentSwitchCaseLabels = value
   }
 
   return []
@@ -77,18 +74,14 @@ public func indentationViewReducer(
 public struct IndentationView: View {
   @ObservedObject var store: Store<IndentationViewState, IndentationViewAction>
 
-  public init(store: Store<IndentationViewState, IndentationViewAction>) {
-    self.store = store
-  }
+  public init(store: Store<IndentationViewState, IndentationViewAction>) { self.store = store }
 
   public var body: some View {
     HStack(alignment: .centerAlignmentGuide) {
-      Text("Indentation:")
-        .modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
+      Text("Indentation:").modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
       VStack(alignment: .leading, spacing: .grid(2)) {
         HStack {
-          Text("Length:")
-            .modifier(CenterAlignmentStyle())
+          Text("Length:").modifier(CenterAlignmentStyle())
           HStack(spacing: 0) {
             Stepper(
               onIncrement: { self.store.send(.indentationIncremented) },
@@ -98,54 +91,36 @@ public struct IndentationView: View {
                   "",
                   value: Binding(
                     get: { self.store.value.indentation.count },
-                    set: { self.store.send(.indentationCountFilledOut($0)) }
-                  ),
+                    set: { self.store.send(.indentationCountFilledOut($0)) }),
                   formatter: UIntNumberFormatter()
-                )
-                .modifier(PrimaryTextFieldStyle())
+                ).modifier(PrimaryTextFieldStyle())
               }
-            )
-            .toolTip("The amount of whitespace that should be added when indenting one level")
+            ).toolTip("The amount of whitespace that should be added when indenting one level")
             Picker(
               "",
               selection: Binding(
                 get: { self.store.value.indentation },
-                set: { self.store.send(.indentationSelected($0)) }
-              )
+                set: { self.store.send(.indentationSelected($0)) })
             ) {
-              Text(Indent.spaces(Int()).rawValue)
-                .tag(Indent.spaces(self.store.value.indentation.count))
-              Text(Indent.tabs(Int()).rawValue)
-                .tag(Indent.tabs(self.store.value.indentation.count))
-            }
-            .toolTip("The type of whitespace that should be added when indenting")
-            .modifier(PrimaryPickerStyle())
+              Text(Indent.spaces(Int()).rawValue).tag(
+                Indent.spaces(self.store.value.indentation.count))
+              Text(Indent.tabs(Int()).rawValue).tag(Indent.tabs(self.store.value.indentation.count))
+            }.toolTip("The type of whitespace that should be added when indenting").modifier(
+              PrimaryPickerStyle())
           }
         }
         Toggle(
           isOn: Binding(
             get: { self.store.value.indentConditionalCompilationBlocks },
-            set: {
-              self.store.send(.indentConditionalCompilationBlocksFilledOut($0))
-            }
-          )
-        ) {
-          Text("Indent conditional compilation blocks")
-        }
-        .toolTip(
+            set: { self.store.send(.indentConditionalCompilationBlocksFilledOut($0)) })
+        ) { Text("Indent conditional compilation blocks") }.toolTip(
           "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented."
         )
         Toggle(
           isOn: Binding(
             get: { self.store.value.indentSwitchCaseLabels },
-            set: {
-              self.store.send(.indentSwitchCaseLabelsFilledOut($0))
-            }
-          )
-        ) {
-          Text("Indent switch case labels")
-        }
-        .toolTip(
+            set: { self.store.send(.indentSwitchCaseLabelsFilledOut($0)) })
+        ) { Text("Indent switch case labels") }.toolTip(
           "Determines if `case` statements should be indented compared to the containing `switch` block"
         )
       }
