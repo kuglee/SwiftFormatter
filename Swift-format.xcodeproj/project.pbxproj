@@ -69,6 +69,8 @@
 		5DB029DF23E7139B00F4BDBA /* About.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA76B3123DDF1400064E82B /* About.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DB068C0244AF2FC006CA5C5 /* CasePathsDependency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; };
 		5DB068C1244AF2FC006CA5C5 /* CasePathsDependency.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D576FCB23F9BDC90005E1B5 /* CasePathsDependency.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DB70A122850981300114D9D /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; };
+		5DB70A132850981300114D9D /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DBCEB5C2404F729007FF4B6 /* Utility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; };
 		5DBCEB5D2404F729007FF4B6 /* Utility.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D765B3623D6D546000ED749 /* Utility.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5DBCEB7F2405BC53007FF4B6 /* Indentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DBCEB7D2405BC53007FF4B6 /* Indentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -618,6 +620,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DB70A142850981300114D9D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5DB70A132850981300114D9D /* XcodeKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DBCEB602404F729007FF4B6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -772,6 +785,7 @@
 		5DA76B3423DDF1410064E82B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DA76B3D23DDF15B0064E82B /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		5DB068CA244AF6D8006CA5C5 /* swift-format */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "swift-format"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DB70A112850981300114D9D /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 		5DBCEB7B2405BC53007FF4B6 /* Indentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Indentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DBCEB7D2405BC53007FF4B6 /* Indentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Indentation.h; sourceTree = "<group>"; };
 		5DBCEB7E2405BC53007FF4B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -898,6 +912,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DB70A122850981300114D9D /* XcodeKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1189,7 @@
 		5DAAAA67244B2BBE00BCEF22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DB70A112850981300114D9D /* XcodeKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1574,6 +1590,7 @@
 				5DA2B9962286048F0051C256 /* Sources */,
 				5DA2B9972286048F0051C256 /* Frameworks */,
 				5D32F4C52286D5ED00547FD2 /* Embed XPC Services */,
+				5DB70A142850981300114D9D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
