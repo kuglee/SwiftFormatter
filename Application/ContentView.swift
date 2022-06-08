@@ -9,6 +9,28 @@ import SwiftFormatConfiguration
 import SwiftUI
 import Utility
 
+let formatterRulesKeys: [String] = [
+  "DoNotUseSemicolons",
+  "FileScopedDeclarationPrivacy",
+  "FullyIndirectEnum",
+  "GroupNumericLiterals",
+  "NoAccessLevelOnExtensionDeclaration",
+  "NoCasesWithOnlyFallthrough",
+  "NoEmptyTrailingClosureParentheses",
+  "NoLabelsInCasePatterns",
+  "NoParensAroundConditions",
+  "NoVoidReturnOnFunctionSignature",
+  "OneCasePerLine",
+  "OneVariableDeclarationPerLine",
+  "OrderedImports",
+  "ReturnVoidInsteadOfEmptyTuple",
+  "UseEarlyExits",
+  "UseShorthandTypeNames",
+  "UseSingleLinePropertyGetter",
+  "UseTripleSlashForDocumentationComments",
+  "UseWhereClausesInForLoops",
+]
+
 public struct AppState {
   public var configuration: Configuration
   public var selectedTab: Int
@@ -17,15 +39,13 @@ public struct AppState {
     self.selectedTab = selectedTab
     self.configuration = configuration
 
-    var defaultConfiguration = Configuration()
+    self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
 
-    for rule in configuration.rules {
-      if defaultConfiguration.rules[rule.key] != nil {
-        defaultConfiguration.rules[rule.key] = rule.value
+    for rule in self.configuration.rules {
+      if self.configuration.rules[rule.key] != nil {
+        self.configuration.rules[rule.key] = rule.value
       }
     }
-
-    self.configuration.rules = defaultConfiguration.rules
   }
 }
 

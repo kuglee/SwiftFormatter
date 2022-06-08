@@ -9,6 +9,7 @@ import SwiftFormatConfiguration
 import SwiftUI
 import TabWidth
 import Utility
+import SwiftFormatConfiguration
 
 public enum SettingsViewAction: Equatable {
   case indentationView(IndentationViewAction)
