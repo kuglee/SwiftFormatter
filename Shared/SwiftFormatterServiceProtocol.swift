@@ -1,5 +1,5 @@
 import Foundation
 
-@objc protocol SwiftFormatServiceProtocol {
+@objc protocol SwiftFormatterServiceProtocol {
   func format(source: String, reply: @escaping (String?, Error?) -> Void)
 }

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-               BuildableName = "Swift-format.app"
-               BlueprintName = "Swift-format"
-               ReferencedContainer = "container:Swift-format.xcodeproj">
+               BlueprintIdentifier = "5D39756C228759FA00307B1E"
+               BuildableName = "com.kuglee.SwiftFormatter.service.xpc"
+               BlueprintName = "Swift Formatter Service"
+               ReferencedContainer = "container:SwiftFormatter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,6 +27,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5D39756C228759FA00307B1E"
+            BuildableName = "com.kuglee.SwiftFormatter.service.xpc"
+            BlueprintName = "Swift Formatter Service"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
       </Testables>
    </TestAction>
@@ -40,16 +49,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-            BuildableName = "Swift-format.app"
-            BlueprintName = "Swift-format"
-            ReferencedContainer = "container:Swift-format.xcodeproj">
+            BlueprintIdentifier = "5D39756C228759FA00307B1E"
+            BuildableName = "com.kuglee.SwiftFormatter.service.xpc"
+            BlueprintName = "Swift Formatter Service"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +65,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-            BuildableName = "Swift-format.app"
-            BlueprintName = "Swift-format"
-            ReferencedContainer = "container:Swift-format.xcodeproj">
+            BlueprintIdentifier = "5D39756C228759FA00307B1E"
+            BuildableName = "com.kuglee.SwiftFormatter.service.xpc"
+            BlueprintName = "Swift Formatter Service"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

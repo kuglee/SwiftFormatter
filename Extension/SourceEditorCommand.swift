@@ -23,22 +23,22 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
-    let swiftFormatServiceConnection = NSXPCConnection(
-      serviceName: "com.kuglee.swift-format.service")
-    swiftFormatServiceConnection.remoteObjectInterface = NSXPCInterface(
-      with: SwiftFormatServiceProtocol.self)
-    swiftFormatServiceConnection.resume()
+    let swiftFormatterServiceConnection = NSXPCConnection(
+      serviceName: "com.kuglee.SwiftFormatter.service")
+    swiftFormatterServiceConnection.remoteObjectInterface = NSXPCInterface(
+      with: SwiftFormatterServiceProtocol.self)
+    swiftFormatterServiceConnection.resume()
 
-    let swiftFormatService =
-      (swiftFormatServiceConnection.remoteObjectProxy as AnyObject)
+    let swiftFormatterService =
+      (swiftFormatterServiceConnection.remoteObjectProxy as AnyObject)
       .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription)
-      } as! SwiftFormatServiceProtocol
+      } as! SwiftFormatterServiceProtocol
 
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
 
-    swiftFormatService.format(source: source) { formattedSource, error in
-      defer { swiftFormatServiceConnection.invalidate() }
+    swiftFormatterService.format(source: source) { formattedSource, error in
+      defer { swiftFormatterServiceConnection.invalidate() }
 
       if let error = error { return completionHandler(error) }
 

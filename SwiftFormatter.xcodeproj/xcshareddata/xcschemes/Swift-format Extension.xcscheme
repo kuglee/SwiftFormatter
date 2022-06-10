@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5DA2B9992286048F0051C256"
-               BuildableName = "Swift-format Extension.appex"
-               BlueprintName = "Swift-format Extension"
-               ReferencedContainer = "container:Swift-format.xcodeproj">
+               BuildableName = "Swift Formatter Extension.appex"
+               BlueprintName = "Swift Formatter Extension"
+               ReferencedContainer = "container:SwiftFormatter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,9 +30,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-               BuildableName = "Swift-format.app"
-               BlueprintName = "Swift-format"
-               ReferencedContainer = "container:Swift-format.xcodeproj">
+               BuildableName = "Swift Formatter.app"
+               BlueprintName = "Swift Formatter"
+               ReferencedContainer = "container:SwiftFormatter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-            BuildableName = "Swift-format.app"
-            BlueprintName = "Swift-format"
-            ReferencedContainer = "container:Swift-format.xcodeproj">
+            BuildableName = "Swift Formatter.app"
+            BlueprintName = "Swift Formatter"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-            BuildableName = "Swift-format.app"
-            BlueprintName = "Swift-format"
-            ReferencedContainer = "container:Swift-format.xcodeproj">
+            BuildableName = "Swift Formatter.app"
+            BlueprintName = "Swift Formatter"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -89,9 +89,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D1AB84E22B75D6E00F15F08"
-            BuildableName = "Swift-format.app"
-            BlueprintName = "Swift-format"
-            ReferencedContainer = "container:Swift-format.xcodeproj">
+            BuildableName = "Swift Formatter.app"
+            BlueprintName = "Swift Formatter"
+            ReferencedContainer = "container:SwiftFormatter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

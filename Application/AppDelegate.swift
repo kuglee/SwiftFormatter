@@ -17,7 +17,7 @@ import Utility
     window.center()
     window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled = false
     window.setFrameAutosaveName("Main Window")
-    window.title = "Swift-format"
+    window.title = "Swift Formatter"
 
     didRunBefore = self.getDidRunBefore()
     let selectedTab = !self.didRunBefore ? 2 : 0

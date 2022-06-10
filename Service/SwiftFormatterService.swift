@@ -55,8 +55,8 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
   return .success(output)
 }
 
-@objc class SwiftFormatService: NSObject, SwiftFormatServiceProtocol {
-  enum SwiftFormatServiceError: Error, LocalizedError {
+@objc class SwiftFormatterService: NSObject, SwiftFormatterServiceProtocol {
+  enum SwiftFormatterServiceError: Error, LocalizedError {
     case tempFileNotFound(message: String)
 
     var localizedDescription: String {
@@ -71,7 +71,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
 
   func format(source: String, reply: @escaping (String?, Error?) -> Void) {
     guard let tempFileURL = FileManager.default.temporaryFileURL() else {
-      let error = SwiftFormatServiceError.tempFileNotFound(message: "The temp file is not found!")
+      let error = SwiftFormatterServiceError.tempFileNotFound(message: "The temp file is not found!")
       os_log("%{public}@", error.localizedDescription)
       return reply(nil, error)
     }
