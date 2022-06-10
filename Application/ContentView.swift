@@ -19,7 +19,7 @@ let formatterRulesKeys: [String] = [
   "UseWhereClausesInForLoops",
 ]
 
-public struct AppState {
+public struct AppState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Int
 
@@ -100,53 +100,56 @@ public enum TabViewAction: Equatable { case tabSelected(Int) }
 
 public struct TabViewState { var selectedTab: Int }
 
-func tabViewReducer(state: inout TabViewState, action: TabViewAction) -> [Effect<TabViewAction>] {
+public let tabViewReducer = Reducer<TabViewState, TabViewAction, Void> { state, action, _ in
   switch action {
   case .tabSelected(let selectedTab):
     state.selectedTab = selectedTab
-    return []
+    return .none
   }
 }
 
-public func saveMiddleware(_ reducer: @escaping Reducer<AppState, AppAction>) -> Reducer<
-  AppState, AppAction
-> {
-  return { state, action in
-    switch action {
-    case .settingsView, .rulesView:
-      let effects = reducer(&state, action)
-      let newState = state
-      return [
-        .fireAndForget {
-          dumpConfiguration(
-            configuration: newState.configuration, outputFileURL: AppConstants.configFileURL,
-            createIntermediateDirectories: true)
-        }
-      ] + effects
-    default: return reducer(&state, action)
+let appReducer = Reducer<AppState, AppAction, Void>.combine(
+  settingsViewReducer.pullback(
+    state: \AppState.settingsView, action: /AppAction.settingsView, environment: {}),
+  rulesViewReducer.pullback(
+    state: \AppState.rulesView, action: /AppAction.rulesView, environment: {}),
+  tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {}))
+
+public struct ContentView: View {
+  let store: Store<AppState, AppAction>
+
+  public var body: some View {
+    WithViewStore(self.store) { viewStore in
+      TabView(
+        selection: Binding(
+          get: { viewStore.selectedTab }, set: { viewStore.send(.tabView(.tabSelected($0))) })
+      ) {
+        SettingsView(
+          store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
+        ).modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
+        RulesView(store: self.store.scope(state: { $0.rulesView }, action: { .rulesView($0) }))
+          .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
+        AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
+      }.modifier(PrimaryTabViewStyle())
     }
   }
 }
 
-let appReducer = combine(
-  pullback(settingsViewReducer, value: \AppState.settingsView, action: /AppAction.settingsView),
-  pullback(rulesViewReducer, value: \AppState.rulesView, action: /AppAction.rulesView),
-  pullback(tabViewReducer, value: \AppState.tabView, action: /AppAction.tabView))
-
-struct ContentView: View {
-  @ObservedObject var store: Store<AppState, AppAction>
-
-  var body: some View {
-    TabView(
-      selection: Binding(
-        get: { self.store.value.selectedTab }, set: { self.store.send(.tabView(.tabSelected($0))) })
-    ) {
-      SettingsView(
-        store: self.store.view(value: { $0.settingsView }, action: { .settingsView($0) })
-      ).modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
-      RulesView(store: self.store.view(value: { $0.rulesView }, action: { .rulesView($0) }))
-        .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
-      AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
-    }.modifier(PrimaryTabViewStyle())
+extension Reducer where State == AppState, Action == AppAction, Environment == Void {
+  func saveMiddleware() -> Reducer {
+    .init { state, action, environment in
+      switch action {
+      case .settingsView, .rulesView:
+        let effects = self(&state, action, environment)
+        let newState = state
+        return .concatenate(
+          .fireAndForget {
+            dumpConfiguration(
+              configuration: newState.configuration, outputFileURL: AppConstants.configFileURL,
+              createIntermediateDirectories: true)
+          }, effects)
+      default: return self(&state, action, environment)
+      }
+    }
   }
 }

@@ -24,9 +24,9 @@ import Utility
 
     contentView = ContentView(
       store: Store(
-        initialValue: AppState(
+        initialState: AppState(
           configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
-          selectedTab: selectedTab), reducer: with(appReducer, saveMiddleware)))
+          selectedTab: selectedTab), reducer: appReducer.saveMiddleware(), environment: ()))
 
     window.contentView = NSHostingView(rootView: contentView)
     window.makeKeyAndOrderFront(nil)
