@@ -1,4 +1,5 @@
 import SwiftFormatConfiguration
+import Foundation
 import os.log
 
 public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
