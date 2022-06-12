@@ -22,9 +22,11 @@ let formatterRulesKeys: [String] = [
 public struct AppState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Int
+  public var didRunBefore: Bool
 
-  public init(configuration: Configuration, selectedTab: Int) {
-    self.selectedTab = selectedTab
+  public init(configuration: Configuration, didRunBefore: Bool) {
+    self.didRunBefore = getDidRunBefore()
+    self.selectedTab = !self.didRunBefore ? 2 : 0
     self.configuration = configuration
 
     self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
@@ -38,6 +40,7 @@ public struct AppState: Equatable {
 }
 
 public enum AppAction {
+  case setDidRunBefore(value: Bool)
   case settingsView(SettingsViewAction)
   case rulesView(RulesViewAction)
   case tabView(TabViewAction)
@@ -109,6 +112,16 @@ public let tabViewReducer = Reducer<TabViewState, TabViewAction, Void> { state, 
 }
 
 let appReducer = Reducer<AppState, AppAction, Void>.combine(
+  Reducer { state, action, _ in
+    switch action {
+    case .setDidRunBefore(let value):
+      state.didRunBefore = value
+      return .fireAndForget { setDidRunBefore() }
+    case .settingsView(_): return .none
+    case .rulesView(_): return .none
+    case .tabView(_): return .none
+    }
+  },
   settingsViewReducer.pullback(
     state: \AppState.settingsView, action: /AppAction.settingsView, environment: {}),
   rulesViewReducer.pullback(
@@ -130,7 +143,9 @@ public struct ContentView: View {
         RulesView(store: self.store.scope(state: { $0.rulesView }, action: { .rulesView($0) }))
           .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
         AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
-      }.modifier(PrimaryTabViewStyle())
+      }.modifier(PrimaryTabViewStyle()).navigationTitle("Swift Formatter").onAppear {
+        if !viewStore.didRunBefore { viewStore.send(.setDidRunBefore(value: true)) }
+      }
     }
   }
 }
@@ -153,3 +168,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
     }
   }
 }
+
+func getDidRunBefore() -> Bool { UserDefaults.standard.bool(forKey: AppConstants.didRunBeforeKey) }
+
+func setDidRunBefore() { UserDefaults.standard.set(true, forKey: AppConstants.didRunBeforeKey) }

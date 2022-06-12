@@ -9,6 +9,7 @@ public enum AppConstants {
   public static var configFileURL: URL {
     AppConstants.applicationSupportDirectory.appendingPathComponent(AppConstants.configFilename)
   }
+  public static let didRunBeforeKey = "didRunBefore"
 }
 
 public class UIntNumberFormatter: NumberFormatter {
