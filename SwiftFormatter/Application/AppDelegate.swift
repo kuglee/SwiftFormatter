@@ -21,6 +21,10 @@ import Utility
 class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     NSApplication.shared.windows.first?.styleMask = [.titled, .closable, .miniaturizable]
+    
+    // disable default focus
+    NSApplication.shared.windows.first?.makeFirstResponder(nil)
+    NSApplication.shared.windows.first?.resignFirstResponder()
   }
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 }
