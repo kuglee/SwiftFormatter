@@ -48,39 +48,58 @@ public struct PrimaryTextFieldStyle: ViewModifier {
   }
 }
 
+// MARK: - Row Styles
+
 public enum AlternatingBackground {
   case dark
   case light
 }
 
-// MARK: - Background Styles
-
-public struct PrimaryListBackgroundStyle: ViewModifier {
+public struct BaseRowStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.listRowBackground(Color(NSColor.alternatingContentBackgroundColors[0]))
+    content.padding([.vertical], .grid(2)).padding([.horizontal], .grid(3))
   }
 }
 
-public struct SecondaryListBackgroundStyle: ViewModifier {
+public struct PrimaryRowBackgroundStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.listRowBackground(Color(NSColor.alternatingContentBackgroundColors[1]))
+    content.background(Color(NSColor.alternatingContentBackgroundColors[0]))
   }
 }
 
-public struct AlternatingListBackgroundStyle: ViewModifier {
+public struct SecondaryRowBackgroundStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.background(Color(NSColor.alternatingContentBackgroundColors[1]))
+  }
+}
+
+public struct AlternatingRowBackgroundStyle: ViewModifier {
   private var background: AlternatingBackground
 
   public init(background: AlternatingBackground) { self.background = background }
 
   public func body(content: Content) -> some View {
     switch background {
-    case .dark: return AnyView(content.modifier(PrimaryListBackgroundStyle()))
-    case .light: return AnyView(content.modifier(SecondaryListBackgroundStyle()))
+    case .dark: return AnyView(content.modifier(PrimaryRowBackgroundStyle()))
+    case .light: return AnyView(content.modifier(SecondaryRowBackgroundStyle()))
     }
+  }
+}
+
+public struct AlternatingRowStyle: ViewModifier {
+  private var background: AlternatingBackground
+
+  public init(background: AlternatingBackground) { self.background = background }
+
+  public func body(content: Content) -> some View {
+    content.modifier(BaseRowStyle())
+      .modifier(AlternatingRowBackgroundStyle(background: self.background))
   }
 }
 
@@ -89,7 +108,9 @@ public struct AlternatingListBackgroundStyle: ViewModifier {
 public struct PrimaryListBorderStyle: ViewModifier {
   public init() {}
 
-  public func body(content: Content) -> some View { content.border(Color(.placeholderTextColor)) }
+  public func body(content: Content) -> some View {
+    content.padding(1).border(Color(.placeholderTextColor))
+  }
 }
 
 // MARK: - Picker Styles
@@ -106,7 +127,7 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(width: 600, height: 500).padding(.horizontal, .grid(10)).padding(.top, .grid(5))
+    content.frame(width: 600, height: 532).padding(.horizontal, .grid(10)).padding(.top, .grid(5))
       .padding(.bottom, .grid(10))
   }
 }

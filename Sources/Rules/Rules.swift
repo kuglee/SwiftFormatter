@@ -27,16 +27,19 @@ public struct RulesView: View {
     WithViewStore(self.store) { viewStore in
       VStack(alignment: .leading, spacing: .grid(2)) {
         Text("Formatting rules:")
-        List {
+        VStack(spacing: 0) {
           ForEach(viewStore.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
             Toggle(
               isOn: Binding(
                 get: { viewStore.rules[key]! },
-                set: { viewStore.send(.ruleFilledOut(key: key, value: $0)) })
-            ) { Text(key.separateCamelCase.sentenceCase) }.modifier(PrimaryToggleStyle()).modifier(
-              AlternatingListBackgroundStyle(background: index % 2 == 0 ? .dark : .light))
+                set: { viewStore.send(.ruleFilledOut(key: key, value: $0)) }
+              )
+            ) { Text(key.separateCamelCase.sentenceCase) }
+            .modifier(PrimaryToggleStyle())
+            .modifier(AlternatingRowStyle(background: index % 2 == 0 ? .dark : .light))
           }
-        }.modifier(PrimaryListBorderStyle())
+        }
+        .modifier(PrimaryListBorderStyle())
       }
     }
   }
@@ -44,7 +47,8 @@ public struct RulesView: View {
 
 extension String {
   func replacingRegex(
-    matching pattern: String, replacingOptions: NSRegularExpression.MatchingOptions = [],
+    matching pattern: String,
+    replacingOptions: NSRegularExpression.MatchingOptions = [],
     with template: String
   ) -> String {
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return self }
