@@ -2,6 +2,30 @@ import SwiftUI
 
 extension CGFloat { public static func grid(_ n: Int) -> CGFloat { return CGFloat(n) * 2 } }
 
+// MARK: - Colors
+
+extension NSColor {
+  public class func dynamicColor(light: NSColor, dark: NSColor) -> NSColor {
+    return NSColor(name: nil) {
+      switch $0.name {
+      case .darkAqua, .vibrantDark, .accessibilityHighContrastDarkAqua,
+        .accessibilityHighContrastVibrantDark:
+        return dark
+      default: return light
+      }
+    }
+  }
+
+  // override with list style colors (bordered(alternatesRowBackgrounds:))
+  static let alternatingContentBackgroundColors: [NSColor] = [
+    NSColor.dynamicColor(light: NSColor.white, dark: NSColor.init(white: 0.175, alpha: 1)),
+    NSColor.dynamicColor(
+      light: NSColor.init(white: 0.96, alpha: 1),
+      dark: NSColor.init(white: 0.21, alpha: 1)
+    ),
+  ]
+}
+
 // MARK: - Alignments
 
 extension HorizontalAlignment {
