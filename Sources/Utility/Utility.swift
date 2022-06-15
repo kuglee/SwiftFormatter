@@ -28,19 +28,3 @@ extension Collection {
     return Array(self.enumerated())
   }
 }
-
-extension View {
-  public func toolTip(_ text: String) -> some View {
-    return self.background(TooltipView(toolTip: text))
-  }
-}
-
-private struct TooltipView: NSViewRepresentable {
-  let toolTip: String
-
-  func makeNSView(context: NSViewRepresentableContext<TooltipView>) -> NSView { NSView() }
-
-  func updateNSView(_ nsView: NSView, context: NSViewRepresentableContext<TooltipView>) {
-    nsView.toolTip = self.toolTip
-  }
-}
