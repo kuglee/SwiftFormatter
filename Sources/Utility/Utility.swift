@@ -30,13 +30,8 @@ extension Collection {
 }
 
 extension View {
-  public func toolTip(
-    _ key: String, tableName: String? = nil, bundle: Bundle? = nil, comment: String? = nil
-  ) -> some View {
-    let localizedString = NSLocalizedString(
-      key, tableName: tableName, bundle: bundle ?? Bundle(), comment: comment ?? "")
-
-    return self.background(TooltipView(toolTip: localizedString))
+  public func toolTip(_ text: String) -> some View {
+    return self.background(TooltipView(toolTip: text))
   }
 }
 
