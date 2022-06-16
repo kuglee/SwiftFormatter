@@ -12,6 +12,7 @@ let package = Package(
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
     .library(name: "Utility", targets: ["Utility"]),
     .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
+    .library(name: "General", targets: ["General"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -39,6 +40,13 @@ let package = Package(
     .target(
       name: "ConfigurationManager",
       dependencies: [.product(name: "SwiftFormatConfiguration", package: "swift-format")]
+    ),
+    .target(
+      name: "General",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "StyleGuide", "Utility",
+      ]
     ),
   ]
 )

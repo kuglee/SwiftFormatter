@@ -40,7 +40,10 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
 
-    swiftFormatterService.format(source: source) { formattedSource, error in
+    let useAutodiscovery = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+      .bool(forKey: "useAutodiscovery")
+
+    swiftFormatterService.format(source: source, useAutodiscovery: useAutodiscovery) { formattedSource, error in
       defer { swiftFormatterServiceConnection.invalidate() }
 
       if let error = error { return completionHandler(error) }

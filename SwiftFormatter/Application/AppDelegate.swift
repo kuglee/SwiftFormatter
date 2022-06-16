@@ -13,7 +13,8 @@ import Utility
         store: Store(
           initialState: AppState(
             configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
-            didRunBefore: getDidRunBefore()
+            didRunBefore: getDidRunBefore(),
+            useAutodiscovery: getUseAutodiscovery()
           ),
           reducer: appReducer.saveMiddleware(),
           environment: ()

@@ -2,6 +2,7 @@ import About
 import CasePaths
 import ComposableArchitecture
 import ConfigurationManager
+import General
 import Rules
 import Settings
 import StyleGuide
@@ -23,11 +24,13 @@ public struct AppState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Int
   public var didRunBefore: Bool
+  public var useAutodiscovery: Bool
 
-  public init(configuration: Configuration, didRunBefore: Bool) {
+  public init(configuration: Configuration, didRunBefore: Bool, useAutodiscovery: Bool) {
     self.didRunBefore = getDidRunBefore()
     self.selectedTab = !self.didRunBefore ? 2 : 0
     self.configuration = configuration
+    self.useAutodiscovery = useAutodiscovery
 
     self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
 
@@ -44,6 +47,7 @@ public enum AppAction {
   case settingsView(SettingsViewAction)
   case rulesView(RulesViewAction)
   case tabView(TabViewAction)
+  case generalView(GeneralViewAction)
 }
 
 extension AppState {
@@ -99,6 +103,12 @@ extension AppState {
     get { TabViewState(selectedTab: self.selectedTab) }
     set { self.selectedTab = newValue.selectedTab }
   }
+
+  var generalView: GeneralViewState {
+    get { GeneralViewState(useAutodiscovery: self.useAutodiscovery) }
+    set { self.useAutodiscovery = newValue.useAutodiscovery }
+  }
+
 }
 
 public enum TabViewAction: Equatable { case tabSelected(Int) }
@@ -123,6 +133,7 @@ let appReducer = Reducer<AppState, AppAction, Void>
       case .settingsView(_): return .none
       case .rulesView(_): return .none
       case .tabView(_): return .none
+      case .generalView(_): return .none
       }
     },
     settingsViewReducer.pullback(
@@ -135,7 +146,12 @@ let appReducer = Reducer<AppState, AppAction, Void>
       action: /AppAction.rulesView,
       environment: {}
     ),
-    tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {})
+    tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {}),
+    generalViewReducer.pullback(
+      state: \AppState.generalView,
+      action: /AppAction.generalView,
+      environment: {}
+    )
   )
 
 public struct ContentView: View {
@@ -156,6 +172,10 @@ public struct ContentView: View {
         RulesView(store: self.store.scope(state: { $0.rulesView }, action: { .rulesView($0) }))
           .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
         AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
+        GeneralView(
+          store: self.store.scope(state: { $0.generalView }, action: { .generalView($0) })
+        )
+        .modifier(PrimaryTabItemStyle()).tabItem { Text("General") }.tag(3)
       }
       .modifier(PrimaryTabViewStyle()).navigationTitle("Swift Formatter")
       .onAppear { if !viewStore.didRunBefore { viewStore.send(.setDidRunBefore(value: true)) } }
@@ -186,6 +206,17 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
   }
 }
 
-func getDidRunBefore() -> Bool { UserDefaults.standard.bool(forKey: AppConstants.didRunBeforeKey) }
+func getDidRunBefore() -> Bool {
+  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+    .bool(forKey: AppConstants.didRunBeforeKey)
+}
 
-func setDidRunBefore() { UserDefaults.standard.set(true, forKey: AppConstants.didRunBeforeKey) }
+func setDidRunBefore() {
+  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+    .set(true, forKey: AppConstants.didRunBeforeKey)
+}
+
+func getUseAutodiscovery() -> Bool {
+  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+    .bool(forKey: AppConstants.useAutodiscovery)
+}

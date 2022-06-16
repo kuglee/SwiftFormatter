@@ -75,7 +75,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
     withExtension: ""
   )!
 
-  func format(source: String, reply: @escaping (String?, Error?) -> Void) {
+  func format(source: String, useAutodiscovery: Bool ,reply: @escaping (String?, Error?) -> Void) {
     guard let tempFileURL = FileManager.default.temporaryFileURL() else {
       let error = SwiftFormatterServiceError.tempFileNotFound(
         message: "The temp file is not found!"
@@ -94,7 +94,9 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
 
     var arguments: [String] = ["-p", "-i", tempFileURL.path]
 
-    if FileManager.default.fileExists(atPath: AppConstants.configFileURL.path) {
+    if !useAutodiscovery,
+      FileManager.default.fileExists(atPath: AppConstants.configFileURL.path)
+    {
       arguments.append(contentsOf: ["--configuration", AppConstants.configFileURL.path])
     }
 

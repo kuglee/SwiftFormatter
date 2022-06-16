@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D162CF1285A5C6F00AC5B86 /* General in Frameworks */ = {isa = PBXBuildFile; productRef = 5D162CF0285A5C6F00AC5B86 /* General */; };
 		5D164E6E2853DED4000C5FC7 /* About in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6D2853DED4000C5FC7 /* About */; };
 		5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */; };
 		5D164E722853DEF1000C5FC7 /* Rules in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E712853DEF1000C5FC7 /* Rules */; };
@@ -113,6 +114,7 @@
 		5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5D1AB85B22B75D7000F15F08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5D1AB85D22B75D7000F15F08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swift Formatter.entitlements"; sourceTree = "<group>"; };
 		5D38B45F22876FA900EE78C7 /* SwiftFormatterServiceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftFormatterServiceProtocol.swift; sourceTree = "<group>"; };
 		5D38B46222876FB800EE78C7 /* SwiftFormatterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftFormatterService.swift; sourceTree = "<group>"; };
 		5D38B46A228770E900EE78C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Extension/Info.plist; sourceTree = SOURCE_ROOT; };
@@ -138,6 +140,7 @@
 				5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */,
 				5D164E6E2853DED4000C5FC7 /* About in Frameworks */,
 				5D164E742853DEFA000C5FC7 /* Settings in Frameworks */,
+				5D162CF1285A5C6F00AC5B86 /* General in Frameworks */,
 				5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */,
 				5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */,
 			);
@@ -221,6 +224,7 @@
 		5DA2B97C2286045B0051C256 = {
 			isa = PBXGroup;
 			children = (
+				5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */,
 				5D164E6C2853DE21000C5FC7 /* Modules */,
 				5D1AB85022B75D6E00F15F08 /* Application */,
 				5DA2B99E2286048F0051C256 /* Extension */,
@@ -287,6 +291,7 @@
 				5D164E772853DF0E000C5FC7 /* Utility */,
 				5D164E792853DFA7000C5FC7 /* ConfigurationManager */,
 				5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */,
+				5D162CF0285A5C6F00AC5B86 /* General */,
 			);
 			productName = "Swift-format";
 			productReference = 5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */;
@@ -536,7 +541,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = "Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -565,7 +570,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = "Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -905,6 +910,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5D162CF0285A5C6F00AC5B86 /* General */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = General;
+		};
 		5D164E6D2853DED4000C5FC7 /* About */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = About;

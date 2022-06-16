@@ -10,6 +10,7 @@ public enum AppConstants {
     AppConstants.applicationSupportDirectory.appendingPathComponent(AppConstants.configFilename)
   }
   public static let didRunBeforeKey = "didRunBefore"
+  public static let useAutodiscovery = "useAutodiscovery"
 }
 
 public class UIntNumberFormatter: NumberFormatter {

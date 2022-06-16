@@ -30,10 +30,16 @@ extension NSColor {
 
 extension HorizontalAlignment {
   private enum TrailingAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.leading] }
+    static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.trailing] }
   }
 
   public static let trailingAlignmentGuide = HorizontalAlignment(TrailingAlignment.self)
+
+  private enum LeadingAlignment: AlignmentID {
+    static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.leading] }
+  }
+
+  public static let leadingAlignmentGuide = HorizontalAlignment(LeadingAlignment.self)
 }
 
 public struct TrailingAlignmentStyle: ViewModifier {
@@ -41,6 +47,14 @@ public struct TrailingAlignmentStyle: ViewModifier {
 
   public func body(content: Content) -> some View {
     content.alignmentGuide(.trailingAlignmentGuide) { $0[.trailing] }
+  }
+}
+
+public struct LeadingAlignmentStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.alignmentGuide(.leadingAlignmentGuide) { $0[.leading] }
   }
 }
 
@@ -187,5 +201,15 @@ public struct PrimaryToggleStyle: ViewModifier {
 
   public func body(content: Content) -> some View {
     content.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+  }
+}
+
+// MARK: - Text Style
+
+public struct SecondaryTextStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.font(.footnote).foregroundColor(Color.secondary)
   }
 }
