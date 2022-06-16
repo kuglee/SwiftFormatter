@@ -92,8 +92,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
       return reply(nil, error)
     }
 
-    var arguments = [String]()
-    arguments.append(contentsOf: ["-i", tempFileURL.path])
+    var arguments: [String] = ["-p", "-i", tempFileURL.path]
 
     if FileManager.default.fileExists(atPath: AppConstants.configFileURL.path) {
       arguments.append(contentsOf: ["--configuration", AppConstants.configFileURL.path])
