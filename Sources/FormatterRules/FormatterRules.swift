@@ -3,15 +3,15 @@ import StyleGuide
 import SwiftUI
 import Utility
 
-public enum RulesViewAction: Equatable { case ruleFilledOut(key: String, value: Bool) }
+public enum FormatterRulesViewAction: Equatable { case ruleFilledOut(key: String, value: Bool) }
 
-public struct RulesViewState: Equatable {
+public struct FormatterRulesViewState: Equatable {
   public var rules: [String: Bool]
 
   public init(rules: [String: Bool]) { self.rules = rules }
 }
 
-public let rulesViewReducer = Reducer<RulesViewState, RulesViewAction, Void> { state, action, _ in
+public let formatterRulesViewReducer = Reducer<FormatterRulesViewState, FormatterRulesViewAction, Void> { state, action, _ in
   switch action {
   case .ruleFilledOut(let key, let value):
     state.rules[key] = value
@@ -19,10 +19,10 @@ public let rulesViewReducer = Reducer<RulesViewState, RulesViewAction, Void> { s
   }
 }
 
-public struct RulesView: View {
-  let store: Store<RulesViewState, RulesViewAction>
+public struct FormatterRulesView: View {
+  let store: Store<FormatterRulesViewState, FormatterRulesViewAction>
 
-  public init(store: Store<RulesViewState, RulesViewAction>) { self.store = store }
+  public init(store: Store<FormatterRulesViewState, FormatterRulesViewAction>) { self.store = store }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
@@ -37,7 +37,7 @@ public struct RulesView: View {
               )
             ) { Text(key.separateCamelCase.sentenceCase) }
             .modifier(PrimaryToggleStyle())
-            .modifier(AlternatingRowStyle(background: index % 2 == 0 ? .dark : .light))
+            .modifier(AlternatingContentBackground(background: index % 2 == 0 ? .dark : .light))
           }
         }
         .modifier(PrimaryListBorderStyle())

@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension CGFloat { public static func grid(_ n: Int) -> CGFloat { return CGFloat(n) * 2 } }
+extension CGFloat { public static func grid(_ n: Int) -> CGFloat { .init(n) * 2 } }
 
 // MARK: - Colors
 
@@ -18,11 +18,8 @@ extension NSColor {
 
   // override with list style colors (bordered(alternatesRowBackgrounds:))
   static let alternatingContentBackgroundColors: [NSColor] = [
-    NSColor.dynamicColor(light: NSColor.white, dark: NSColor.init(white: 0.175, alpha: 1)),
-    NSColor.dynamicColor(
-      light: NSColor.init(white: 0.96, alpha: 1),
-      dark: NSColor.init(white: 0.21, alpha: 1)
-    ),
+    .dynamicColor(light: .white, dark: .init(white: 0.175, alpha: 1)),
+    .dynamicColor(light: .init(white: 0.96, alpha: 1), dark: .init(white: 0.21, alpha: 1)),
   ]
 }
 
@@ -93,51 +90,14 @@ public enum AlternatingBackground {
   case light
 }
 
-public struct BaseRowStyle: ViewModifier {
-  public init() {}
+public struct AlternatingContentBackground: ViewModifier {
+  private var background: AlternatingBackground
+
+  public init(background: AlternatingBackground) { self.background = background }
 
   public func body(content: Content) -> some View {
     content.padding([.vertical], .grid(2)).padding([.horizontal], .grid(3))
-  }
-}
-
-public struct PrimaryRowBackgroundStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.background(Color(NSColor.alternatingContentBackgroundColors[0]))
-  }
-}
-
-public struct SecondaryRowBackgroundStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.background(Color(NSColor.alternatingContentBackgroundColors[1]))
-  }
-}
-
-public struct AlternatingRowBackgroundStyle: ViewModifier {
-  private var background: AlternatingBackground
-
-  public init(background: AlternatingBackground) { self.background = background }
-
-  public func body(content: Content) -> some View {
-    switch background {
-    case .dark: return AnyView(content.modifier(PrimaryRowBackgroundStyle()))
-    case .light: return AnyView(content.modifier(SecondaryRowBackgroundStyle()))
-    }
-  }
-}
-
-public struct AlternatingRowStyle: ViewModifier {
-  private var background: AlternatingBackground
-
-  public init(background: AlternatingBackground) { self.background = background }
-
-  public func body(content: Content) -> some View {
-    content.modifier(BaseRowStyle())
-      .modifier(AlternatingRowBackgroundStyle(background: self.background))
+      .background(Color(.alternatingContentBackgroundColors[self.background == .dark ? 0 : 1]))
   }
 }
 
@@ -165,8 +125,7 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(width: 600, height: 532).padding(.horizontal, .grid(10)).padding(.top, .grid(5))
-      .padding(.bottom, .grid(10))
+    content.padding(.horizontal, .grid(10)).padding(.top, .grid(5)).padding(.bottom, .grid(10))
   }
 }
 
@@ -204,7 +163,7 @@ public struct PrimaryToggleStyle: ViewModifier {
   }
 }
 
-// MARK: - Text Style
+// MARK: - Text Styles
 
 public struct SecondaryTextStyle: ViewModifier {
   public init() {}

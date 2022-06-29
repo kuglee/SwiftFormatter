@@ -14,7 +14,7 @@ import Utility
           initialState: AppState(
             configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
             didRunBefore: getDidRunBefore(),
-            useAutodiscovery: getUseAutodiscovery()
+            useConfigurationAutodiscovery: getUseConfigurationAutodiscovery()
           ),
           reducer: appReducer.saveMiddleware(),
           environment: ()

@@ -7,12 +7,12 @@ let package = Package(
   name: "Modules",
   platforms: [.macOS(.v11)],
   products: [
-    .library(name: "Settings", targets: ["Settings"]), .library(name: "Rules", targets: ["Rules"]),
-    .library(name: "About", targets: ["About"]),
+    .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
+    .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
     .library(name: "Utility", targets: ["Utility"]),
     .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
-    .library(name: "General", targets: ["General"]),
+    .library(name: "Settings", targets: ["Settings"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -20,7 +20,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "Settings",
+      name: "FormatterSettings",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
@@ -28,24 +28,27 @@ let package = Package(
       ]
     ),
     .target(
-      name: "Rules",
+      name: "FormatterRules",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide", "Utility",
       ]
     ),
-    .target(name: "About", dependencies: ["StyleGuide"]),
-    .target(name: "StyleGuide", dependencies: []),
+    .target(name: "StyleGuide" ,dependencies: []),
     .target(name: "Utility", dependencies: []),
     .target(
       name: "ConfigurationManager",
       dependencies: [.product(name: "SwiftFormatConfiguration", package: "swift-format")]
     ),
     .target(
-      name: "General",
+      name: "Settings",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "StyleGuide", "Utility",
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        "FormatterSettings",
+        "FormatterRules",
+        "StyleGuide",
+        "Utility",
       ]
     ),
   ]

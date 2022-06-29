@@ -7,11 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D162CF1285A5C6F00AC5B86 /* General in Frameworks */ = {isa = PBXBuildFile; productRef = 5D162CF0285A5C6F00AC5B86 /* General */; };
-		5D164E6E2853DED4000C5FC7 /* About in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6D2853DED4000C5FC7 /* About */; };
 		5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */; };
-		5D164E722853DEF1000C5FC7 /* Rules in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E712853DEF1000C5FC7 /* Rules */; };
-		5D164E742853DEFA000C5FC7 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E732853DEFA000C5FC7 /* Settings */; };
 		5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E752853DF03000C5FC7 /* StyleGuide */; };
 		5D164E782853DF0E000C5FC7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E772853DF0E000C5FC7 /* Utility */; };
 		5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E792853DFA7000C5FC7 /* ConfigurationManager */; };
@@ -33,6 +29,7 @@
 		5DAAAA6C244B2E4800BCEF22 /* swift-format in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5DB068CA244AF6D8006CA5C5 /* swift-format */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5DB70A122850981300114D9D /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; };
 		5DB70A132850981300114D9D /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5DD2641C286ACA6100772CB2 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 5DD2641B286ACA6100772CB2 /* Settings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,13 +131,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D164E722853DEF1000C5FC7 /* Rules in Frameworks */,
 				5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */,
 				5D164E782853DF0E000C5FC7 /* Utility in Frameworks */,
 				5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */,
-				5D164E6E2853DED4000C5FC7 /* About in Frameworks */,
-				5D164E742853DEFA000C5FC7 /* Settings in Frameworks */,
-				5D162CF1285A5C6F00AC5B86 /* General in Frameworks */,
+				5DD2641C286ACA6100772CB2 /* Settings in Frameworks */,
 				5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */,
 				5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */,
 			);
@@ -283,15 +277,12 @@
 			);
 			name = "Swift Formatter";
 			packageProductDependencies = (
-				5D164E6D2853DED4000C5FC7 /* About */,
 				5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */,
-				5D164E712853DEF1000C5FC7 /* Rules */,
-				5D164E732853DEFA000C5FC7 /* Settings */,
 				5D164E752853DF03000C5FC7 /* StyleGuide */,
 				5D164E772853DF0E000C5FC7 /* Utility */,
 				5D164E792853DFA7000C5FC7 /* ConfigurationManager */,
 				5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */,
-				5D162CF0285A5C6F00AC5B86 /* General */,
+				5DD2641B286ACA6100772CB2 /* Settings */,
 			);
 			productName = "Swift-format";
 			productReference = 5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */;
@@ -910,26 +901,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5D162CF0285A5C6F00AC5B86 /* General */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = General;
-		};
-		5D164E6D2853DED4000C5FC7 /* About */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = About;
-		};
 		5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		5D164E712853DEF1000C5FC7 /* Rules */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Rules;
-		};
-		5D164E732853DEFA000C5FC7 /* Settings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
 		};
 		5D164E752853DF03000C5FC7 /* StyleGuide */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -956,6 +931,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
 			productName = "swift-format";
+		};
+		5DD2641B286ACA6100772CB2 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

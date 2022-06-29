@@ -1,9 +1,6 @@
-import About
 import CasePaths
 import ComposableArchitecture
 import ConfigurationManager
-import General
-import Rules
 import Settings
 import StyleGuide
 import SwiftFormatConfiguration
@@ -22,15 +19,15 @@ let formatterRulesKeys: [String] = [
 
 public struct AppState: Equatable {
   public var configuration: Configuration
-  public var selectedTab: Int
+  public var selectedTab: Tab = .formatting
   public var didRunBefore: Bool
-  public var useAutodiscovery: Bool
+  public var useConfigurationAutodiscovery: Bool
 
-  public init(configuration: Configuration, didRunBefore: Bool, useAutodiscovery: Bool) {
+  public init(configuration: Configuration, didRunBefore: Bool, useConfigurationAutodiscovery: Bool)
+  {
     self.didRunBefore = getDidRunBefore()
-    self.selectedTab = !self.didRunBefore ? 2 : 0
     self.configuration = configuration
-    self.useAutodiscovery = useAutodiscovery
+    self.useConfigurationAutodiscovery = useConfigurationAutodiscovery
 
     self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
 
@@ -45,81 +42,22 @@ public struct AppState: Equatable {
 public enum AppAction {
   case setDidRunBefore(value: Bool)
   case settingsView(SettingsViewAction)
-  case rulesView(RulesViewAction)
-  case tabView(TabViewAction)
-  case generalView(GeneralViewAction)
 }
 
 extension AppState {
   var settingsView: SettingsViewState {
     get {
       SettingsViewState(
-        maximumBlankLines: self.configuration.maximumBlankLines,
-        lineLength: self.configuration.lineLength,
-        tabWidth: self.configuration.tabWidth,
-        indentation: self.configuration.indentation,
-        respectsExistingLineBreaks: self.configuration.respectsExistingLineBreaks,
-        lineBreakBeforeControlFlowKeywords: self.configuration.lineBreakBeforeControlFlowKeywords,
-        lineBreakBeforeEachArgument: self.configuration.lineBreakBeforeEachArgument,
-        lineBreakBeforeEachGenericRequirement: self.configuration
-          .lineBreakBeforeEachGenericRequirement,
-        prioritizeKeepingFunctionOutputTogether: self.configuration
-          .prioritizeKeepingFunctionOutputTogether,
-        indentConditionalCompilationBlocks: self.configuration.indentConditionalCompilationBlocks,
-        indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
-        lineBreakAroundMultilineExpressionChainComponents: self.configuration
-          .lineBreakAroundMultilineExpressionChainComponents,
-        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy
+        configuration: self.configuration,
+        selectedTab: self.selectedTab,
+        useConfigurationAutodiscovery: self.useConfigurationAutodiscovery
       )
     }
     set {
-      self.configuration.maximumBlankLines = newValue.maximumBlankLines
-      self.configuration.lineLength = newValue.lineLength
-      self.configuration.tabWidth = newValue.tabWidth
-      self.configuration.indentation = newValue.indentation
-      self.configuration.respectsExistingLineBreaks = newValue.respectsExistingLineBreaks
-      self.configuration.lineBreakBeforeControlFlowKeywords =
-        newValue.lineBreakBeforeControlFlowKeywords
-      self.configuration.lineBreakBeforeEachArgument = newValue.lineBreakBeforeEachArgument
-      self.configuration.lineBreakBeforeEachGenericRequirement =
-        newValue.lineBreakBeforeEachGenericRequirement
-      self.configuration.prioritizeKeepingFunctionOutputTogether =
-        newValue.prioritizeKeepingFunctionOutputTogether
-      self.configuration.indentConditionalCompilationBlocks =
-        newValue.indentConditionalCompilationBlocks
-      self.configuration.indentSwitchCaseLabels = newValue.indentSwitchCaseLabels
-      self.configuration.lineBreakAroundMultilineExpressionChainComponents =
-        newValue.lineBreakAroundMultilineExpressionChainComponents
-      self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
+      self.configuration = newValue.configuration
+      self.selectedTab = newValue.selectedTab
+      self.useConfigurationAutodiscovery = newValue.useConfigurationAutodiscovery
     }
-  }
-
-  var rulesView: RulesViewState {
-    get { RulesViewState(rules: self.configuration.rules) }
-    set { self.configuration.rules = newValue.rules }
-  }
-
-  var tabView: TabViewState {
-    get { TabViewState(selectedTab: self.selectedTab) }
-    set { self.selectedTab = newValue.selectedTab }
-  }
-
-  var generalView: GeneralViewState {
-    get { GeneralViewState(useAutodiscovery: self.useAutodiscovery) }
-    set { self.useAutodiscovery = newValue.useAutodiscovery }
-  }
-
-}
-
-public enum TabViewAction: Equatable { case tabSelected(Int) }
-
-public struct TabViewState { var selectedTab: Int }
-
-public let tabViewReducer = Reducer<TabViewState, TabViewAction, Void> { state, action, _ in
-  switch action {
-  case .tabSelected(let selectedTab):
-    state.selectedTab = selectedTab
-    return .none
   }
 }
 
@@ -131,25 +69,11 @@ let appReducer = Reducer<AppState, AppAction, Void>
         state.didRunBefore = value
         return .fireAndForget { setDidRunBefore() }
       case .settingsView(_): return .none
-      case .rulesView(_): return .none
-      case .tabView(_): return .none
-      case .generalView(_): return .none
       }
     },
     settingsViewReducer.pullback(
       state: \AppState.settingsView,
       action: /AppAction.settingsView,
-      environment: {}
-    ),
-    rulesViewReducer.pullback(
-      state: \AppState.rulesView,
-      action: /AppAction.rulesView,
-      environment: {}
-    ),
-    tabViewReducer.pullback(state: \AppState.tabView, action: /AppAction.tabView, environment: {}),
-    generalViewReducer.pullback(
-      state: \AppState.generalView,
-      action: /AppAction.generalView,
       environment: {}
     )
   )
@@ -159,27 +83,11 @@ public struct ContentView: View {
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
-      TabView(
-        selection: Binding(
-          get: { viewStore.selectedTab },
-          set: { viewStore.send(.tabView(.tabSelected($0))) }
-        )
-      ) {
-        SettingsView(
-          store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
-        )
-        .modifier(PrimaryTabItemStyle()).tabItem { Text("Formatting") }.tag(0)
-        RulesView(store: self.store.scope(state: { $0.rulesView }, action: { .rulesView($0) }))
-          .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(1)
-        AboutView().modifier(PrimaryTabItemStyle()).tabItem { Text("About") }.tag(2)
-        GeneralView(
-          store: self.store.scope(state: { $0.generalView }, action: { .generalView($0) })
-        )
-        .modifier(PrimaryTabItemStyle()).tabItem { Text("General") }.tag(3)
-      }
-      .modifier(PrimaryTabViewStyle()).navigationTitle("Swift Formatter")
-      .onAppear { if !viewStore.didRunBefore { viewStore.send(.setDidRunBefore(value: true)) } }
+      SettingsView(
+        store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
+      )
     }
+    .navigationTitle("Swift Formatter")
   }
 }
 
@@ -187,7 +95,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
   func saveMiddleware() -> Reducer {
     .init { state, action, environment in
       switch action {
-      case .settingsView, .rulesView:
+      case .settingsView:
         let effects = self(&state, action, environment)
         let newState = state
         return .concatenate(
@@ -216,7 +124,7 @@ func setDidRunBefore() {
     .set(true, forKey: AppConstants.didRunBeforeKey)
 }
 
-func getUseAutodiscovery() -> Bool {
+func getUseConfigurationAutodiscovery() -> Bool {
   UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .bool(forKey: AppConstants.useAutodiscovery)
+    .bool(forKey: AppConstants.useConfigurationAutodiscovery)
 }
