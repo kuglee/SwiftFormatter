@@ -135,7 +135,6 @@
 		5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Swift Formatter Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorExtension.swift; sourceTree = "<group>"; };
 		5DA2B9A12286048F0051C256 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
-		5DA754B12288133C00FF0EAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Service/Info.plist; sourceTree = SOURCE_ROOT; };
 		5DB068CA244AF6D8006CA5C5 /* swift-format */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "swift-format"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB70A112850981300114D9D /* XcodeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XcodeKit.framework; path = Library/Frameworks/XcodeKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -203,14 +202,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5D39756E228759FA00307B1E /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				5DA754B12288133C00FF0EAA /* Info.plist */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		5DA2B97C2286045B0051C256 = {
 			isa = PBXGroup;
 			children = (
@@ -218,7 +209,6 @@
 				5D164E6C2853DE21000C5FC7 /* Modules */,
 				5D1AB85022B75D6E00F15F08 /* Application */,
 				5DA2B99E2286048F0051C256 /* Extension */,
-				5D39756E228759FA00307B1E /* Service */,
 				5DA2B9862286045B0051C256 /* Products */,
 				5DAAAA67244B2BBE00BCEF22 /* Frameworks */,
 			);
@@ -632,7 +622,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
-				INFOPLIST_FILE = "$(SRCROOT)/Service/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/SwiftFormatterService/SwiftFormatterService.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -658,7 +648,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = C89KNBM28S;
-				INFOPLIST_FILE = "$(SRCROOT)/Service/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/SwiftFormatterService/SwiftFormatterService.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

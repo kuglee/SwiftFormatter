@@ -56,6 +56,8 @@ let package = Package(
     .target(name: "SwiftFormatterServiceProtocol", dependencies: []),
     .executableTarget(
       name: "SwiftFormatterService",
-      dependencies: ["SwiftFormatterServiceProtocol", "Utility"]),
+      dependencies: ["SwiftFormatterServiceProtocol", "Utility"],
+      exclude: ["SwiftFormatterService.plist"]
+    ),
   ]
 )
