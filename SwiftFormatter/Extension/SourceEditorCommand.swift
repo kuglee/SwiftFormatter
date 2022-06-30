@@ -1,4 +1,5 @@
 import Foundation
+import SwiftFormatterServiceProtocol
 import XcodeKit
 import os.log
 

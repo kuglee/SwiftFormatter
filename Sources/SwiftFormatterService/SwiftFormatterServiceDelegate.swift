@@ -1,6 +1,7 @@
 import Foundation
+import SwiftFormatterServiceProtocol
 
-class ServiceDelegate: NSObject, NSXPCListenerDelegate {
+class SwiftFormatterServiceDelegate: NSObject, NSXPCListenerDelegate {
   func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection)
     -> Bool
   {
@@ -11,9 +12,3 @@ class ServiceDelegate: NSObject, NSXPCListenerDelegate {
     return true
   }
 }
-
-let delegate = ServiceDelegate()
-
-let listener = NSXPCListener.service()
-listener.delegate = delegate
-listener.resume()
