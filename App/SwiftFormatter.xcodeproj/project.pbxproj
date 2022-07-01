@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D098D1E286F8FCC004FDAF0 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 5D098D1D286F8FCC004FDAF0 /* App */; };
 		5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */; };
 		5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E752853DF03000C5FC7 /* StyleGuide */; };
 		5D164E782853DF0E000C5FC7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E772853DF0E000C5FC7 /* Utility */; };
 		5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E792853DFA7000C5FC7 /* ConfigurationManager */; };
 		5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */; };
 		5D1AB85222B75D6E00F15F08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */; };
-		5D1AB85422B75D6E00F15F08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85322B75D6E00F15F08 /* ContentView.swift */; };
 		5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85522B75D7000F15F08 /* Assets.xcassets */; };
 		5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */; };
 		5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85A22B75D7000F15F08 /* Main.storyboard */; };
@@ -122,7 +122,6 @@
 		5D164E6C2853DE21000C5FC7 /* SwiftFormatter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftFormatter; path = ..; sourceTree = "<group>"; };
 		5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Formatter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D1AB85322B75D6E00F15F08 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5D1AB85522B75D7000F15F08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5D1AB85B22B75D7000F15F08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,6 +146,7 @@
 				5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */,
 				5D164E782853DF0E000C5FC7 /* Utility in Frameworks */,
 				5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */,
+				5D098D1E286F8FCC004FDAF0 /* App in Frameworks */,
 				5DD2641C286ACA6100772CB2 /* Settings in Frameworks */,
 				5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */,
 				5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */,
@@ -176,7 +176,6 @@
 			isa = PBXGroup;
 			children = (
 				5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */,
-				5D1AB85322B75D6E00F15F08 /* ContentView.swift */,
 				5D1AB85522B75D7000F15F08 /* Assets.xcassets */,
 				5D1AB85A22B75D7000F15F08 /* Main.storyboard */,
 				5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */,
@@ -261,6 +260,7 @@
 				5D164E792853DFA7000C5FC7 /* ConfigurationManager */,
 				5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */,
 				5DD2641B286ACA6100772CB2 /* Settings */,
+				5D098D1D286F8FCC004FDAF0 /* App */,
 			);
 			productName = "Swift-format";
 			productReference = 5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */;
@@ -482,7 +482,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D1AB85422B75D6E00F15F08 /* ContentView.swift in Sources */,
 				5D1AB85222B75D6E00F15F08 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -957,6 +956,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5D098D1D286F8FCC004FDAF0 /* App */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = App;
+		};
 		5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;

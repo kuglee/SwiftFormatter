@@ -1,5 +1,4 @@
 // swift-tools-version: 5.6
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -7,6 +6,7 @@ let package = Package(
   name: "Modules",
   platforms: [.macOS(.v11)],
   products: [
+    .library(name: "App", targets: ["App"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
@@ -21,6 +21,17 @@ let package = Package(
     .package(url: "https://github.com/apple/swift-format", branch: "release/5.6"),
   ],
   targets: [
+    .target(
+      name: "App",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "ConfigurationManager",
+        "Settings",
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        "StyleGuide",
+        "Utility",
+      ]
+    ),
     .target(
       name: "FormatterSettings",
       dependencies: [

@@ -1,4 +1,3 @@
-import CasePaths
 import ComposableArchitecture
 import ConfigurationManager
 import Settings
@@ -25,7 +24,7 @@ public struct AppState: Equatable {
 
   public init(configuration: Configuration, didRunBefore: Bool, useConfigurationAutodiscovery: Bool)
   {
-    self.didRunBefore = getDidRunBefore()
+    self.didRunBefore = didRunBefore
     self.configuration = configuration
     self.useConfigurationAutodiscovery = useConfigurationAutodiscovery
 
@@ -61,7 +60,7 @@ extension AppState {
   }
 }
 
-let appReducer = Reducer<AppState, AppAction, Void>
+public let appReducer = Reducer<AppState, AppAction, Void>
   .combine(
     Reducer { state, action, _ in
       switch action {
@@ -78,8 +77,12 @@ let appReducer = Reducer<AppState, AppAction, Void>
     )
   )
 
-public struct ContentView: View {
+public struct AppView: View {
   let store: Store<AppState, AppAction>
+
+  public init(store: Store<AppState, AppAction>) {
+    self.store = store
+  }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
@@ -87,44 +90,10 @@ public struct ContentView: View {
         store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
       )
     }
-    .navigationTitle("Swift Formatter")
   }
-}
-
-extension Reducer where State == AppState, Action == AppAction, Environment == Void {
-  func saveMiddleware() -> Reducer {
-    .init { state, action, environment in
-      switch action {
-      case .settingsView:
-        let effects = self(&state, action, environment)
-        let newState = state
-        return .concatenate(
-          .fireAndForget {
-            dumpConfiguration(
-              configuration: newState.configuration,
-              outputFileURL: AppConstants.configFileURL,
-              createIntermediateDirectories: true
-            )
-          },
-          effects
-        )
-      default: return self(&state, action, environment)
-      }
-    }
-  }
-}
-
-func getDidRunBefore() -> Bool {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .bool(forKey: AppConstants.didRunBeforeKey)
 }
 
 func setDidRunBefore() {
   UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
     .set(true, forKey: AppConstants.didRunBeforeKey)
-}
-
-func getUseConfigurationAutodiscovery() -> Bool {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .bool(forKey: AppConstants.useConfigurationAutodiscovery)
 }

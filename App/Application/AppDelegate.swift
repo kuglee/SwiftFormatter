@@ -1,3 +1,4 @@
+import App
 import ComposableArchitecture
 import ConfigurationManager
 import SwiftFormatConfiguration
@@ -9,7 +10,7 @@ import Utility
 
   var body: some Scene {
     WindowGroup {
-      ContentView(
+      AppView(
         store: Store(
           initialState: AppState(
             configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
@@ -27,10 +28,44 @@ import Utility
 class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     NSApplication.shared.windows.first?.styleMask = [.titled, .closable, .miniaturizable]
+
     // disable default focus
     NSApplication.shared.windows.first?.makeFirstResponder(nil)
     NSApplication.shared.windows.first?.resignFirstResponder()
   }
 
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+}
+
+extension Reducer where State == AppState, Action == AppAction, Environment == Void {
+  func saveMiddleware() -> Reducer {
+    .init { state, action, environment in
+      switch action {
+      case .settingsView:
+        let effects = self(&state, action, environment)
+        let newState = state
+        return .concatenate(
+          .fireAndForget {
+            dumpConfiguration(
+              configuration: newState.configuration,
+              outputFileURL: AppConstants.configFileURL,
+              createIntermediateDirectories: true
+            )
+          },
+          effects
+        )
+      default: return self(&state, action, environment)
+      }
+    }
+  }
+}
+
+func getDidRunBefore() -> Bool {
+  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+    .bool(forKey: AppConstants.didRunBeforeKey)
+}
+
+func getUseConfigurationAutodiscovery() -> Bool {
+  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+    .bool(forKey: AppConstants.useConfigurationAutodiscovery)
 }

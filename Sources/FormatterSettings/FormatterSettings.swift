@@ -1,4 +1,3 @@
-import CasePaths
 import ComposableArchitecture
 import StyleGuide
 import SwiftFormatConfiguration
