@@ -6,6 +6,4 @@ import Foundation
     useConfigurationAutodiscovery: Bool,
     reply: @escaping (String?, Error?) -> Void
   )
-
-  func openPreferences()
 }
