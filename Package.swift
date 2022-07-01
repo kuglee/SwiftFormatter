@@ -14,6 +14,7 @@ let package = Package(
     .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "SwiftFormatterServiceProtocol", targets: ["SwiftFormatterServiceProtocol"]),
+    .library(name: "AppConstants", targets: ["AppConstants"]),
     .executable(name: "SwiftFormatterService", targets: ["SwiftFormatterService"]),
   ],
   dependencies: [
@@ -29,7 +30,7 @@ let package = Package(
         "Settings",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
         "StyleGuide",
-        "Utility",
+        "AppConstants",
       ]
     ),
     .target(
@@ -37,6 +38,7 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
+        "AppConstants",
         "Utility",
       ]
     ),
@@ -44,7 +46,9 @@ let package = Package(
       name: "FormatterRules",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "StyleGuide", "Utility",
+        "StyleGuide",
+        "AppConstants",
+        "Utility",
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
@@ -61,13 +65,14 @@ let package = Package(
         "FormatterSettings",
         "FormatterRules",
         "StyleGuide",
-        "Utility",
+        "AppConstants",
       ]
     ),
     .target(name: "SwiftFormatterServiceProtocol", dependencies: []),
+    .target(name: "AppConstants" ,dependencies: []),
     .executableTarget(
       name: "SwiftFormatterService",
-      dependencies: ["SwiftFormatterServiceProtocol", "Utility"],
+      dependencies: ["SwiftFormatterServiceProtocol", "AppConstants"],
       exclude: ["SwiftFormatterService.plist"]
     ),
   ]

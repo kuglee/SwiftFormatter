@@ -1,10 +1,10 @@
+import AppConstants
 import ComposableArchitecture
 import ConfigurationManager
 import Settings
 import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
-import Utility
 
 let formatterRulesKeys: [String] = [
   "DoNotUseSemicolons", "FileScopedDeclarationPrivacy", "FullyIndirectEnum", "GroupNumericLiterals",
@@ -80,9 +80,7 @@ public let appReducer = Reducer<AppState, AppAction, Void>
 public struct AppView: View {
   let store: Store<AppState, AppAction>
 
-  public init(store: Store<AppState, AppAction>) {
-    self.store = store
-  }
+  public init(store: Store<AppState, AppAction>) { self.store = store }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
@@ -94,6 +92,6 @@ public struct AppView: View {
 }
 
 func setDidRunBefore() {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+  UserDefaults(suiteName: AppConstants.appGroupName)!
     .set(true, forKey: AppConstants.didRunBeforeKey)
 }

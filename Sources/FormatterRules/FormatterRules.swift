@@ -1,3 +1,4 @@
+import AppConstants
 import ComposableArchitecture
 import StyleGuide
 import SwiftUI
@@ -11,7 +12,9 @@ public struct FormatterRulesViewState: Equatable {
   public init(rules: [String: Bool]) { self.rules = rules }
 }
 
-public let formatterRulesViewReducer = Reducer<FormatterRulesViewState, FormatterRulesViewAction, Void> { state, action, _ in
+public let formatterRulesViewReducer = Reducer<
+  FormatterRulesViewState, FormatterRulesViewAction, Void
+> { state, action, _ in
   switch action {
   case .ruleFilledOut(let key, let value):
     state.rules[key] = value
@@ -22,7 +25,9 @@ public let formatterRulesViewReducer = Reducer<FormatterRulesViewState, Formatte
 public struct FormatterRulesView: View {
   let store: Store<FormatterRulesViewState, FormatterRulesViewAction>
 
-  public init(store: Store<FormatterRulesViewState, FormatterRulesViewAction>) { self.store = store }
+  public init(store: Store<FormatterRulesViewState, FormatterRulesViewAction>) {
+    self.store = store
+  }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in

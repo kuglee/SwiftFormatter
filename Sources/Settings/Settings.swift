@@ -1,10 +1,10 @@
+import AppConstants
 import ComposableArchitecture
 import FormatterRules
 import FormatterSettings
 import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
-import Utility
 
 public enum Tab {
   case formatting
@@ -163,6 +163,6 @@ public struct SettingsView: View {
 }
 
 func setUseConfigurationAutodiscovery(newValue: Bool) {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .set(newValue, forKey: AppConstants.useConfigurationAutodiscovery)
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .set(newValue, forKey: AppConstants.useConfigurationAutodiscoveryKey)
 }

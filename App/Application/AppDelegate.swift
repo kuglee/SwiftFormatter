@@ -1,9 +1,9 @@
 import App
+import AppConstants
 import ComposableArchitecture
 import ConfigurationManager
 import SwiftFormatConfiguration
 import SwiftUI
-import Utility
 
 @main struct SwiftFormatApp: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -61,11 +61,10 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
 }
 
 func getDidRunBefore() -> Bool {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .bool(forKey: AppConstants.didRunBeforeKey)
+  UserDefaults(suiteName: AppConstants.appGroupName)!.bool(forKey: AppConstants.didRunBeforeKey)
 }
 
 func getUseConfigurationAutodiscovery() -> Bool {
-  UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-    .bool(forKey: AppConstants.useConfigurationAutodiscovery)
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .bool(forKey: AppConstants.useConfigurationAutodiscoveryKey)
 }
