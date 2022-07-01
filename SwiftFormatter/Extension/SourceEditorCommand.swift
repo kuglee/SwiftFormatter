@@ -57,6 +57,22 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
   }
 }
 
+class OpenPreferencesCommand: NSObject, XCSourceEditorCommand {
+  func perform(
+    with invocation: XCSourceEditorCommandInvocation,
+    completionHandler: @escaping (Error?) -> Void
+  ) {
+    let serviceConnection = getServiceConnection()
+    serviceConnection.resume()
+
+    let service = getService(connection: serviceConnection)
+    service.openPreferences()
+    serviceConnection.invalidate()
+
+    return completionHandler(nil)
+  }
+}
+
 func getServiceConnection() -> NSXPCConnection {
   let connection = NSXPCConnection(serviceName: "com.kuglee.SwiftFormatter.service")
   connection.remoteObjectInterface = NSXPCInterface(with: SwiftFormatterServiceProtocol.self)

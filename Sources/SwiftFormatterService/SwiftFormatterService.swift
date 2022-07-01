@@ -119,4 +119,11 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
       return reply(nil, error)
     }
   }
+
+  func openPreferences() {
+    run(
+      command: URL(fileURLWithPath: "/usr/bin/open"),
+      with: ["-a", "/Applications/Swift Formatter.app"]
+    )
+  }
 }
