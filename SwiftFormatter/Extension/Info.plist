@@ -30,9 +30,9 @@
 			<array>
 				<dict>
 					<key>XCSourceEditorCommandClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).SourceEditorCommand</string>
+					<string>$(PRODUCT_MODULE_NAME).FormatSourceCommand</string>
 					<key>XCSourceEditorCommandIdentifier</key>
-					<string>$(PRODUCT_BUNDLE_IDENTIFIER).SourceEditorCommand</string>
+					<string>$(PRODUCT_BUNDLE_IDENTIFIER).FormatSourceCommand</string>
 					<key>XCSourceEditorCommandName</key>
 					<string>Format Source</string>
 				</dict>

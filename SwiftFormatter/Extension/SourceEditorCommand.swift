@@ -15,7 +15,7 @@ enum FormatterError: Error, LocalizedError {
   }
 }
 
-class SourceEditorCommand: NSObject, XCSourceEditorCommand {
+class FormatSourceCommand: NSObject, XCSourceEditorCommand {
   func perform(
     with invocation: XCSourceEditorCommandInvocation,
     completionHandler: @escaping (Error?) -> Void
@@ -25,18 +25,10 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
         .contains(invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
-    let swiftFormatterServiceConnection = NSXPCConnection(
-      serviceName: "com.kuglee.SwiftFormatter.service"
-    )
-    swiftFormatterServiceConnection.remoteObjectInterface = NSXPCInterface(
-      with: SwiftFormatterServiceProtocol.self
-    )
-    swiftFormatterServiceConnection.resume()
+    let serviceConnection = getServiceConnection()
+    serviceConnection.resume()
 
-    let swiftFormatterService =
-      (swiftFormatterServiceConnection.remoteObjectProxy as AnyObject)
-      .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription)
-      } as! SwiftFormatterServiceProtocol
+    let service = getService(connection: serviceConnection)
 
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
@@ -44,10 +36,9 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
     let useConfigurationAutodiscovery = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
       .bool(forKey: "useConfigurationAutodiscovery")
 
-    swiftFormatterService.format(
-      source: source,
-      useConfigurationAutodiscovery: useConfigurationAutodiscovery
-    ) { formattedSource, error in defer { swiftFormatterServiceConnection.invalidate() }
+    service.format(source: source, useConfigurationAutodiscovery: useConfigurationAutodiscovery) {
+      formattedSource,
+      error in defer { serviceConnection.invalidate() }
 
       if let error = error { return completionHandler(error) }
 
@@ -64,4 +55,17 @@ class SourceEditorCommand: NSObject, XCSourceEditorCommand {
       return completionHandler(nil)
     }
   }
+}
+
+func getServiceConnection() -> NSXPCConnection {
+  let connection = NSXPCConnection(serviceName: "com.kuglee.SwiftFormatter.service")
+  connection.remoteObjectInterface = NSXPCInterface(with: SwiftFormatterServiceProtocol.self)
+
+  return connection
+}
+
+func getService(connection: NSXPCConnection) -> SwiftFormatterServiceProtocol {
+  return (connection.remoteObjectProxy as AnyObject)
+    .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription) }
+    as! SwiftFormatterServiceProtocol
 }
