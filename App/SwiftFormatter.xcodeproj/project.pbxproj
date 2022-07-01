@@ -119,7 +119,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5D164E6C2853DE21000C5FC7 /* Modules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Modules; path = ..; sourceTree = "<group>"; };
+		5D164E6C2853DE21000C5FC7 /* SwiftFormatter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftFormatter; path = ..; sourceTree = "<group>"; };
 		5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Formatter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D1AB85322B75D6E00F15F08 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 				5D1AB85322B75D6E00F15F08 /* ContentView.swift */,
 				5D1AB85522B75D7000F15F08 /* Assets.xcassets */,
 				5D1AB85A22B75D7000F15F08 /* Main.storyboard */,
+				5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */,
 				5D1AB85D22B75D7000F15F08 /* Info.plist */,
 				5D1AB85722B75D7000F15F08 /* Preview Content */,
 			);
@@ -193,20 +194,10 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5D38B45922876EB100EE78C7 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5D38EC1B22A2CFEA0020E392 /* Swift Formatter Extension.entitlements */,
-				5D38B46A228770E900EE78C7 /* Info.plist */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		5DA2B97C2286045B0051C256 = {
 			isa = PBXGroup;
 			children = (
-				5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */,
-				5D164E6C2853DE21000C5FC7 /* Modules */,
+				5D164E6C2853DE21000C5FC7 /* SwiftFormatter */,
 				5D1AB85022B75D6E00F15F08 /* Application */,
 				5DA2B99E2286048F0051C256 /* Extension */,
 				5DA2B9862286045B0051C256 /* Products */,
@@ -231,7 +222,8 @@
 			children = (
 				5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */,
 				5DA2B9A12286048F0051C256 /* SourceEditorCommand.swift */,
-				5D38B45922876EB100EE78C7 /* Supporting Files */,
+				5D38EC1B22A2CFEA0020E392 /* Swift Formatter Extension.entitlements */,
+				5D38B46A228770E900EE78C7 /* Info.plist */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -561,7 +553,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Swift Formatter.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Application/Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -590,7 +582,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Swift Formatter.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Application/Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
