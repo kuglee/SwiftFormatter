@@ -14,8 +14,7 @@ import SwiftUI
         store: Store(
           initialState: AppState(
             configuration: loadConfiguration(fromJSON: getConfiguration()),
-            didRunBefore: getDidRunBefore(),
-            useConfigurationAutodiscovery: getUseConfigurationAutodiscovery()
+            didRunBefore: getDidRunBefore()
           ),
           reducer: appReducer.saveMiddleware(),
           environment: ()
@@ -56,9 +55,4 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
 
 func getDidRunBefore() -> Bool {
   UserDefaults(suiteName: AppConstants.appGroupName)!.bool(forKey: AppConstants.didRunBeforeKey)
-}
-
-func getUseConfigurationAutodiscovery() -> Bool {
-  UserDefaults(suiteName: AppConstants.appGroupName)!
-    .bool(forKey: AppConstants.useConfigurationAutodiscoveryKey)
 }

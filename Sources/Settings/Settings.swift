@@ -14,21 +14,14 @@ public enum Tab {
 public struct SettingsViewState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Tab
-  public var useConfigurationAutodiscovery: Bool
 
-  public init(
-    configuration: Configuration,
-    selectedTab: Tab = .formatting,
-    useConfigurationAutodiscovery: Bool
-  ) {
+  public init(configuration: Configuration, selectedTab: Tab = .formatting) {
     self.configuration = configuration
-    self.useConfigurationAutodiscovery = useConfigurationAutodiscovery
     self.selectedTab = selectedTab
   }
 }
 
 public enum SettingsViewAction: Equatable {
-  case useConfigurationAutodiscoveryFilledOut(Bool)
   case tabSelected(Tab)
   case formatterSettingsView(FormatterSettingsViewAction)
   case formatterRulesView(FormatterRulesViewAction)
@@ -88,10 +81,6 @@ public let settingsViewReducer = Reducer<SettingsViewState, SettingsViewAction, 
   .combine(
     Reducer { state, action, _ in
       switch action {
-      case .useConfigurationAutodiscoveryFilledOut(let value):
-        state.selectedTab = .formatting
-        state.useConfigurationAutodiscovery = value
-        return .fireAndForget { setUseConfigurationAutodiscovery(newValue: value) }
       case .tabSelected(let selectedTab):
         state.selectedTab = selectedTab
         return .none
@@ -118,51 +107,28 @@ public struct SettingsView: View {
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
-      VStack {
-        VStack(alignment: .leadingAlignmentGuide, spacing: .grid(2)) {
-          Toggle(
-            isOn: Binding(
-              get: { viewStore.useConfigurationAutodiscovery },
-              set: { viewStore.send(.useConfigurationAutodiscoveryFilledOut($0)) }
-            )
-          ) { Text("Use configuration autodiscovery").modifier(LeadingAlignmentStyle()) }
-          .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-          .help(
-            "For any source file being checked or formatted, swift-format looks for a JSON-formatted file named .swift-format in the same directory. If one is found, then that file is loaded to determine the tool's configuration. If the file is not found, then it looks in the parent directory, and so on."
+      TabView(
+        selection: Binding(
+          get: { viewStore.selectedTab },
+          set: { viewStore.send(.tabSelected($0)) }
+        )
+      ) {
+        FormatterSettingsView(
+          store: self.store.scope(
+            state: { $0.formatterSettingsView },
+            action: { .formatterSettingsView($0) }
           )
-          Text("Use .swift-format configuration files based on source file location.")
-            .modifier(SecondaryTextStyle())
-        }
-        .padding(.top, .grid(8))
-        TabView(
-          selection: Binding(
-            get: { viewStore.selectedTab },
-            set: { viewStore.send(.tabSelected($0)) }
+        )
+        .tabItem { Text("Formatting") }.tag(Tab.formatting).modifier(PrimaryTabItemStyle())
+        FormatterRulesView(
+          store: self.store.scope(
+            state: { $0.formatterRulesView },
+            action: { .formatterRulesView($0) }
           )
-        ) {
-          FormatterSettingsView(
-            store: self.store.scope(
-              state: { $0.formatterSettingsView },
-              action: { .formatterSettingsView($0) }
-            )
-          )
-          .tabItem { Text("Formatting") }.tag(Tab.formatting).modifier(PrimaryTabItemStyle())
-          FormatterRulesView(
-            store: self.store.scope(
-              state: { $0.formatterRulesView },
-              action: { .formatterRulesView($0) }
-            )
-          )
-          .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(Tab.rules)
-        }
-        .modifier(PrimaryTabViewStyle()).disabled(viewStore.useConfigurationAutodiscovery)
+        )
+        .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(Tab.rules)
       }
-      .frame(width: 650, height: 620)
+      .modifier(PrimaryTabViewStyle())
     }
   }
-}
-
-func setUseConfigurationAutodiscovery(newValue: Bool) {
-  UserDefaults(suiteName: AppConstants.appGroupName)!
-    .set(newValue, forKey: AppConstants.useConfigurationAutodiscoveryKey)
 }

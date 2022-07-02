@@ -31,12 +31,6 @@ extension HorizontalAlignment {
   }
 
   public static let trailingAlignmentGuide = HorizontalAlignment(TrailingAlignment.self)
-
-  private enum LeadingAlignment: AlignmentID {
-    static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.leading] }
-  }
-
-  public static let leadingAlignmentGuide = HorizontalAlignment(LeadingAlignment.self)
 }
 
 public struct TrailingAlignmentStyle: ViewModifier {
@@ -44,14 +38,6 @@ public struct TrailingAlignmentStyle: ViewModifier {
 
   public func body(content: Content) -> some View {
     content.alignmentGuide(.trailingAlignmentGuide) { $0[.trailing] }
-  }
-}
-
-public struct LeadingAlignmentStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.alignmentGuide(.leadingAlignmentGuide) { $0[.leading] }
   }
 }
 
@@ -125,7 +111,8 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.padding(.horizontal, .grid(10)).padding(.top, .grid(5)).padding(.bottom, .grid(10))
+    content.frame(width: 600, height: 532).padding(.horizontal, .grid(10)).padding(.top, .grid(5))
+      .padding(.bottom, .grid(10))
   }
 }
 

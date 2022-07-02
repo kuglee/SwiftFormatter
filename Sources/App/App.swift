@@ -20,13 +20,10 @@ public struct AppState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Tab = .formatting
   public var didRunBefore: Bool
-  public var useConfigurationAutodiscovery: Bool
 
-  public init(configuration: Configuration, didRunBefore: Bool, useConfigurationAutodiscovery: Bool)
-  {
+  public init(configuration: Configuration, didRunBefore: Bool) {
     self.didRunBefore = didRunBefore
     self.configuration = configuration
-    self.useConfigurationAutodiscovery = useConfigurationAutodiscovery
 
     self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
 
@@ -45,17 +42,10 @@ public enum AppAction {
 
 extension AppState {
   var settingsView: SettingsViewState {
-    get {
-      SettingsViewState(
-        configuration: self.configuration,
-        selectedTab: self.selectedTab,
-        useConfigurationAutodiscovery: self.useConfigurationAutodiscovery
-      )
-    }
+    get { SettingsViewState(configuration: self.configuration, selectedTab: self.selectedTab) }
     set {
       self.configuration = newValue.configuration
       self.selectedTab = newValue.selectedTab
-      self.useConfigurationAutodiscovery = newValue.useConfigurationAutodiscovery
     }
   }
 }
