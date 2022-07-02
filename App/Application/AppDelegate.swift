@@ -13,7 +13,7 @@ import SwiftUI
       AppView(
         store: Store(
           initialState: AppState(
-            configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
+            configuration: loadConfiguration(fromJSON: getConfiguration()),
             didRunBefore: getDidRunBefore(),
             useConfigurationAutodiscovery: getUseConfigurationAutodiscovery()
           ),
@@ -45,13 +45,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         let effects = self(&state, action, environment)
         let newState = state
         return .concatenate(
-          .fireAndForget {
-            dumpConfiguration(
-              configuration: newState.configuration,
-              outputFileURL: AppConstants.configFileURL,
-              createIntermediateDirectories: true
-            )
-          },
+          .fireAndForget { dumpConfiguration(configuration: newState.configuration) },
           effects
         )
       default: return self(&state, action, environment)

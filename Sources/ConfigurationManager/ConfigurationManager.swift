@@ -1,53 +1,52 @@
 import Foundation
 import SwiftFormatConfiguration
 import os.log
+import AppConstants
 
-public func loadConfiguration(fromFileAtPath path: URL?) -> Configuration {
-  if let path = path {
+public func loadConfiguration(fromJSON configurationJSON: String?) -> Configuration {
+  if let configurationJSON = configurationJSON, let data = configurationJSON.data(using: .utf8) {
     do {
-      let data = try Data(contentsOf: path)
       return try JSONDecoder().decode(Configuration.self, from: data)
-    }
-    catch {
-      os_log(
-        "Could not load configuration at %{public}@: %{public}@",
-        path.absoluteString,
-        error.localizedDescription
-      )
+    } catch {
+      os_log("Could not load configuration: %{public}@", error.localizedDescription)
     }
   }
 
   return Configuration()
 }
 
-public func dumpConfiguration(
-  configuration: Configuration = Configuration(),
-  outputFileURL: URL,
-  createIntermediateDirectories: Bool = false
-) {
+public func loadConfiguration2(fromFileAtPath configurationFileURL: URL) -> Configuration {
+  do {
+    return try Configuration(contentsOf: configurationFileURL)
+  } catch {
+    os_log(
+      "Could not load configuration at %{public}@: %{public}@",
+      configurationFileURL.absoluteString,
+      error.localizedDescription
+    )
+  }
+
+  return Configuration()
+}
+
+public func dumpConfiguration(configuration: Configuration) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted]
-
-    if #available(macOS 10.13, *) { encoder.outputFormatting.insert(.sortedKeys) }
+    encoder.outputFormatting.insert(.sortedKeys)
 
     let data = try encoder.encode(configuration)
     guard let jsonString = String(data: data, encoding: .utf8) else {
-      print("Could not dump the default configuration: the JSON was not valid UTF-8")
+      os_log("Could not dump the default configuration: the JSON was not valid UTF-8")
       return
     }
 
-    do {
-      if createIntermediateDirectories {
-        try? FileManager.default.createDirectory(
-          at: outputFileURL.deletingLastPathComponent(),
-          withIntermediateDirectories: true
-        )
-      }
+    setConfiguration(jsonString)
 
-      try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
-    }
-    catch { print("Could not dump the default configuration: \(error)") }
-  }
-  catch { print("Could not dump the default configuration: \(error)") }
+  } catch { os_log("Could not dump the default configuration: %{public}@", error.localizedDescription) }
+}
+
+func setConfiguration(_ newValue: String) {
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .set(newValue, forKey: AppConstants.configurationKey)
 }

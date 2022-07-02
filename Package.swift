@@ -13,9 +13,7 @@ let package = Package(
     .library(name: "Utility", targets: ["Utility"]),
     .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
     .library(name: "Settings", targets: ["Settings"]),
-    .library(name: "SwiftFormatterServiceProtocol", targets: ["SwiftFormatterServiceProtocol"]),
     .library(name: "AppConstants", targets: ["AppConstants"]),
-    .executable(name: "SwiftFormatterService", targets: ["SwiftFormatterService"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -55,7 +53,10 @@ let package = Package(
     .target(name: "Utility", dependencies: []),
     .target(
       name: "ConfigurationManager",
-      dependencies: [.product(name: "SwiftFormatConfiguration", package: "swift-format")]
+      dependencies: [
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        "AppConstants",
+      ]
     ),
     .target(
       name: "Settings",
@@ -68,12 +69,6 @@ let package = Package(
         "AppConstants",
       ]
     ),
-    .target(name: "SwiftFormatterServiceProtocol", dependencies: []),
     .target(name: "AppConstants" ,dependencies: []),
-    .executableTarget(
-      name: "SwiftFormatterService",
-      dependencies: ["SwiftFormatterServiceProtocol", "AppConstants"],
-      exclude: ["SwiftFormatterService.plist"]
-    ),
   ]
 )

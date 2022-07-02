@@ -1,5 +1,8 @@
+import AppConstants
+import ConfigurationManager
 import Foundation
-import SwiftFormatterServiceProtocol
+import SwiftFormat
+import SwiftFormatConfiguration
 import XcodeKit
 import os.log
 
@@ -25,47 +28,20 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
         .contains(invocation.buffer.contentUTI)
     else { return completionHandler(FormatterError.notSwiftSource) }
 
-    let serviceConnection = getServiceConnection()
-    serviceConnection.resume()
-
-    let service = getService(connection: serviceConnection)
-
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source = invocation.buffer.completeBuffer
+    var formattedSource = ""
 
-    let useConfigurationAutodiscovery = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
-      .bool(forKey: "useConfigurationAutodiscovery")
+    let formatter = SwiftFormatter(configuration: loadConfiguration(fromJSON: getConfiguration()))
+    do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) }
+    catch { return completionHandler(error) }
 
-    service.format(source: source, useConfigurationAutodiscovery: useConfigurationAutodiscovery) {
-      formattedSource,
-      error in defer { serviceConnection.invalidate() }
+    if formattedSource.isEmpty || source == formattedSource { return completionHandler(nil) }
 
-      if let error = error { return completionHandler(error) }
+    invocation.buffer.selections.removeAllObjects()
+    invocation.buffer.completeBuffer = formattedSource
+    invocation.buffer.selections.add(previousSelection)
 
-      guard let formattedSource = formattedSource else {
-        return completionHandler(FormatterError.formatError)
-      }
-
-      if source == formattedSource { return completionHandler(nil) }
-
-      invocation.buffer.selections.removeAllObjects()
-      invocation.buffer.completeBuffer = formattedSource
-      invocation.buffer.selections.add(previousSelection)
-
-      return completionHandler(nil)
-    }
+    return completionHandler(nil)
   }
-}
-
-func getServiceConnection() -> NSXPCConnection {
-  let connection = NSXPCConnection(serviceName: "com.kuglee.SwiftFormatter.service")
-  connection.remoteObjectInterface = NSXPCInterface(with: SwiftFormatterServiceProtocol.self)
-
-  return connection
-}
-
-func getService(connection: NSXPCConnection) -> SwiftFormatterServiceProtocol {
-  return (connection.remoteObjectProxy as AnyObject)
-    .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription) }
-    as! SwiftFormatterServiceProtocol
 }
