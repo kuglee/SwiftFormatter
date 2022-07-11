@@ -1,10 +1,10 @@
 import AppConstants
+import AppKit
 import ConfigurationManager
 import Foundation
 import SwiftFormat
 import SwiftFormatConfiguration
 import XcodeKit
-import os.log
 
 enum FormatterError: Error, LocalizedError {
   case notSwiftSource
@@ -41,6 +41,17 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     invocation.buffer.selections.removeAllObjects()
     invocation.buffer.completeBuffer = formattedSource
     invocation.buffer.selections.add(previousSelection)
+
+    return completionHandler(nil)
+  }
+}
+
+class OpenPreferencesCommand: NSObject, XCSourceEditorCommand {
+  func perform(
+    with invocation: XCSourceEditorCommandInvocation,
+    completionHandler: @escaping (Error?) -> Void
+  ) {
+    NSWorkspace.shared.open(URL(fileURLWithPath: "/Applications/Swift Formatter.app"))
 
     return completionHandler(nil)
   }
