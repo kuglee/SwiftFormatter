@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "Modules",
-  platforms: [.macOS(.v11)],
+  platforms: [.macOS(.v12)],
   products: [
     .library(name: "App", targets: ["App"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),

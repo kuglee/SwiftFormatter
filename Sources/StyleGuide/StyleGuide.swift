@@ -2,27 +2,6 @@ import SwiftUI
 
 extension CGFloat { public static func grid(_ n: Int) -> CGFloat { .init(n) * 2 } }
 
-// MARK: - Colors
-
-extension NSColor {
-  public class func dynamicColor(light: NSColor, dark: NSColor) -> NSColor {
-    return NSColor(name: nil) {
-      switch $0.name {
-      case .darkAqua, .vibrantDark, .accessibilityHighContrastDarkAqua,
-        .accessibilityHighContrastVibrantDark:
-        return dark
-      default: return light
-      }
-    }
-  }
-
-  // override with list style colors (bordered(alternatesRowBackgrounds:))
-  static let alternatingContentBackgroundColors: [NSColor] = [
-    .dynamicColor(light: .white, dark: .init(white: 0.175, alpha: 1)),
-    .dynamicColor(light: .init(white: 0.96, alpha: 1), dark: .init(white: 0.21, alpha: 1)),
-  ]
-}
-
 // MARK: - Alignments
 
 extension HorizontalAlignment {
@@ -66,34 +45,6 @@ public struct PrimaryTextFieldStyle: ViewModifier {
 
   public func body(content: Content) -> some View {
     content.multilineTextAlignment(.trailing).frame(width: 40)
-  }
-}
-
-// MARK: - Row Styles
-
-public enum AlternatingBackground {
-  case dark
-  case light
-}
-
-public struct AlternatingContentBackground: ViewModifier {
-  private var background: AlternatingBackground
-
-  public init(background: AlternatingBackground) { self.background = background }
-
-  public func body(content: Content) -> some View {
-    content.padding([.vertical], .grid(2)).padding([.horizontal], .grid(3))
-      .background(Color(.alternatingContentBackgroundColors[self.background == .dark ? 0 : 1]))
-  }
-}
-
-// MARK: - Border Styles
-
-public struct PrimaryListBorderStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.padding(1).border(Color(.placeholderTextColor))
   }
 }
 

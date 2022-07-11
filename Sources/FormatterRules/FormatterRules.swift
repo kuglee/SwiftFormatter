@@ -29,23 +29,20 @@ public struct FormatterRulesView: View {
     self.store = store
   }
 
+  var colors: [Color] = [.red, .blue, .yellow]
   public var body: some View {
     WithViewStore(self.store) { viewStore in
       VStack(alignment: .leading, spacing: .grid(2)) {
         Text("Formatting rules:")
-        VStack(spacing: 0) {
-          ForEach(viewStore.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
-            Toggle(
-              isOn: Binding(
-                get: { viewStore.rules[key]! },
-                set: { viewStore.send(.ruleFilledOut(key: key, value: $0)) }
-              )
-            ) { Text(key.separateCamelCase.sentenceCase) }
-            .modifier(PrimaryToggleStyle())
-            .modifier(AlternatingContentBackground(background: index % 2 == 0 ? .dark : .light))
-          }
+        List(viewStore.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
+          Toggle(
+            isOn: Binding(
+              get: { viewStore.rules[key]! },
+              set: { viewStore.send(.ruleFilledOut(key: key, value: $0)) }
+            )
+          ) { Text(key.separateCamelCase.sentenceCase) }
         }
-        .modifier(PrimaryListBorderStyle())
+        .listStyle(.bordered(alternatesRowBackgrounds: true))
       }
     }
   }
