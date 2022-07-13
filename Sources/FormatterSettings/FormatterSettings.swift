@@ -396,6 +396,7 @@ public struct FormatterSettingsView: View {
     }
   }
 
+  @FocusState var shouldFocusFirstTextField: Bool
   public var body: some View {
     VStack(alignment: .trailingAlignmentGuide, spacing: .grid(4)) {
       indentationView
@@ -405,6 +406,12 @@ public struct FormatterSettingsView: View {
       fileScopedDeclarationPrivacyView
     }
     .modifier(PrimaryVStackStyle())
+    .focused($shouldFocusFirstTextField)
+    .onAppear {
+      Task {
+        shouldFocusFirstTextField = false
+      }
+    }
   }
 }
 
