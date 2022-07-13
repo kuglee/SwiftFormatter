@@ -209,7 +209,7 @@
 				5DA2B9962286048F0051C256 /* Sources */,
 				5DA2B9972286048F0051C256 /* Frameworks */,
 				5DB70A142850981300114D9D /* Embed Frameworks */,
-				5D4F33E8287044AC009F3A29 /* ShellScript */,
+				5D4F33E8287044AC009F3A29 /* Copy lib_InternalSwiftSyntaxParser.dylib */,
 			);
 			buildRules = (
 			);
@@ -286,7 +286,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5D4F33E8287044AC009F3A29 /* ShellScript */ = {
+		5D4F33E8287044AC009F3A29 /* Copy lib_InternalSwiftSyntaxParser.dylib */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -295,9 +295,11 @@
 			);
 			inputPaths = (
 			);
+			name = "Copy lib_InternalSwiftSyntaxParser.dylib";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"\"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
