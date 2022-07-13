@@ -46,6 +46,10 @@ public func dumpConfiguration(configuration: Configuration) {
   } catch { os_log("Could not dump the default configuration: %{public}@", error.localizedDescription) }
 }
 
+public func getConfiguration() -> String? {
+  UserDefaults(suiteName: AppConstants.appGroupName)!.string(forKey: AppConstants.configurationKey)
+}
+
 func setConfiguration(_ newValue: String) {
   UserDefaults(suiteName: AppConstants.appGroupName)!
     .set(newValue, forKey: AppConstants.configurationKey)

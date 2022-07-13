@@ -5,7 +5,3 @@ public enum AppConstants {
   public static let configurationKey = "configuration"
   public static let didRunBeforeKey = "didRunBefore"
 }
-
-public func getConfiguration() -> String? {
-  UserDefaults(suiteName: AppConstants.appGroupName)!.string(forKey: AppConstants.configurationKey)
-}
