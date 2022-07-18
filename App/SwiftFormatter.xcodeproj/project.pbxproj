@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D098D1E286F8FCC004FDAF0 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 5D098D1D286F8FCC004FDAF0 /* App */; };
 		5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */; };
 		5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E752853DF03000C5FC7 /* StyleGuide */; };
 		5D164E782853DF0E000C5FC7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E772853DF0E000C5FC7 /* Utility */; };
@@ -19,6 +18,7 @@
 		5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85A22B75D7000F15F08 /* Main.storyboard */; };
 		5D24296828704F9500BD9DAA /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D24296728704F9500BD9DAA /* ConfigurationManager */; };
 		5D24296A287050AF00BD9DAA /* AppConstants in Frameworks */ = {isa = PBXBuildFile; productRef = 5D242969287050AF00BD9DAA /* AppConstants */; };
+		5D38C3FA28857F8D00399C9E /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 5D38C3F928857F8D00399C9E /* AppFeature */; };
 		5D4F33E5287043DF009F3A29 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 5D4F33E4287043DF009F3A29 /* SwiftFormat */; };
 		5D4F33E7287043E8009F3A29 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D4F33E6287043E8009F3A29 /* SwiftFormatConfiguration */; };
 		5DA2B9A02286048F0051C256 /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */; };
@@ -87,9 +87,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */,
+				5D38C3FA28857F8D00399C9E /* AppFeature in Frameworks */,
 				5D164E782853DF0E000C5FC7 /* Utility in Frameworks */,
 				5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */,
-				5D098D1E286F8FCC004FDAF0 /* App in Frameworks */,
 				5DD2641C286ACA6100772CB2 /* Settings in Frameworks */,
 				5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */,
 				5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */,
@@ -196,7 +196,7 @@
 				5D164E792853DFA7000C5FC7 /* ConfigurationManager */,
 				5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */,
 				5DD2641B286ACA6100772CB2 /* Settings */,
-				5D098D1D286F8FCC004FDAF0 /* App */,
+				5D38C3F928857F8D00399C9E /* AppFeature */,
 			);
 			productName = "Swift-format";
 			productReference = 5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */;
@@ -626,10 +626,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5D098D1D286F8FCC004FDAF0 /* App */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = App;
-		};
 		5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
@@ -659,6 +655,10 @@
 		5D242969287050AF00BD9DAA /* AppConstants */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppConstants;
+		};
+		5D38C3F928857F8D00399C9E /* AppFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppFeature;
 		};
 		5D4F33E4287043DF009F3A29 /* SwiftFormat */ = {
 			isa = XCSwiftPackageProductDependency;

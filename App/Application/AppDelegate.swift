@@ -1,4 +1,4 @@
-import App
+import AppFeature
 import AppConstants
 import ComposableArchitecture
 import ConfigurationManager

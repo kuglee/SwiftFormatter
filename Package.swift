@@ -6,7 +6,7 @@ let package = Package(
   name: "Modules",
   platforms: [.macOS(.v12)],
   products: [
-    .library(name: "App", targets: ["App"]),
+    .library(name: "AppFeature", targets: ["AppFeature"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
@@ -21,7 +21,7 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "App",
+      name: "AppFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "ConfigurationManager",
