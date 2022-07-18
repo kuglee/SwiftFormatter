@@ -1,11 +1,11 @@
-import AppFeature
 import AppConstants
+import AppFeature
 import ComposableArchitecture
 import ConfigurationManager
 import SwiftFormatConfiguration
 import SwiftUI
 
-@main struct SwiftFormatApp: App {
+@main struct MainApp: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
   var body: some Scene {

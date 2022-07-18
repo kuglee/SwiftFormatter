@@ -12,7 +12,7 @@
 		5D164E782853DF0E000C5FC7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E772853DF0E000C5FC7 /* Utility */; };
 		5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E792853DFA7000C5FC7 /* ConfigurationManager */; };
 		5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */; };
-		5D1AB85222B75D6E00F15F08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */; };
+		5D1AB85222B75D6E00F15F08 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85122B75D6E00F15F08 /* App.swift */; };
 		5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85522B75D7000F15F08 /* Assets.xcassets */; };
 		5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */; };
 		5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85A22B75D7000F15F08 /* Main.storyboard */; };
@@ -67,7 +67,7 @@
 /* Begin PBXFileReference section */
 		5D164E6C2853DE21000C5FC7 /* SwiftFormatter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftFormatter; path = ..; sourceTree = "<group>"; };
 		5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift Formatter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5D1AB85122B75D6E00F15F08 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5D1AB85522B75D7000F15F08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5D1AB85B22B75D7000F15F08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -114,7 +114,7 @@
 		5D1AB85022B75D6E00F15F08 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				5D1AB85122B75D6E00F15F08 /* AppDelegate.swift */,
+				5D1AB85122B75D6E00F15F08 /* App.swift */,
 				5D1AB85522B75D7000F15F08 /* Assets.xcassets */,
 				5D1AB85A22B75D7000F15F08 /* Main.storyboard */,
 				5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */,
@@ -312,7 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D1AB85222B75D6E00F15F08 /* AppDelegate.swift in Sources */,
+				5D1AB85222B75D6E00F15F08 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
