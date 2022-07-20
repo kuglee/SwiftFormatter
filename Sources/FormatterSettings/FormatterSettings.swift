@@ -11,6 +11,7 @@ public enum FormatterSettingsViewAction: Equatable {
   case lineLengthView(LineLengthViewAction)
   case lineBreaksView(LineBreaksViewAction)
   case fileScopedDeclarationPrivacyView(FileScopedDeclarationPrivacyViewAction)
+  case trimTrailingWhitespaceFilledOut(Bool)
 }
 
 public struct FormatterSettingsViewState: Equatable {
@@ -27,6 +28,7 @@ public struct FormatterSettingsViewState: Equatable {
   public var indentSwitchCaseLabels: Bool
   public var lineBreakAroundMultilineExpressionChainComponents: Bool
   public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
+  public var shouldTrimTrailingWhitespace: Bool
 
   public init(
     maximumBlankLines: Int,
@@ -41,7 +43,8 @@ public struct FormatterSettingsViewState: Equatable {
     indentConditionalCompilationBlocks: Bool,
     indentSwitchCaseLabels: Bool,
     lineBreakAroundMultilineExpressionChainComponents: Bool,
-    fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
+    fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration,
+    shouldTrimTrailingWhitespace: Bool
   ) {
     self.maximumBlankLines = maximumBlankLines
     self.lineLength = lineLength
@@ -57,6 +60,7 @@ public struct FormatterSettingsViewState: Equatable {
     self.lineBreakAroundMultilineExpressionChainComponents =
       lineBreakAroundMultilineExpressionChainComponents
     self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
+    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
   }
 }
 
@@ -126,6 +130,18 @@ public let formatterSettingsViewReducer = Reducer<
   FormatterSettingsViewState, FormatterSettingsViewAction, Void
 >
 .combine(
+  Reducer { state, action, _ in
+    switch action {
+    case .trimTrailingWhitespaceFilledOut(let newValue):
+      state.shouldTrimTrailingWhitespace = newValue
+      return .none
+    case .indentationView(_): return .none
+    case .tabWidthView(_): return .none
+    case .lineLengthView(_): return .none
+    case .lineBreaksView(_): return .none
+    case .fileScopedDeclarationPrivacyView(_): return .none
+    }
+  },
   indentationViewReducer.pullback(
     state: \FormatterSettingsViewState.indentationView,
     action: /FormatterSettingsViewAction.indentationView,
@@ -345,6 +361,15 @@ public struct FormatterSettingsView: View {
           .help(
             "Determines if function-like declaration outputs should be prioritized to be together with the function signature right (closing) parenthesis. If false, function output (i.e. throws, return type) is not prioritized to be together with the signature's right parenthesis, and when the line length would be exceeded, a line break will be fired after the function signature first, indenting the declaration output one additional level. If true, A line break will be fired further up in the function's declaration (e.g. generic parameters, parameters) before breaking on the function's output."
           )
+          Toggle(
+            isOn: Binding(
+              get: { viewStore.shouldTrimTrailingWhitespace },
+              set: { viewStore.send(.trimTrailingWhitespaceFilledOut($0)) }
+            )
+          ) { Text("Trim trailing whitespace before formatting") }
+          .help(
+            "The formatter trims trailing whitespace before formatting, so whitespace only lines won't get joined with the subsequent line."
+          )
           HStack {
             Text("Maximum blank lines")
             Stepper(
@@ -405,13 +430,8 @@ public struct FormatterSettingsView: View {
       lineBreaksView
       fileScopedDeclarationPrivacyView
     }
-    .modifier(PrimaryVStackStyle())
-    .focused($shouldFocusFirstTextField)
-    .onAppear {
-      Task {
-        shouldFocusFirstTextField = false
-      }
-    }
+    .modifier(PrimaryVStackStyle()).focused($shouldFocusFirstTextField)
+    .onAppear { Task { shouldFocusFirstTextField = false } }
   }
 }
 

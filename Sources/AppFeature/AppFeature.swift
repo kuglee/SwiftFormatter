@@ -20,9 +20,12 @@ public struct AppState: Equatable {
   public var configuration: Configuration
   public var selectedTab: Tab = .formatting
   public var didRunBefore: Bool
+  public var shouldTrimTrailingWhitespace: Bool
 
-  public init(configuration: Configuration, didRunBefore: Bool) {
+  public init(configuration: Configuration, didRunBefore: Bool, shouldTrimTrailingWhitespace: Bool)
+  {
     self.didRunBefore = didRunBefore
+    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
     self.configuration = configuration
 
     self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
@@ -42,10 +45,17 @@ public enum AppAction {
 
 extension AppState {
   var settingsView: SettingsViewState {
-    get { SettingsViewState(configuration: self.configuration, selectedTab: self.selectedTab) }
+    get {
+      SettingsViewState(
+        configuration: self.configuration,
+        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
+        selectedTab: self.selectedTab
+      )
+    }
     set {
       self.configuration = newValue.configuration
       self.selectedTab = newValue.selectedTab
+      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
     }
   }
 }

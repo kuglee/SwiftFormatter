@@ -13,10 +13,16 @@ public enum Tab {
 
 public struct SettingsViewState: Equatable {
   public var configuration: Configuration
+  public var shouldTrimTrailingWhitespace: Bool
   public var selectedTab: Tab
 
-  public init(configuration: Configuration, selectedTab: Tab = .formatting) {
+  public init(
+    configuration: Configuration,
+    shouldTrimTrailingWhitespace: Bool,
+    selectedTab: Tab = .formatting
+  ) {
     self.configuration = configuration
+    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
     self.selectedTab = selectedTab
   }
 }
@@ -46,7 +52,8 @@ extension SettingsViewState {
         indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
           .lineBreakAroundMultilineExpressionChainComponents,
-        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy
+        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy,
+        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace
       )
     }
     set {
@@ -68,6 +75,7 @@ extension SettingsViewState {
       self.configuration.lineBreakAroundMultilineExpressionChainComponents =
         newValue.lineBreakAroundMultilineExpressionChainComponents
       self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
+      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
     }
   }
 

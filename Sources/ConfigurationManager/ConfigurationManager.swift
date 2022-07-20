@@ -54,3 +54,13 @@ func setConfiguration(_ newValue: String) {
   UserDefaults(suiteName: AppConstants.appGroupName)!
     .set(newValue, forKey: AppConstants.configurationKey)
 }
+
+public func getShouldTrimTrailingWhitespace() -> Bool {
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .bool(forKey: AppConstants.shouldTrimTrailingWhitespaceKey)
+}
+
+public func setShouldTrimTrailingWhitespace(newValue: Bool) {
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .set(newValue, forKey: AppConstants.shouldTrimTrailingWhitespaceKey)
+}

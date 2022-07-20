@@ -29,7 +29,9 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     else { return completionHandler(FormatterError.notSwiftSource) }
 
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
-    let source = invocation.buffer.completeBuffer
+    let source =
+      getShouldTrimTrailingWhitespace()
+      ? invocation.buffer.completeBufferTrimmed : invocation.buffer.completeBuffer
     var formattedSource = ""
 
     let formatter = SwiftFormatter(configuration: loadConfiguration(fromJSON: getConfiguration()))
@@ -54,5 +56,21 @@ class OpenPreferencesCommand: NSObject, XCSourceEditorCommand {
     NSWorkspace.shared.open(URL(fileURLWithPath: "/Applications/Swift Formatter.app"))
 
     return completionHandler(nil)
+  }
+}
+
+extension XCSourceTextBuffer {
+  var completeBufferTrimmed: String {
+    lines.map { ($0 as! String).trailingWhitespaceTrimmed + "\n" }.joined()
+  }
+}
+
+extension StringProtocol {
+  @inline(__always) var trailingWhitespaceTrimmed: Self.SubSequence {
+    var view = self[...]
+
+    while view.last?.isWhitespace == true { view = view.dropLast() }
+
+    return view
   }
 }

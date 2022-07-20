@@ -14,7 +14,8 @@ import SwiftUI
         store: Store(
           initialState: AppState(
             configuration: loadConfiguration(fromJSON: getConfiguration()),
-            didRunBefore: getDidRunBefore()
+            didRunBefore: getDidRunBefore(),
+            shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
           ),
           reducer: appReducer.saveMiddleware(),
           environment: ()
@@ -38,9 +39,20 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
   func saveMiddleware() -> Reducer {
     .init { state, action, environment in
       switch action {
+      case .settingsView(.formatterSettingsView(.trimTrailingWhitespaceFilledOut(_))):
+        let effects = self(&state, action, environment)
+        let newState = state
+
+        return .concatenate(
+          .fireAndForget {
+            setShouldTrimTrailingWhitespace(newValue: newState.shouldTrimTrailingWhitespace)
+          },
+          effects
+        )
       case .settingsView:
         let effects = self(&state, action, environment)
         let newState = state
+
         return .concatenate(
           .fireAndForget { dumpConfiguration(configuration: newState.configuration) },
           effects
