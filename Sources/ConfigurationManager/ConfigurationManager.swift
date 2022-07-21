@@ -1,24 +1,11 @@
+import AppConstants
 import Foundation
 import SwiftFormatConfiguration
 import os.log
-import AppConstants
 
-public func loadConfiguration(fromJSON configurationJSON: String?) -> Configuration {
-  if let configurationJSON = configurationJSON, let data = configurationJSON.data(using: .utf8) {
-    do {
-      return try JSONDecoder().decode(Configuration.self, from: data)
-    } catch {
-      os_log("Could not load configuration: %{public}@", error.localizedDescription)
-    }
-  }
-
-  return Configuration()
-}
-
-public func loadConfiguration2(fromFileAtPath configurationFileURL: URL) -> Configuration {
-  do {
-    return try Configuration(contentsOf: configurationFileURL)
-  } catch {
+public func loadConfiguration(fromFileAtPath configurationFileURL: URL) -> Configuration {
+  do { return try Configuration(contentsOf: configurationFileURL) }
+  catch {
     os_log(
       "Could not load configuration at %{public}@: %{public}@",
       configurationFileURL.absoluteString,
@@ -29,7 +16,11 @@ public func loadConfiguration2(fromFileAtPath configurationFileURL: URL) -> Conf
   return Configuration()
 }
 
-public func dumpConfiguration(configuration: Configuration) {
+public func dumpConfiguration(
+  configuration: Configuration,
+  outputFileURL: URL,
+  createIntermediateDirectories: Bool = false
+) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted]
@@ -41,18 +32,18 @@ public func dumpConfiguration(configuration: Configuration) {
       return
     }
 
-    setConfiguration(jsonString)
+    if createIntermediateDirectories {
+      try? FileManager.default.createDirectory(
+        at: outputFileURL.deletingLastPathComponent(),
+        withIntermediateDirectories: true
+      )
+    }
 
-  } catch { os_log("Could not dump the default configuration: %{public}@", error.localizedDescription) }
-}
-
-public func getConfiguration() -> String? {
-  UserDefaults(suiteName: AppConstants.appGroupName)!.string(forKey: AppConstants.configurationKey)
-}
-
-func setConfiguration(_ newValue: String) {
-  UserDefaults(suiteName: AppConstants.appGroupName)!
-    .set(newValue, forKey: AppConstants.configurationKey)
+    try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
+  }
+  catch {
+    os_log("Could not dump the default configuration: %{public}@", error.localizedDescription)
+  }
 }
 
 public func getShouldTrimTrailingWhitespace() -> Bool {

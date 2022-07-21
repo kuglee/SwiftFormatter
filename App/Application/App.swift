@@ -2,7 +2,6 @@ import AppConstants
 import AppFeature
 import ComposableArchitecture
 import ConfigurationManager
-import SwiftFormatConfiguration
 import SwiftUI
 
 @main struct MainApp: App {
@@ -13,7 +12,7 @@ import SwiftUI
       AppView(
         store: Store(
           initialState: AppState(
-            configuration: loadConfiguration(fromJSON: getConfiguration()),
+            configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
             didRunBefore: getDidRunBefore(),
             shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
           ),
@@ -54,7 +53,13 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         let newState = state
 
         return .concatenate(
-          .fireAndForget { dumpConfiguration(configuration: newState.configuration) },
+          .fireAndForget {
+            dumpConfiguration(
+              configuration: newState.configuration,
+              outputFileURL: AppConstants.configFileURL,
+              createIntermediateDirectories: true
+            )
+          },
           effects
         )
       default: return self(&state, action, environment)

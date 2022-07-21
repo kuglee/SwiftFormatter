@@ -3,33 +3,52 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */; };
-		5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E752853DF03000C5FC7 /* StyleGuide */; };
-		5D164E782853DF0E000C5FC7 /* Utility in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E772853DF0E000C5FC7 /* Utility */; };
 		5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E792853DFA7000C5FC7 /* ConfigurationManager */; };
-		5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */; };
 		5D1AB85222B75D6E00F15F08 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1AB85122B75D6E00F15F08 /* App.swift */; };
 		5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85522B75D7000F15F08 /* Assets.xcassets */; };
 		5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */; };
 		5D1AB85C22B75D7000F15F08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85A22B75D7000F15F08 /* Main.storyboard */; };
-		5D24296828704F9500BD9DAA /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5D24296728704F9500BD9DAA /* ConfigurationManager */; };
 		5D24296A287050AF00BD9DAA /* AppConstants in Frameworks */ = {isa = PBXBuildFile; productRef = 5D242969287050AF00BD9DAA /* AppConstants */; };
 		5D38C3FA28857F8D00399C9E /* AppFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 5D38C3F928857F8D00399C9E /* AppFeature */; };
-		5D4F33E5287043DF009F3A29 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 5D4F33E4287043DF009F3A29 /* SwiftFormat */; };
-		5D4F33E7287043E8009F3A29 /* SwiftFormatConfiguration in Frameworks */ = {isa = PBXBuildFile; productRef = 5D4F33E6287043E8009F3A29 /* SwiftFormatConfiguration */; };
+		5D6E4B6E2889834F0050F64E /* swift-format in Copy swift-format */ = {isa = PBXBuildFile; fileRef = 5D6E4B4F28897E240050F64E /* swift-format */; };
+		5D6E4B7F288984D50050F64E /* SwiftFormatterService in Copy SwiftFormatterService */ = {isa = PBXBuildFile; fileRef = 5D6E4B74288983AC0050F64E /* SwiftFormatterService */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5D6E4B8828898D1D0050F64E /* SwiftFormatterServiceProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 5D6E4B8728898D1D0050F64E /* SwiftFormatterServiceProtocol */; };
+		5D6E4B8C28898F2B0050F64E /* com.kuglee.SwiftFormatter.service.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5D6E4B5F28897FAF0050F64E /* com.kuglee.SwiftFormatter.service.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5DA2B9A02286048F0051C256 /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */; };
 		5DA2B9A22286048F0051C256 /* SourceEditorCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2B9A12286048F0051C256 /* SourceEditorCommand.swift */; };
 		5DAAAA68244B2BBE00BCEF22 /* Swift Formatter Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5DB70A122850981300114D9D /* XcodeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; };
 		5DB70A132850981300114D9D /* XcodeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DB70A112850981300114D9D /* XcodeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5DD2641C286ACA6100772CB2 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 5DD2641B286ACA6100772CB2 /* Settings */; };
+		5DD91CCD2889E2EF0056DCB0 /* ConfigurationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 5DD91CCC2889E2EF0056DCB0 /* ConfigurationManager */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5D6E4B6B288982C40050F64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D6E4B4E28897E240050F64E;
+			remoteInfo = "swift-format";
+		};
+		5D6E4B7D288984BD0050F64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D6E4B73288983AC0050F64E;
+			remoteInfo = SwiftFormatterService;
+		};
+		5D6E4B83288987460050F64E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D6E4B5E28897FAF0050F64E;
+			remoteInfo = "Swift Formatter Service";
+		};
 		5DAAAA69244B2BBF00BCEF22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5DA2B97D2286045B0051C256 /* Project object */;
@@ -40,6 +59,39 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5D6E4B6D2889832F0050F64E /* Copy swift-format */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				5D6E4B6E2889834F0050F64E /* swift-format in Copy swift-format */,
+			);
+			name = "Copy swift-format";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D6E4B6F288983740050F64E /* Copy SwiftFormatterService */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				5D6E4B7F288984D50050F64E /* SwiftFormatterService in Copy SwiftFormatterService */,
+			);
+			name = "Copy SwiftFormatterService";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D6E4B8B28898EAD0050F64E /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				5D6E4B8C28898F2B0050F64E /* com.kuglee.SwiftFormatter.service.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DAAAA6B244B2BBF00BCEF22 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,6 +127,9 @@
 		5D3729B2285B0967008F9319 /* Swift Formatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Swift Formatter.entitlements"; sourceTree = "<group>"; };
 		5D38B46A228770E900EE78C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Extension/Info.plist; sourceTree = SOURCE_ROOT; };
 		5D38EC1B22A2CFEA0020E392 /* Swift Formatter Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Swift Formatter Extension.entitlements"; path = "Extension/Swift Formatter Extension.entitlements"; sourceTree = SOURCE_ROOT; };
+		5D6E4B4F28897E240050F64E /* swift-format */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "swift-format"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D6E4B5F28897FAF0050F64E /* com.kuglee.SwiftFormatter.service.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = com.kuglee.SwiftFormatter.service.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D6E4B74288983AC0050F64E /* SwiftFormatterService */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftFormatterService; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Swift Formatter Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorExtension.swift; sourceTree = "<group>"; };
 		5DA2B9A12286048F0051C256 /* SourceEditorCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceEditorCommand.swift; sourceTree = "<group>"; };
@@ -88,11 +143,14 @@
 			files = (
 				5D164E702853DEE2000C5FC7 /* ComposableArchitecture in Frameworks */,
 				5D38C3FA28857F8D00399C9E /* AppFeature in Frameworks */,
-				5D164E782853DF0E000C5FC7 /* Utility in Frameworks */,
-				5D164E762853DF03000C5FC7 /* StyleGuide in Frameworks */,
-				5DD2641C286ACA6100772CB2 /* Settings in Frameworks */,
-				5D164E7C2853DFBB000C5FC7 /* SwiftFormatConfiguration in Frameworks */,
 				5D164E7A2853DFA7000C5FC7 /* ConfigurationManager in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D6E4B5C28897FAF0050F64E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,10 +159,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DB70A122850981300114D9D /* XcodeKit.framework in Frameworks */,
-				5D4F33E5287043DF009F3A29 /* SwiftFormat in Frameworks */,
+				5D6E4B8828898D1D0050F64E /* SwiftFormatterServiceProtocol in Frameworks */,
 				5D24296A287050AF00BD9DAA /* AppConstants in Frameworks */,
-				5D4F33E7287043E8009F3A29 /* SwiftFormatConfiguration in Frameworks */,
-				5D24296828704F9500BD9DAA /* ConfigurationManager in Frameworks */,
+				5DD91CCD2889E2EF0056DCB0 /* ConfigurationManager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +205,9 @@
 			children = (
 				5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */,
 				5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */,
+				5D6E4B4F28897E240050F64E /* swift-format */,
+				5D6E4B5F28897FAF0050F64E /* com.kuglee.SwiftFormatter.service.xpc */,
+				5D6E4B74288983AC0050F64E /* SwiftFormatterService */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,16 +251,66 @@
 			name = "Swift Formatter";
 			packageProductDependencies = (
 				5D164E6F2853DEE2000C5FC7 /* ComposableArchitecture */,
-				5D164E752853DF03000C5FC7 /* StyleGuide */,
-				5D164E772853DF0E000C5FC7 /* Utility */,
 				5D164E792853DFA7000C5FC7 /* ConfigurationManager */,
-				5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */,
-				5DD2641B286ACA6100772CB2 /* Settings */,
 				5D38C3F928857F8D00399C9E /* AppFeature */,
 			);
 			productName = "Swift-format";
 			productReference = 5D1AB84F22B75D6E00F15F08 /* Swift Formatter.app */;
 			productType = "com.apple.product-type.application";
+		};
+		5D6E4B4E28897E240050F64E /* swift-format */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D6E4B5328897E240050F64E /* Build configuration list for PBXNativeTarget "swift-format" */;
+			buildPhases = (
+				5D6E4B5828897EA70050F64E /* Fix linking */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D6E4B5728897E410050F64E /* PBXTargetDependency */,
+			);
+			name = "swift-format";
+			productName = "swift-format";
+			productReference = 5D6E4B4F28897E240050F64E /* swift-format */;
+			productType = "com.apple.product-type.tool";
+		};
+		5D6E4B5E28897FAF0050F64E /* Swift Formatter Service */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D6E4B6828897FAF0050F64E /* Build configuration list for PBXNativeTarget "Swift Formatter Service" */;
+			buildPhases = (
+				5D6E4B5B28897FAF0050F64E /* Sources */,
+				5D6E4B5C28897FAF0050F64E /* Frameworks */,
+				5D6E4B5D28897FAF0050F64E /* Resources */,
+				5D6E4B6F288983740050F64E /* Copy SwiftFormatterService */,
+				5D6E4B80288984DE0050F64E /* Rename SwiftFormatterService */,
+				5D6E4B6D2889832F0050F64E /* Copy swift-format */,
+				5D6E4B822889853F0050F64E /* Copy lib_InternalSwiftSyntaxParser.dylib */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D6E4B7E288984BD0050F64E /* PBXTargetDependency */,
+				5D6E4B6C288982C40050F64E /* PBXTargetDependency */,
+			);
+			name = "Swift Formatter Service";
+			productName = "Swift Formatter Service";
+			productReference = 5D6E4B5F28897FAF0050F64E /* com.kuglee.SwiftFormatter.service.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+		5D6E4B73288983AC0050F64E /* SwiftFormatterService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D6E4B78288983AC0050F64E /* Build configuration list for PBXNativeTarget "SwiftFormatterService" */;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5D6E4B8A28898D6E0050F64E /* PBXTargetDependency */,
+			);
+			name = SwiftFormatterService;
+			productName = SwiftFormatterService;
+			productReference = 5D6E4B74288983AC0050F64E /* SwiftFormatterService */;
+			productType = "com.apple.product-type.tool";
 		};
 		5DA2B9992286048F0051C256 /* Swift Formatter Extension */ = {
 			isa = PBXNativeTarget;
@@ -209,18 +319,18 @@
 				5DA2B9962286048F0051C256 /* Sources */,
 				5DA2B9972286048F0051C256 /* Frameworks */,
 				5DB70A142850981300114D9D /* Embed Frameworks */,
-				5D4F33E8287044AC009F3A29 /* Copy lib_InternalSwiftSyntaxParser.dylib */,
+				5D6E4B8B28898EAD0050F64E /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5D6E4B84288987460050F64E /* PBXTargetDependency */,
 			);
 			name = "Swift Formatter Extension";
 			packageProductDependencies = (
-				5D4F33E4287043DF009F3A29 /* SwiftFormat */,
-				5D4F33E6287043E8009F3A29 /* SwiftFormatConfiguration */,
-				5D24296728704F9500BD9DAA /* ConfigurationManager */,
 				5D242969287050AF00BD9DAA /* AppConstants */,
+				5D6E4B8728898D1D0050F64E /* SwiftFormatterServiceProtocol */,
+				5DD91CCC2889E2EF0056DCB0 /* ConfigurationManager */,
 			);
 			productName = "Swift-format-extension";
 			productReference = 5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */;
@@ -232,12 +342,21 @@
 		5DA2B97D2286045B0051C256 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = kuglee;
 				TargetAttributes = {
 					5D1AB84E22B75D6E00F15F08 = {
 						CreatedOnToolsVersion = 11.0;
+					};
+					5D6E4B4E28897E240050F64E = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					5D6E4B5E28897FAF0050F64E = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					5D6E4B73288983AC0050F64E = {
+						CreatedOnToolsVersion = 14.0;
 					};
 					5DA2B9992286048F0051C256 = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -268,6 +387,9 @@
 			targets = (
 				5D1AB84E22B75D6E00F15F08 /* Swift Formatter */,
 				5DA2B9992286048F0051C256 /* Swift Formatter Extension */,
+				5D6E4B5E28897FAF0050F64E /* Swift Formatter Service */,
+				5D6E4B4E28897E240050F64E /* swift-format */,
+				5D6E4B73288983AC0050F64E /* SwiftFormatterService */,
 			);
 		};
 /* End PBXProject section */
@@ -283,10 +405,55 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5D6E4B5D28897FAF0050F64E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5D4F33E8287044AC009F3A29 /* Copy lib_InternalSwiftSyntaxParser.dylib */ = {
+		5D6E4B5828897EA70050F64E /* Fix linking */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fix linking";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change \"@rpath/lib_InternalSwiftSyntaxParser.dylib\" \"@executable_path/lib_InternalSwiftSyntaxParser.dylib\" $BUILT_PRODUCTS_DIR/$TARGET_NAME\n";
+		};
+		5D6E4B80288984DE0050F64E /* Rename SwiftFormatterService */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Rename SwiftFormatterService";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"\"$BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME\"",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mv -f $BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/SwiftFormatterService $BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME\n";
+		};
+		5D6E4B822889853F0050F64E /* Copy lib_InternalSwiftSyntaxParser.dylib */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -299,11 +466,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"\"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"",
+				"\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp \"$BUILT_PRODUCTS_DIR/lib_InternalSwiftSyntaxParser.dylib\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/\"\n";
+			shellScript = "cp \"$BUILT_PRODUCTS_DIR/lib_InternalSwiftSyntaxParser.dylib\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -313,6 +480,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D1AB85222B75D6E00F15F08 /* App.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D6E4B5B28897FAF0050F64E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +502,29 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5D6E4B5728897E410050F64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5D6E4B5628897E410050F64E /* swift-format */;
+		};
+		5D6E4B6C288982C40050F64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D6E4B4E28897E240050F64E /* swift-format */;
+			targetProxy = 5D6E4B6B288982C40050F64E /* PBXContainerItemProxy */;
+		};
+		5D6E4B7E288984BD0050F64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D6E4B73288983AC0050F64E /* SwiftFormatterService */;
+			targetProxy = 5D6E4B7D288984BD0050F64E /* PBXContainerItemProxy */;
+		};
+		5D6E4B84288987460050F64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D6E4B5E28897FAF0050F64E /* Swift Formatter Service */;
+			targetProxy = 5D6E4B83288987460050F64E /* PBXContainerItemProxy */;
+		};
+		5D6E4B8A28898D6E0050F64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5D6E4B8928898D6E0050F64E /* SwiftFormatterService */;
+		};
 		5DAAAA6A244B2BBF00BCEF22 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5DA2B9992286048F0051C256 /* Swift Formatter Extension */;
@@ -401,6 +598,114 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.SwiftFormatter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5D6E4B5428897E240050F64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5D6E4B5528897E240050F64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5D6E4B6928897FAF0050F64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/SwiftFormatterService/SwiftFormatterService.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022. kuglee. All rights reserved.";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.SwiftFormatter.service;
+				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5D6E4B6A28897FAF0050F64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/../Sources/SwiftFormatterService/SwiftFormatterService.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022. kuglee. All rights reserved.";
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.SwiftFormatter.service;
+				PRODUCT_NAME = "$(PRODUCT_BUNDLE_IDENTIFIER)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5D6E4B79288983AC0050F64E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5D6E4B7A288983AC0050F64E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = C89KNBM28S;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -523,6 +828,7 @@
 		5DA2B9A92286048F0051C256 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Extension/Swift Formatter Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -539,6 +845,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.SwiftFormatter.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -550,6 +857,7 @@
 		5DA2B9AA2286048F0051C256 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Extension/Swift Formatter Extension.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -566,6 +874,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.kuglee.SwiftFormatter.extension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -582,6 +891,33 @@
 			buildConfigurations = (
 				5D1AB86022B75D7000F15F08 /* Debug */,
 				5D1AB86122B75D7000F15F08 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D6E4B5328897E240050F64E /* Build configuration list for PBXNativeTarget "swift-format" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D6E4B5428897E240050F64E /* Debug */,
+				5D6E4B5528897E240050F64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D6E4B6828897FAF0050F64E /* Build configuration list for PBXNativeTarget "Swift Formatter Service" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D6E4B6928897FAF0050F64E /* Debug */,
+				5D6E4B6A28897FAF0050F64E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5D6E4B78288983AC0050F64E /* Build configuration list for PBXNativeTarget "SwiftFormatterService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5D6E4B79288983AC0050F64E /* Debug */,
+				5D6E4B7A288983AC0050F64E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -631,24 +967,7 @@
 			package = 5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
-		5D164E752853DF03000C5FC7 /* StyleGuide */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = StyleGuide;
-		};
-		5D164E772853DF0E000C5FC7 /* Utility */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Utility;
-		};
 		5D164E792853DFA7000C5FC7 /* ConfigurationManager */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ConfigurationManager;
-		};
-		5D164E7B2853DFBB000C5FC7 /* SwiftFormatConfiguration */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
-			productName = SwiftFormatConfiguration;
-		};
-		5D24296728704F9500BD9DAA /* ConfigurationManager */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ConfigurationManager;
 		};
@@ -660,19 +979,22 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = AppFeature;
 		};
-		5D4F33E4287043DF009F3A29 /* SwiftFormat */ = {
+		5D6E4B5628897E410050F64E /* swift-format */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
-			productName = SwiftFormat;
+			productName = "swift-format";
 		};
-		5D4F33E6287043E8009F3A29 /* SwiftFormatConfiguration */ = {
+		5D6E4B8728898D1D0050F64E /* SwiftFormatterServiceProtocol */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */;
-			productName = SwiftFormatConfiguration;
+			productName = SwiftFormatterServiceProtocol;
 		};
-		5DD2641B286ACA6100772CB2 /* Settings */ = {
+		5D6E4B8928898D6E0050F64E /* SwiftFormatterService */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
+			productName = SwiftFormatterService;
+		};
+		5DD91CCC2889E2EF0056DCB0 /* ConfigurationManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ConfigurationManager;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
