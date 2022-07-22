@@ -4,26 +4,45 @@ import ComposableArchitecture
 import ConfigurationManager
 import SwiftUI
 
-@main struct MainApp: App {
+@main struct MainApp {
+  static func main() {
+    if #available(macOS 13.0, *) {
+      AppMacOS13.main()
+    }
+    else {
+      AppMacOS12.main()
+    }
+  }
+}
+
+let windowGroup: some Scene = WindowGroup {
+  AppView(
+    store: Store(
+      initialState: AppState(
+        configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
+        didRunBefore: getDidRunBefore(),
+        shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
+      ),
+      reducer: appReducer.saveMiddleware(),
+      environment: ()
+    )
+  )
+  .onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
+}
+.commands { CommandGroup(replacing: .newItem, addition: {}) }
+
+@available(macOS 13.0, *) struct AppMacOS13: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
   var body: some Scene {
-    WindowGroup {
-      AppView(
-        store: Store(
-          initialState: AppState(
-            configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
-            didRunBefore: getDidRunBefore(),
-            shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
-          ),
-          reducer: appReducer.saveMiddleware(),
-          environment: ()
-        )
-      )
-      .onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
-    }
-    .commands { CommandGroup(replacing: .newItem, addition: {}) }
+    windowGroup.windowResizability(.contentSize)
   }
+}
+
+struct AppMacOS12: App {
+  @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+  var body: some Scene { windowGroup }
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
