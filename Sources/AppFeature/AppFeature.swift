@@ -39,7 +39,7 @@ public struct AppState: Equatable {
 }
 
 public enum AppAction {
-  case setDidRunBefore(value: Bool)
+  case setDidRunBefore
   case settingsView(SettingsViewAction)
 }
 
@@ -64,8 +64,8 @@ public let appReducer = Reducer<AppState, AppAction, Void>
   .combine(
     Reducer { state, action, _ in
       switch action {
-      case .setDidRunBefore(let value):
-        state.didRunBefore = value
+      case .setDidRunBefore:
+        state.didRunBefore = true
         return .fireAndForget { setDidRunBefore() }
       case .settingsView(_): return .none
       }
@@ -77,18 +77,42 @@ public let appReducer = Reducer<AppState, AppAction, Void>
     )
   )
 
-public struct AppView: View {
+func appViewBody(store: Store<AppState, AppAction>, onAppearFirstRun: (() -> Void)? = nil)
+  -> some View
+{
+  WithViewStore(store) { viewStore in
+    SettingsView(store: store.scope(state: { $0.settingsView }, action: { .settingsView($0) }))
+      .onAppear {
+        if !viewStore.didRunBefore {
+          viewStore.send(.setDidRunBefore)
+          if let onAppearFirstRun = onAppearFirstRun { onAppearFirstRun() }
+        }
+      }
+  }
+}
+
+@available(macOS 13.0, *) public struct AppViewMacOS13: View {
   let store: Store<AppState, AppAction>
+  @Environment(\.openWindow) private var openWindow
 
   public init(store: Store<AppState, AppAction>) { self.store = store }
 
   public var body: some View {
-    WithViewStore(self.store) { viewStore in
-      SettingsView(
-        store: self.store.scope(state: { $0.settingsView }, action: { .settingsView($0) })
-      )
+    appViewBody(store: self.store) {
+      Task {
+        try await Task.sleep(nanoseconds: NSEC_PER_SEC / 2)
+        openWindow(id: "welcome")
+      }
     }
   }
+}
+
+public struct AppViewMacOS12: View {
+  let store: Store<AppState, AppAction>
+
+  public init(store: Store<AppState, AppAction>) { self.store = store }
+
+  public var body: some View { appViewBody(store: self.store) }
 }
 
 func setDidRunBefore() {

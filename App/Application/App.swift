@@ -15,34 +15,53 @@ import SwiftUI
   }
 }
 
-let windowGroup: some Scene = WindowGroup {
-  AppView(
-    store: Store(
-      initialState: AppState(
-        configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
-        didRunBefore: getDidRunBefore(),
-        shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
-      ),
-      reducer: appReducer.saveMiddleware(),
-      environment: ()
-    )
-  )
-  .onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
-}
-.commands { CommandGroup(replacing: .newItem, addition: {}) }
+let appStore = Store(
+  initialState: AppState(
+    configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
+    didRunBefore: getDidRunBefore(),
+    shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
+  ),
+  reducer: appReducer.saveMiddleware(),
+  environment: ()
+)
 
 @available(macOS 13.0, *) struct AppMacOS13: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
   var body: some Scene {
-    windowGroup.windowResizability(.contentSize)
+    WindowGroup {
+      AppViewMacOS13(store: appStore).onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
+    }
+    .commands { CommandGroup(replacing: .newItem, addition: {}) }.windowResizability(.contentSize)
+
+    Window("Welcome to Swift Formatter", id: "welcome") {
+      VStack(alignment: .leading, spacing: .grid(4)) {
+        VStack(alignment: .leading, spacing: .grid(2)) {
+          Text("How to enable").bold()
+          Text(
+            "Choose Apple menu  > System Settings > Privacy & Security > Extensions > Xcode Source Editor and enable the Swift Formatter extension."
+          )
+        }
+        VStack(alignment: .leading, spacing: .grid(2)) {
+          Text("How to use").bold()
+          Text("In Xcode choose Editor > Swift Formatter > Format Source from the menu bar.")
+        }
+      }
+      .padding().frame(width: 520, height: 300, alignment: .top)
+    }
+    .windowResizability(.contentSize)
   }
 }
 
 struct AppMacOS12: App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-  var body: some Scene { windowGroup }
+  var body: some Scene {
+    WindowGroup {
+      AppViewMacOS12(store: appStore).onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
+    }
+    .commands { CommandGroup(replacing: .newItem, addition: {}) }
+  }
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
