@@ -76,7 +76,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
   func saveMiddleware() -> Reducer {
     .init { state, action, environment in
       switch action {
-      case .settingsView(.formatterSettingsView(.trimTrailingWhitespaceFilledOut(_))):
+      case .settingsView(.formatterSettingsView(.binding(\.$shouldTrimTrailingWhitespace))):
         let effects = self(&state, action, environment)
         let newState = state
 
