@@ -5,8 +5,7 @@ import os.log
 
 extension FileManager {
   func temporaryFileURL(fileName: String = UUID().uuidString) -> URL? {
-    return URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-      .appendingPathComponent(fileName)
+    URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(fileName)
   }
 }
 
@@ -60,7 +59,7 @@ func run(command lauchPath: URL, with arguments: [String] = []) -> Result<String
   return .success(output)
 }
 
-@objc class SwiftFormatterService: NSObject, SwiftFormatterServiceProtocol {
+class SwiftFormatterService: SwiftFormatterServiceProtocol {
   enum SwiftFormatterServiceError: Error, LocalizedError {
     case tempFileNotFound(message: String)
 

@@ -90,7 +90,7 @@ func getServiceConnection() -> NSXPCConnection {
 }
 
 func getService(connection: NSXPCConnection) -> SwiftFormatterServiceProtocol {
-  return (connection.remoteObjectProxy as AnyObject)
+  (connection.remoteObjectProxy as AnyObject)
     .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription) }
     as! SwiftFormatterServiceProtocol
 }

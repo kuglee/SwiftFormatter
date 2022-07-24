@@ -264,7 +264,7 @@ public struct FormatterSettingsView: View {
 extension Indent: RawRepresentable {
   public typealias RawValue = String
 
-  public init?(rawValue: RawValue) { return nil }
+  public init?(rawValue: RawValue) { nil }
 
   public var rawValue: RawValue {
     switch self {
@@ -294,7 +294,7 @@ extension Indent: RawRepresentable {
 extension FileScopedDeclarationPrivacyConfiguration.AccessLevel {
   public typealias RawValue = String
 
-  public init?(rawValue: RawValue) { return nil }
+  public init?(rawValue: RawValue) { nil }
 
   public var rawValue: RawValue {
     switch self {
