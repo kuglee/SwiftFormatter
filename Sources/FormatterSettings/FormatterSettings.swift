@@ -3,7 +3,6 @@ import ComposableArchitecture
 import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
-import Utility
 
 public struct FormatterSettingsViewState: Equatable {
   @BindableState public var maximumBlankLines: Int

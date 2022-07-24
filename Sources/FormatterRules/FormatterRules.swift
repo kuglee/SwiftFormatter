@@ -2,7 +2,6 @@ import AppConstants
 import ComposableArchitecture
 import StyleGuide
 import SwiftUI
-import Utility
 
 public enum FormatterRulesViewAction: Equatable { case ruleFilledOut(key: String, value: Bool) }
 
@@ -76,4 +75,10 @@ extension String {
   }
 
   func capitalizingFirstLetter() -> String { self.prefix(1).capitalized + self.dropFirst() }
+}
+
+extension Collection {
+  public func enumeratedArray() -> [(offset: Int, element: Self.Element)] {
+    return Array(self.enumerated())
+  }
 }

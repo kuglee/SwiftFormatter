@@ -10,7 +10,6 @@ let package = Package(
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
-    .library(name: "Utility", targets: ["Utility"]),
     .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "AppConstants", targets: ["AppConstants"]),
@@ -39,7 +38,6 @@ let package = Package(
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
         "AppConstants",
-        "Utility",
       ]
     ),
     .target(
@@ -48,11 +46,9 @@ let package = Package(
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
         "AppConstants",
-        "Utility",
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
-    .target(name: "Utility", dependencies: []),
     .target(
       name: "ConfigurationManager",
       dependencies: [
