@@ -38,10 +38,9 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     service.format(source: source) { formattedSource, error in
       defer { serviceConnection.invalidate() }
 
-      if let error = error { return completionHandler(error) }
-
-      guard let formattedSource = formattedSource else {
-        return completionHandler(FormatterError.formatError)
+      // can't show any error message, so don't return errors
+      guard let formattedSource = formattedSource, error == nil else {
+        return completionHandler(nil)
       }
 
       if source == formattedSource { return completionHandler(nil) }
