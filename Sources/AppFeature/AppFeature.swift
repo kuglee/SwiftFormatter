@@ -77,18 +77,8 @@ public let appReducer = Reducer<AppState, AppAction, Void>
     )
   )
 
-func appViewBody(store: Store<AppState, AppAction>, onAppearFirstRun: (() -> Void)? = nil)
-  -> some View
-{
-  WithViewStore(store) { viewStore in
-    SettingsView(store: store.scope(state: { $0.settingsView }, action: { .settingsView($0) }))
-      .onAppear {
-        if !viewStore.didRunBefore {
-          viewStore.send(.setDidRunBefore)
-          if let onAppearFirstRun = onAppearFirstRun { onAppearFirstRun() }
-        }
-      }
-  }
+func appViewBody(store: Store<AppState, AppAction>) -> some View {
+  SettingsView(store: store.scope(state: { $0.settingsView }, action: { .settingsView($0) }))
 }
 
 @available(macOS 13.0, *) public struct AppViewMacOS13: View {
@@ -98,11 +88,15 @@ func appViewBody(store: Store<AppState, AppAction>, onAppearFirstRun: (() -> Voi
   public init(store: Store<AppState, AppAction>) { self.store = store }
 
   public var body: some View {
-    appViewBody(store: self.store) {
-      Task {
-        try await Task.sleep(nanoseconds: NSEC_PER_SEC / 2)
-        openWindow(id: "welcome")
-      }
+    WithViewStore(store) { viewStore in
+      appViewBody(store: self.store)
+        .task {
+          if !viewStore.didRunBefore {
+            viewStore.send(.setDidRunBefore)
+            try? await Task.sleep(nanoseconds: NSEC_PER_SEC / 2)
+            openWindow(id: "welcome")
+          }
+        }
     }
   }
 }
