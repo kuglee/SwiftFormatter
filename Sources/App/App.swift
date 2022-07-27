@@ -1,7 +1,6 @@
-import AppConstants
 import AppFeature
+import AppUserDefaults
 import ComposableArchitecture
-import ConfigurationManager
 import SwiftUI
 
 public struct App {
@@ -17,9 +16,9 @@ public struct App {
 
 let appStore = Store(
   initialState: AppState(
-    configuration: loadConfiguration(fromJSON: getConfiguration()),
-    didRunBefore: getDidRunBefore(),
-    shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
+    configuration: AppUserDefaults.configuration,
+    didRunBefore: AppUserDefaults.didRunBefore,
+    shouldTrimTrailingWhitespace: AppUserDefaults.shouldTrimTrailingWhitespace
   ),
   reducer: appReducer.saveMiddleware(),
   environment: ()
@@ -82,7 +81,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
 
         return .concatenate(
           .fireAndForget {
-            setShouldTrimTrailingWhitespace(newValue: newState.shouldTrimTrailingWhitespace)
+            AppUserDefaults.shouldTrimTrailingWhitespace = newState.shouldTrimTrailingWhitespace
           },
           effects
         )
@@ -91,15 +90,11 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         let newState = state
 
         return .concatenate(
-          .fireAndForget { dumpConfiguration(configuration: newState.configuration) },
+          .fireAndForget { AppUserDefaults.configuration = newState.configuration },
           effects
         )
       default: return self(&state, action, environment)
       }
     }
   }
-}
-
-func getDidRunBefore() -> Bool {
-  UserDefaults(suiteName: AppConstants.appGroupName)!.bool(forKey: AppConstants.didRunBeforeKey)
 }

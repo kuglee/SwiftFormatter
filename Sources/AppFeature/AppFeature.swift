@@ -1,8 +1,6 @@
-import AppConstants
+import AppUserDefaults
 import ComposableArchitecture
-import ConfigurationManager
 import Settings
-import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
 
@@ -66,7 +64,7 @@ public let appReducer = Reducer<AppState, AppAction, Void>
       switch action {
       case .setDidRunBefore:
         state.didRunBefore = true
-        return .fireAndForget { setDidRunBefore() }
+        return .fireAndForget { AppUserDefaults.didRunBefore = true }
       case .settingsView(_): return .none
       }
     },
@@ -107,9 +105,4 @@ public struct AppViewMacOS12: View {
   public init(store: Store<AppState, AppAction>) { self.store = store }
 
   public var body: some View { appViewBody(store: self.store) }
-}
-
-func setDidRunBefore() {
-  UserDefaults(suiteName: AppConstants.appGroupName)!
-    .set(true, forKey: AppConstants.didRunBeforeKey)
 }

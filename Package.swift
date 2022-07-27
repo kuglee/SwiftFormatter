@@ -11,9 +11,8 @@ let package = Package(
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
-    .library(name: "ConfigurationManager", targets: ["ConfigurationManager"]),
     .library(name: "Settings", targets: ["Settings"]),
-    .library(name: "AppConstants", targets: ["AppConstants"]),
+    .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -24,11 +23,7 @@ let package = Package(
       name: "App",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "ConfigurationManager",
-        "Settings",
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "StyleGuide",
-        "AppConstants",
+        "AppUserDefaults",
         "AppFeature",
       ]
     ),
@@ -36,8 +31,8 @@ let package = Package(
       name: "AppFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "ConfigurationManager",
-        "AppConstants",
+        "AppUserDefaults",
+        "Settings",
       ]
     ),
     .target(
@@ -45,7 +40,7 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
-        "AppConstants",
+        "AppUserDefaults",
       ]
     ),
     .target(
@@ -53,17 +48,10 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
-        "AppConstants",
+        "AppUserDefaults",
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
-    .target(
-      name: "ConfigurationManager",
-      dependencies: [
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "AppConstants",
-      ]
-    ),
     .target(
       name: "Settings",
       dependencies: [
@@ -72,9 +60,14 @@ let package = Package(
         "FormatterSettings",
         "FormatterRules",
         "StyleGuide",
-        "AppConstants",
+        "AppUserDefaults",
       ]
     ),
-    .target(name: "AppConstants" ,dependencies: []),
+    .target(
+      name: "AppUserDefaults",
+      dependencies: [
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+      ]
+    ),
   ]
 )
