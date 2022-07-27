@@ -6,6 +6,7 @@ let package = Package(
   name: "Modules",
   platforms: [.macOS(.v12)],
   products: [
+    .library(name: "App", targets: ["App"]),
     .library(name: "AppFeature", targets: ["AppFeature"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
@@ -20,13 +21,22 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "AppFeature",
+      name: "App",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "ConfigurationManager",
         "Settings",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
         "StyleGuide",
+        "AppConstants",
+        "AppFeature",
+      ]
+    ),
+    .target(
+      name: "AppFeature",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "ConfigurationManager",
         "AppConstants",
       ]
     ),
