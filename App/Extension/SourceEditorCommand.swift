@@ -22,9 +22,9 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     var formattedSource = ""
 
     let formatter = SwiftFormatter(configuration: loadConfiguration(fromJSON: getConfiguration()))
-    try? formatter.format(source: source, assumingFileURL: nil, to: &formattedSource)
+    do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) }
+    catch { os_log("Unable to format source: %{public}@", error.localizedDescription) }
 
-    // can't show any error messages, so don't return errors
     if formattedSource.isEmpty || source == formattedSource { return completionHandler(nil) }
 
     invocation.buffer.selections.removeAllObjects()
