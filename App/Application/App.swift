@@ -17,7 +17,7 @@ import SwiftUI
 
 let appStore = Store(
   initialState: AppState(
-    configuration: loadConfiguration(fromFileAtPath: AppConstants.configFileURL),
+    configuration: loadConfiguration(fromJSON: getConfiguration()),
     didRunBefore: getDidRunBefore(),
     shouldTrimTrailingWhitespace: getShouldTrimTrailingWhitespace()
   ),
@@ -91,13 +91,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         let newState = state
 
         return .concatenate(
-          .fireAndForget {
-            dumpConfiguration(
-              configuration: newState.configuration,
-              outputFileURL: AppConstants.configFileURL,
-              createIntermediateDirectories: true
-            )
-          },
+          .fireAndForget { dumpConfiguration(configuration: newState.configuration) },
           effects
         )
       default: return self(&state, action, environment)

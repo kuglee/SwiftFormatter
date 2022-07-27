@@ -1,19 +1,9 @@
 import AppConstants
 import AppKit
 import ConfigurationManager
-import SwiftFormatterServiceProtocol
+import SwiftFormat
 import XcodeKit
 import os.log
-
-enum FormatterError: Error, LocalizedError {
-  case formatError
-
-  var localizedDescription: String {
-    switch self {
-    case .formatError: return "Error: could not format source file."
-    }
-  }
-}
 
 class FormatSourceCommand: NSObject, XCSourceEditorCommand {
   func perform(
@@ -29,28 +19,19 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     let source =
       getShouldTrimTrailingWhitespace()
       ? invocation.buffer.completeBufferTrimmed : invocation.buffer.completeBuffer
+    var formattedSource = ""
 
-    let serviceConnection = getServiceConnection()
-    serviceConnection.resume()
+    let formatter = SwiftFormatter(configuration: loadConfiguration(fromJSON: getConfiguration()))
+    try? formatter.format(source: source, assumingFileURL: nil, to: &formattedSource)
 
-    let service = getService(connection: serviceConnection)
+    // can't show any error messages, so don't return errors
+    if formattedSource.isEmpty || source == formattedSource { return completionHandler(nil) }
 
-    service.format(source: source) { formattedSource, error in
-      defer { serviceConnection.invalidate() }
+    invocation.buffer.selections.removeAllObjects()
+    invocation.buffer.completeBuffer = formattedSource
+    invocation.buffer.selections.add(previousSelection)
 
-      // can't show any error message, so don't return errors
-      guard let formattedSource = formattedSource, error == nil else {
-        return completionHandler(nil)
-      }
-
-      if source == formattedSource { return completionHandler(nil) }
-
-      invocation.buffer.selections.removeAllObjects()
-      invocation.buffer.completeBuffer = formattedSource
-      invocation.buffer.selections.add(previousSelection)
-
-      return completionHandler(nil)
-    }
+    return completionHandler(nil)
   }
 }
 
@@ -79,17 +60,4 @@ extension StringProtocol {
 
     return view
   }
-}
-
-func getServiceConnection() -> NSXPCConnection {
-  let connection = NSXPCConnection(serviceName: AppConstants.xpcServiceName)
-  connection.remoteObjectInterface = NSXPCInterface(with: SwiftFormatterServiceProtocol.self)
-
-  return connection
-}
-
-func getService(connection: NSXPCConnection) -> SwiftFormatterServiceProtocol {
-  (connection.remoteObjectProxy as AnyObject)
-    .remoteObjectProxyWithErrorHandler { error in os_log("%{public}@", error.localizedDescription) }
-    as! SwiftFormatterServiceProtocol
 }

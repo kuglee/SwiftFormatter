@@ -3,24 +3,16 @@ import Foundation
 import SwiftFormatConfiguration
 import os.log
 
-public func loadConfiguration(fromFileAtPath configurationFileURL: URL) -> Configuration {
-  do { return try Configuration(contentsOf: configurationFileURL) }
-  catch {
-    os_log(
-      "Could not load configuration at %{public}@: %{public}@",
-      configurationFileURL.absoluteString,
-      error.localizedDescription
-    )
+public func loadConfiguration(fromJSON configurationJSON: String?) -> Configuration {
+  if let configurationJSON = configurationJSON, let data = configurationJSON.data(using: .utf8) {
+    do { return try JSONDecoder().decode(Configuration.self, from: data) }
+    catch { os_log("Could not load configuration: %{public}@", error.localizedDescription) }
   }
 
   return Configuration()
 }
 
-public func dumpConfiguration(
-  configuration: Configuration,
-  outputFileURL: URL,
-  createIntermediateDirectories: Bool = false
-) {
+public func dumpConfiguration(configuration: Configuration) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted]
@@ -32,18 +24,20 @@ public func dumpConfiguration(
       return
     }
 
-    if createIntermediateDirectories {
-      try? FileManager.default.createDirectory(
-        at: outputFileURL.deletingLastPathComponent(),
-        withIntermediateDirectories: true
-      )
-    }
-
-    try jsonString.write(to: outputFileURL, atomically: false, encoding: .utf8)
+    setConfiguration(jsonString)
   }
   catch {
     os_log("Could not dump the default configuration: %{public}@", error.localizedDescription)
   }
+}
+
+public func getConfiguration() -> String? {
+  UserDefaults(suiteName: AppConstants.appGroupName)!.string(forKey: AppConstants.configurationKey)
+}
+
+func setConfiguration(_ newValue: String) {
+  UserDefaults(suiteName: AppConstants.appGroupName)!
+    .set(newValue, forKey: AppConstants.configurationKey)
 }
 
 public func getShouldTrimTrailingWhitespace() -> Bool {
