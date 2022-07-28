@@ -1,4 +1,3 @@
-import AppUserDefaults
 import ComposableArchitecture
 import Settings
 import SwiftFormatConfiguration
@@ -64,7 +63,7 @@ public let appReducer = Reducer<AppState, AppAction, Void>
       switch action {
       case .setDidRunBefore:
         state.didRunBefore = true
-        return .fireAndForget { AppUserDefaults.didRunBefore = true }
+        return .none
       case .settingsView(_): return .none
       }
     },

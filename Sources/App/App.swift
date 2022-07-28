@@ -1,6 +1,7 @@
 import AppFeature
 import AppUserDefaults
 import ComposableArchitecture
+import Defaults
 import SwiftUI
 
 public struct App {
@@ -16,9 +17,9 @@ public struct App {
 
 let appStore = Store(
   initialState: AppState(
-    configuration: AppUserDefaults.configuration,
-    didRunBefore: AppUserDefaults.didRunBefore,
-    shouldTrimTrailingWhitespace: AppUserDefaults.shouldTrimTrailingWhitespace
+    configuration: Defaults[.configuration],
+    didRunBefore: Defaults[.didRunBefore],
+    shouldTrimTrailingWhitespace: Defaults[.shouldTrimTrailingWhitespace]
   ),
   reducer: appReducer.saveMiddleware(),
   environment: ()
@@ -81,7 +82,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
 
         return .concatenate(
           .fireAndForget {
-            AppUserDefaults.shouldTrimTrailingWhitespace = newState.shouldTrimTrailingWhitespace
+            Defaults[.shouldTrimTrailingWhitespace] = newState.shouldTrimTrailingWhitespace
           },
           effects
         )
@@ -90,10 +91,17 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
         let newState = state
 
         return .concatenate(
-          .fireAndForget { AppUserDefaults.configuration = newState.configuration },
+          .fireAndForget { Defaults[.configuration] = newState.configuration },
           effects
         )
-      default: return self(&state, action, environment)
+      case .setDidRunBefore:
+        let effects = self(&state, action, environment)
+        let newState = state
+
+        return .concatenate(
+          .fireAndForget { Defaults[.didRunBefore] = newState.didRunBefore },
+          effects
+        )
       }
     }
   }

@@ -17,6 +17,7 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
     .package(url: "https://github.com/apple/swift-format", branch: "release/5.6"),
+    .package(url: "https://github.com/sindresorhus/Defaults", branch: "v6.3.0"),
   ],
   targets: [
     .target(
@@ -25,14 +26,15 @@ let package = Package(
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "AppUserDefaults",
         "AppFeature",
+        "Defaults",
       ]
     ),
     .target(
       name: "AppFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "AppUserDefaults",
         "Settings",
+        "Defaults",
       ]
     ),
     .target(
@@ -40,7 +42,6 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
-        "AppUserDefaults",
       ]
     ),
     .target(
@@ -48,7 +49,6 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
-        "AppUserDefaults",
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
@@ -60,13 +60,13 @@ let package = Package(
         "FormatterSettings",
         "FormatterRules",
         "StyleGuide",
-        "AppUserDefaults",
       ]
     ),
     .target(
       name: "AppUserDefaults",
       dependencies: [
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        "Defaults",
       ]
     ),
   ]

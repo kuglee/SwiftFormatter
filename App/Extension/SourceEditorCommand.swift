@@ -1,5 +1,6 @@
 import AppKit
 import AppUserDefaults
+import Defaults
 import SwiftFormat
 import XcodeKit
 import os.log
@@ -16,11 +17,11 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
 
     let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source =
-      AppUserDefaults.shouldTrimTrailingWhitespace
+      Defaults[.shouldTrimTrailingWhitespace]
       ? invocation.buffer.completeBufferTrimmed : invocation.buffer.completeBuffer
     var formattedSource = ""
 
-    let formatter = SwiftFormatter(configuration: AppUserDefaults.configuration)
+    let formatter = SwiftFormatter(configuration: Defaults[.configuration])
     do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) }
     catch { os_log("Unable to format source: %{public}@", error.localizedDescription) }
 
