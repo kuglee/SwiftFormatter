@@ -279,7 +279,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp \"$BUILT_PRODUCTS_DIR/lib_InternalSwiftSyntaxParser.dylib\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/\"\necho \"$CODE_SIGN_IDENTITY\" > ~/Downloads/out.txt\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"\n";
+			shellScript = "cp \"$BUILT_PRODUCTS_DIR/lib_InternalSwiftSyntaxParser.dylib\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/\"\ncodesign -f -v -s \"$CODE_SIGN_IDENTITY\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
