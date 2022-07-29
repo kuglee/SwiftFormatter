@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "Modules",
+  name: "SwiftFormatter",
   platforms: [.macOS(.v12)],
   products: [
     .library(name: "App", targets: ["App"]),
