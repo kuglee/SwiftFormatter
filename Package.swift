@@ -2,6 +2,8 @@
 
 import PackageDescription
 
+let xcodeKitFrameworkPath = "/Applications/Xcode-beta.app/Contents/Developer/Library/Frameworks/"
+
 let package = Package(
   name: "SwiftFormatter",
   platforms: [.macOS(.v12)],
@@ -13,6 +15,7 @@ let package = Package(
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
+    .library(name: "AppExtension", targets: ["AppExtension"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -69,5 +72,18 @@ let package = Package(
         "Defaults",
       ]
     ),
+    .target(
+      name: "AppExtension",
+      dependencies: [
+        .product(name: "SwiftFormat", package: "swift-format"),
+        "AppUserDefaults",
+        "Defaults",
+      ],
+      swiftSettings: [
+          .unsafeFlags([
+              "-Fsystem", xcodeKitFrameworkPath,
+          ]),
+      ]
+    )
   ]
 )
