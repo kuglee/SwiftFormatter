@@ -226,8 +226,6 @@
 			);
 			mainGroup = 5DA2B97C2286045B0051C256;
 			packageReferences = (
-				5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */,
-				5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 5DA2B9862286045B0051C256 /* Products */;
 			projectDirPath = "";
@@ -573,25 +571,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		5D29C53D23C8DE4300581751 /* XCRemoteSwiftPackageReference "swift-format" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-format";
-			requirement = {
-				branch = release/5.6;
-				kind = branch;
-			};
-		};
-		5D63BF24285126A60026C565 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		5D3C54CF2895A21900BFD803 /* AppExtension */ = {
