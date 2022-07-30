@@ -1,7 +1,7 @@
 # Swift Formatter
 Xcode extension for [swift-format](https://github.com/apple/swift-format).
 
-It only supports macOS Catalina (10.15).
+For macOS Monterey (macOS 12) and later.
 
 ## How to install
-Build from source or download the [latest version](https://github.com/kuglee/Swift-format/releases/latest).
+Build from source (with Xcode 14) or download the [latest version](https://github.com/kuglee/Swift-format/releases/latest).
