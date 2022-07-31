@@ -3,4 +3,4 @@
 xcuserdata/
 *.build
 App/.swiftpm
-/Package.resolved
+Package.resolved
