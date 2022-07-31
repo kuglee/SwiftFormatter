@@ -9,13 +9,13 @@ let package = Package(
   platforms: [.macOS(.v12)],
   products: [
     .library(name: "App", targets: ["App"]),
-    .library(name: "AppFeature", targets: ["AppFeature"]),
-    .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
-    .library(name: "FormatterRules", targets: ["FormatterRules"]),
-    .library(name: "StyleGuide", targets: ["StyleGuide"]),
-    .library(name: "Settings", targets: ["Settings"]),
-    .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
     .library(name: "AppExtension", targets: ["AppExtension"]),
+    .library(name: "AppFeature", targets: ["AppFeature"]),
+    .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
+    .library(name: "FormatterRules", targets: ["FormatterRules"]),
+    .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
+    .library(name: "Settings", targets: ["Settings"]),
+    .library(name: "StyleGuide", targets: ["StyleGuide"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.9.0"),
@@ -26,28 +26,40 @@ let package = Package(
     .target(
       name: "App",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "AppUserDefaults",
         "AppFeature",
+        "AppUserDefaults",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
         "StyleGuide",
+      ]
+    ),
+    .target(
+      name: "AppExtension",
+      dependencies: [
+        "AppUserDefaults",
+        "Defaults",
+        .product(name: "SwiftFormat", package: "swift-format"),
+      ],
+      swiftSettings: [
+          .unsafeFlags([
+              "-Fsystem", xcodeKitFrameworkPath,
+          ]),
       ]
     ),
     .target(
       name: "AppFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "Settings",
         "Defaults",
+        "Settings",
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
     .target(
-      name: "FormatterSettings",
+      name: "AppUserDefaults",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "Defaults",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "StyleGuide",
       ]
     ),
     .target(
@@ -57,36 +69,24 @@ let package = Package(
         "StyleGuide",
       ]
     ),
-    .target(name: "StyleGuide" ,dependencies: []),
+    .target(
+      name: "FormatterSettings",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "StyleGuide",
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+      ]
+    ),
     .target(
       name: "Settings",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "FormatterSettings",
         "FormatterRules",
+        "FormatterSettings",
         "StyleGuide",
-      ]
-    ),
-    .target(
-      name: "AppUserDefaults",
-      dependencies: [
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
-        "Defaults",
       ]
     ),
-    .target(
-      name: "AppExtension",
-      dependencies: [
-        .product(name: "SwiftFormat", package: "swift-format"),
-        "AppUserDefaults",
-        "Defaults",
-      ],
-      swiftSettings: [
-          .unsafeFlags([
-              "-Fsystem", xcodeKitFrameworkPath,
-          ]),
-      ]
-    )
+    .target(name: "StyleGuide" ,dependencies: [])
   ]
 )
