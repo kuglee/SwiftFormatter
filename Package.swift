@@ -30,12 +30,14 @@ let package = Package(
         "AppUserDefaults",
         "AppFeature",
         "Defaults",
+        "StyleGuide",
       ]
     ),
     .target(
       name: "AppFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
         "Settings",
         "Defaults",
       ]
@@ -44,7 +46,8 @@ let package = Package(
       name: "FormatterSettings",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"), "StyleGuide",
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        "StyleGuide",
       ]
     ),
     .target(
