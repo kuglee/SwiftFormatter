@@ -7,18 +7,18 @@ import os.log
 
 open class AppExtension: NSObject, XCSourceEditorExtension {
   public var commandDefinitions: [[XCSourceEditorCommandDefinitionKey: Any]] {
-    func getCommandDefinition(for class: AnyClass, commandName: String)
-      -> [XCSourceEditorCommandDefinitionKey: Any]
-    {
-      [
-        .identifierKey: "\(Bundle.main.bundleIdentifier!).\(`class`.self)",
-        .classNameKey: `class`.description(), .nameKey: commandName,
-      ]
-    }
+    [
+      makeCommandDefinition(name: "Format Source", class: FormatSourceCommand.self),
+      makeCommandDefinition(name: "Settings...", class: OpenPreferencesCommand.self),
+    ]
+  }
 
-    return [
-      getCommandDefinition(for: FormatSourceCommand.self, commandName: "Format Source"),
-      getCommandDefinition(for: OpenPreferencesCommand.self, commandName: "Settings..."),
+  func makeCommandDefinition(name: String, class: AnyClass) -> [XCSourceEditorCommandDefinitionKey:
+    String]
+  {
+    [
+      .identifierKey: "\(Bundle.main.bundleIdentifier!).\(`class`.self)",
+      .classNameKey: `class`.description(), .nameKey: name,
     ]
   }
 }
@@ -33,7 +33,6 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
         .contains(invocation.buffer.contentUTI)
     else { return completionHandler(nil) }
 
-    let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     let source =
       Defaults[.shouldTrimTrailingWhitespace]
       ? invocation.buffer.completeBufferTrimmed : invocation.buffer.completeBuffer
@@ -45,6 +44,7 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
 
     if formattedSource.isEmpty || source == formattedSource { return completionHandler(nil) }
 
+    let previousSelection = invocation.buffer.selections[0] as! XCSourceTextRange
     invocation.buffer.selections.removeAllObjects()
     invocation.buffer.completeBuffer = formattedSource
     invocation.buffer.selections.add(previousSelection)
