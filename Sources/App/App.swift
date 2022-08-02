@@ -7,12 +7,7 @@ import SwiftUI
 
 public struct App {
   public static func main() {
-    if #available(macOS 13.0, *) {
-      AppMacOS13.main()
-    }
-    else {
-      AppMacOS12.main()
-    }
+    if #available(macOS 13.0, *) { AppMacOS13.main() } else { AppMacOS12.main() }
   }
 }
 

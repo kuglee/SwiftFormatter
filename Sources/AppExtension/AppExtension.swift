@@ -39,8 +39,9 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
     var formattedSource = ""
 
     let formatter = SwiftFormatter(configuration: Defaults[.configuration])
-    do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) }
-    catch { os_log("Unable to format source: %{public}@", error.localizedDescription) }
+    do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) } catch {
+      os_log("Unable to format source: %{public}@", error.localizedDescription)
+    }
 
     if formattedSource.isEmpty || source == formattedSource { return completionHandler(nil) }
 
