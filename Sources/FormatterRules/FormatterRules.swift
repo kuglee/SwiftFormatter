@@ -30,7 +30,7 @@ public struct FormatterRulesView: View {
   var colors: [Color] = [.red, .blue, .yellow]
   public var body: some View {
     WithViewStore(self.store) { viewStore in
-      VStack(alignment: .leading, spacing: .grid(2)) {
+      VStack(alignment: .leading, spacing: .grid(1)) {
         Text("Formatting rules:")
         List(viewStore.rules.keys.sorted().enumeratedArray(), id: \.offset) { index, key in
           Toggle(

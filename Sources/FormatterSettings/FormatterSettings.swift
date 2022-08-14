@@ -73,7 +73,7 @@ public struct FormatterSettingsView: View {
     WithViewStore(self.store) { viewStore in
       HStack(alignment: .centerAlignmentGuide) {
         Text("Indentation:").modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
-        VStack(alignment: .leading, spacing: .grid(2)) {
+        VStack(alignment: .leading, spacing: .grid(1)) {
           HStack(spacing: 0) {
             Text("Length:").modifier(CenterAlignmentStyle())
             Stepper(
@@ -158,7 +158,7 @@ public struct FormatterSettingsView: View {
     WithViewStore(self.store) { viewStore in
       HStack(alignment: .firstTextBaseline) {
         Text("Line breaks:").modifier(TrailingAlignmentStyle())
-        VStack(alignment: .leading, spacing: .grid(2)) {
+        VStack(alignment: .leading, spacing: .grid(1)) {
           Toggle(isOn: viewStore.binding(\.$respectsExistingLineBreaks)) {
             Text("Respects existing line breaks")
           }
@@ -246,7 +246,7 @@ public struct FormatterSettingsView: View {
 
   @FocusState var shouldFocusFirstTextField: Bool
   public var body: some View {
-    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(4)) {
+    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(2)) {
       indentationView
       tabWidthView
       lineLenghtView

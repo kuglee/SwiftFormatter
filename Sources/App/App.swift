@@ -31,14 +31,14 @@ let appStore = Store(
     .commands { CommandGroup(replacing: .newItem, addition: {}) }.windowResizability(.contentSize)
 
     Window("Welcome to Swift Formatter", id: "welcome") {
-      VStack(alignment: .leading, spacing: .grid(8)) {
+      VStack(alignment: .leading, spacing: .grid(4)) {
         Text(
           "Before Swift Formatter can be used in Xcode its extension must be enabled in System Settings."
         )
         .modifier(CenterTextStyle())
-        VStack(alignment: .leading, spacing: .grid(6)) {
+        VStack(alignment: .leading, spacing: .grid(3)) {
           Text("Enabling the Extension").bold().modifier(CenterTextStyle())
-          VStack(alignment: .leading, spacing: .grid(4)) {
+          VStack(alignment: .leading, spacing: .grid(2)) {
             Text(
               "The extension can be enabled and disabled in System Settings > Privacy & Security > Extensions > Xcode Source Editor"
             )
@@ -51,7 +51,7 @@ let appStore = Store(
             .frame(maxWidth: .infinity)
           }
         }
-        VStack(alignment: .leading, spacing: .grid(6)) {
+        VStack(alignment: .leading, spacing: .grid(3)) {
           Text("Using the Extension").bold().modifier(CenterTextStyle())
           Text(
             "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar."
