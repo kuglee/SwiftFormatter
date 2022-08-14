@@ -62,8 +62,7 @@ public struct PrimaryTabViewStyle: ViewModifier {
   public init() {}
 
   public func body(content: Content) -> some View {
-    content.frame(width: 600, height: 532).padding(.horizontal, .grid(10)).padding(.top, .grid(5))
-      .padding(.bottom, .grid(10))
+    content.frame(width: 600, height: 532).padding(.grid(10))
   }
 }
 
