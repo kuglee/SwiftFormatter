@@ -110,3 +110,11 @@ public struct SecondaryTextStyle: ViewModifier {
     content.font(.footnote).foregroundColor(Color.secondary)
   }
 }
+
+public struct CenterTextStyle: ViewModifier {
+  public init() {}
+
+  public func body(content: Content) -> some View {
+    content.multilineTextAlignment(.center).frame(maxWidth: .infinity)
+  }
+}
