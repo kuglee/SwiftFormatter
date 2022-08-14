@@ -90,25 +90,7 @@ public struct PrimaryVStackStyle: ViewModifier {
   }
 }
 
-// MARK: - Toggle Styles
-
-public struct PrimaryToggleStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-  }
-}
-
 // MARK: - Text Styles
-
-public struct SecondaryTextStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.font(.footnote).foregroundColor(Color.secondary)
-  }
-}
 
 public struct CenterTextStyle: ViewModifier {
   public init() {}
