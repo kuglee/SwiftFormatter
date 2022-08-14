@@ -120,22 +120,25 @@ public struct SettingsView: View {
           set: { viewStore.send(.tabSelected($0)) }
         )
       ) {
-        FormatterSettingsView(
-          store: self.store.scope(
-            state: { $0.formatterSettingsView },
-            action: { .formatterSettingsView($0) }
+        Group {
+          FormatterSettingsView(
+            store: self.store.scope(
+              state: { $0.formatterSettingsView },
+              action: { .formatterSettingsView($0) }
+            )
           )
-        )
-        .tabItem { Text("Formatting") }.tag(Tab.formatting).modifier(PrimaryTabItemStyle())
-        FormatterRulesView(
-          store: self.store.scope(
-            state: { $0.formatterRulesView },
-            action: { .formatterRulesView($0) }
+          .tabItem { Text("Formatting") }.tag(Tab.formatting)
+          FormatterRulesView(
+            store: self.store.scope(
+              state: { $0.formatterRulesView },
+              action: { .formatterRulesView($0) }
+            )
           )
-        )
-        .modifier(PrimaryTabItemStyle()).tabItem { Text("Rules") }.tag(Tab.rules)
+          .tabItem { Text("Rules") }.tag(Tab.rules)
+        }
+        .padding(.grid(3))
       }
-      .modifier(PrimaryTabViewStyle())
+      .frame(width: 600, height: 532).padding(.grid(5))
     }
   }
 }

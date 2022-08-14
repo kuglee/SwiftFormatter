@@ -80,23 +80,14 @@ public struct FormatterSettingsView: View {
               value: viewStore.binding(\.$indentation.count),
               in: 0...1000,
               step: 1,
-              label: {
-                TextField(
-                  "",
-                  value: viewStore.binding(\.$indentation.count),
-                  formatter: uIntNumberFormatter
-                )
-                .modifier(PrimaryTextFieldStyle())
-              }
+              label: { StepperTextField(value: viewStore.binding(\.$indentation.count)) }
             )
             .help("The amount of whitespace that should be added when indenting one level")
             Picker("", selection: viewStore.binding(\.$indentation)) {
               Text(Indent.spaces(Int()).rawValue).tag(Indent.spaces(viewStore.indentation.count))
               Text(Indent.tabs(Int()).rawValue).tag(Indent.tabs(viewStore.indentation.count))
             }
-
-            .help("The type of whitespace that should be added when indenting")
-            .modifier(PrimaryPickerStyle())
+            .help("The type of whitespace that should be added when indenting").fixedSize()
           }
           Toggle(isOn: viewStore.binding(\.$indentConditionalCompilationBlocks)) {
             Text("Indent conditional compilation blocks")
@@ -123,10 +114,7 @@ public struct FormatterSettingsView: View {
           value: viewStore.binding(\.$tabWidth),
           in: 0...1000,
           step: 1,
-          label: {
-            TextField("", value: viewStore.binding(\.$tabWidth), formatter: uIntNumberFormatter)
-              .frame(alignment: .leading).modifier(PrimaryTextFieldStyle())
-          }
+          label: { StepperTextField(value: viewStore.binding(\.$tabWidth)) }
         )
         .help(
           "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
@@ -144,10 +132,7 @@ public struct FormatterSettingsView: View {
           value: viewStore.binding(\.$lineLength),
           in: 0...1000,
           step: 1,
-          label: {
-            TextField("", value: viewStore.binding(\.$lineLength), formatter: uIntNumberFormatter)
-              .modifier(PrimaryTextFieldStyle())
-          }
+          label: { StepperTextField(value: viewStore.binding(\.$lineLength)) }
         )
         .help("The maximum allowed length of a line, in characters")
       }
@@ -207,14 +192,7 @@ public struct FormatterSettingsView: View {
               value: viewStore.binding(\.$maximumBlankLines),
               in: 0...1000,
               step: 1,
-              label: {
-                TextField(
-                  "",
-                  value: viewStore.binding(\.$maximumBlankLines),
-                  formatter: uIntNumberFormatter
-                )
-                .modifier(PrimaryTextFieldStyle())
-              }
+              label: { StepperTextField(value: viewStore.binding(\.$maximumBlankLines)) }
             )
             .help(
               "The maximum number of consecutive blank lines that are allowed to be present in a source file. Any number larger than this will be collapsed down to the maximum."
@@ -239,7 +217,7 @@ public struct FormatterSettingsView: View {
         .help(
           "Determines the formal access level (i.e., the level specified in source code) for file-scoped declarations whose effective access level is private to the containing file."
         )
-        .modifier(PrimaryPickerStyle())
+        .fixedSize()
       }
     }
   }
@@ -253,12 +231,11 @@ public struct FormatterSettingsView: View {
       lineBreaksView
       fileScopedDeclarationPrivacyView
     }
-    .modifier(PrimaryVStackStyle()).focused($shouldFocusFirstTextField)
-    .onAppear { Task { shouldFocusFirstTextField = false } }
+    .multilineTextAlignment(.trailing)
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    .focused($shouldFocusFirstTextField).onAppear { Task { shouldFocusFirstTextField = false } }
   }
 }
-
-// MARK: Indentation
 
 extension Indent: RawRepresentable {
   public typealias RawValue = String
@@ -288,8 +265,6 @@ extension Indent: RawRepresentable {
   }
 }
 
-// MARK: FileScopedDeclarationPrivacy
-
 extension FileScopedDeclarationPrivacyConfiguration.AccessLevel {
   public typealias RawValue = String
 
@@ -302,30 +277,3 @@ extension FileScopedDeclarationPrivacyConfiguration.AccessLevel {
     }
   }
 }
-
-// workaround for NumberFormatter bug: https://stackoverflow.com/questions/56799456/swiftui-textfield-with-formatter-not-working
-extension TextField {
-  public init(_ prompt: LocalizedStringKey, value: Binding<Int>, formatter: NumberFormatter)
-  where Text == Label {
-    self.init(
-      prompt,
-      text: .init(
-        get: { formatter.string(for: value.wrappedValue) ?? String() },
-        set: { value.wrappedValue = formatter.number(from: $0)?.intValue ?? value.wrappedValue }
-      )
-    )
-  }
-}
-
-public class UIntNumberFormatter: NumberFormatter {
-  public override init() {
-    super.init()
-
-    self.allowsFloats = false
-    self.minimum = 0
-  }
-
-  required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-}
-
-let uIntNumberFormatter = UIntNumberFormatter()

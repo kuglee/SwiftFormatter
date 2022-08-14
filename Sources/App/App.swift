@@ -31,18 +31,16 @@ let appStore = Store(
     .commands { CommandGroup(replacing: .newItem, addition: {}) }.windowResizability(.contentSize)
 
     Window("Welcome to Swift Formatter", id: "welcome") {
-      VStack(alignment: .leading, spacing: .grid(4)) {
+      VStack(spacing: .grid(4)) {
         Text(
           "Before Swift Formatter can be used in Xcode its extension must be enabled in System Settings."
         )
-        .modifier(CenterTextStyle())
-        VStack(alignment: .leading, spacing: .grid(3)) {
-          Text("Enabling the Extension").bold().modifier(CenterTextStyle())
-          VStack(alignment: .leading, spacing: .grid(2)) {
+        VStack(spacing: .grid(3)) {
+          Text("Enabling the Extension").font(.system(.headline))
+          VStack(spacing: .grid(2)) {
             Text(
               "The extension can be enabled and disabled in System Settings > Privacy & Security > Extensions > Xcode Source Editor"
             )
-            .modifier(CenterTextStyle())
             Button(action: {
               NSWorkspace.shared.open(
                 URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences")!
@@ -51,15 +49,14 @@ let appStore = Store(
             .frame(maxWidth: .infinity)
           }
         }
-        VStack(alignment: .leading, spacing: .grid(3)) {
-          Text("Using the Extension").bold().modifier(CenterTextStyle())
+        VStack(spacing: .grid(3)) {
+          Text("Using the Extension").font(.system(.headline))
           Text(
             "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar."
           )
-          .modifier(CenterTextStyle())
         }
       }
-      .padding().frame(width: 500, height: 300, alignment: .top)
+      .multilineTextAlignment(.center).padding().frame(width: 500, height: 300, alignment: .top)
     }
     .windowResizability(.contentSize)
   }
