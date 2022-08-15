@@ -234,7 +234,7 @@ public struct FormatterSettingsView: View {
     }
     .multilineTextAlignment(.trailing)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    .focused($shouldFocusFirstTextField).onAppear { Task { shouldFocusFirstTextField = false } }
+    .focused($shouldFocusFirstTextField).task { shouldFocusFirstTextField = false }
   }
 }
 
