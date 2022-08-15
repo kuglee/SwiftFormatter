@@ -38,7 +38,9 @@ public struct FormatterRulesView: View {
               get: { viewStore.rules[key]! },
               set: { viewStore.send(.ruleFilledOut(key: key, value: $0)) }
             )
-          ) { Text(key.separateCamelCase.sentenceCase) }
+          ) {
+            Text(splitCamelCase(string: key).joined(separator: " ").sentenceCased(separator: " "))
+          }
         }
         .listStyle(.bordered(alternatesRowBackgrounds: true))
       }
@@ -46,12 +48,17 @@ public struct FormatterRulesView: View {
   }
 }
 
+func splitCamelCase(string s: String) -> [String.SubSequence] {
+  s.replacingRegex(matching: #"((?<=\p{Ll})\p{Lu}|(?<!^)\p{Lu}(?=\p{Ll}))"#, with: " $1")
+    .split(separator: " ")
+}
+
 extension String {
   func replacingRegex(
     matching pattern: String,
     replacingOptions: NSRegularExpression.MatchingOptions = [],
     with template: String
-  ) -> String {
+  ) -> Self {
     guard let regex = try? NSRegularExpression(pattern: pattern) else { return self }
 
     let range = NSRange(startIndex..., in: self)
@@ -64,13 +71,9 @@ extension String {
     )
   }
 
-  var separateCamelCase: String {
-    self.replacingRegex(matching: #"((?<=\p{Ll})\p{Lu}|(?<!^)\p{Lu}(?=\p{Ll}))"#, with: " $1")
-  }
-
-  var sentenceCase: String {
-    self.split(separator: " ").map { $0 == $0.uppercased() ? String($0) : $0.lowercased() }
-      .joined(separator: " ").capitalizingFirstLetter()
+  func sentenceCased(separator: Self.Element) -> Self {
+    self.split(separator: separator).map { $0 == $0.uppercased() ? String($0) : $0.lowercased() }
+      .joined(separator: String(separator)).capitalizingFirstLetter()
   }
 
   func capitalizingFirstLetter() -> String { self.prefix(1).capitalized + self.dropFirst() }
