@@ -71,11 +71,12 @@ public struct FormatterSettingsView: View {
 
   public var indentationView: some View {
     WithViewStore(self.store) { viewStore in
-      HStack(alignment: .centerAlignmentGuide) {
-        Text("Indentation:").modifier(TrailingAlignmentStyle()).modifier(CenterAlignmentStyle())
+      HStack(alignment: .centerNonSiblings) {
+        Text("Indentation:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+          .alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
         VStack(alignment: .leading, spacing: .grid(1)) {
           HStack(spacing: 0) {
-            Text("Length:").modifier(CenterAlignmentStyle())
+            Text("Length:").alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
             Stepper(
               value: viewStore.binding(\.$indentation.count),
               in: 0...1000,
@@ -109,7 +110,7 @@ public struct FormatterSettingsView: View {
   public var tabWidthView: some View {
     WithViewStore(self.store) { viewStore in
       HStack(spacing: 0) {
-        Text("Tab Width:").modifier(TrailingAlignmentStyle())
+        Text("Tab Width:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.binding(\.$tabWidth),
           in: 0...1000,
@@ -119,7 +120,7 @@ public struct FormatterSettingsView: View {
         .help(
           "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
         )
-        Text("spaces")
+        Text("spaces").padding(.grid(2))
       }
     }
   }
@@ -127,7 +128,7 @@ public struct FormatterSettingsView: View {
   public var lineLenghtView: some View {
     WithViewStore(self.store) { viewStore in
       HStack(spacing: 0) {
-        Text("Line Length:").modifier(TrailingAlignmentStyle())
+        Text("Line Length:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.binding(\.$lineLength),
           in: 0...1000,
@@ -142,7 +143,7 @@ public struct FormatterSettingsView: View {
   public var lineBreaksView: some View {
     WithViewStore(self.store) { viewStore in
       HStack(alignment: .firstTextBaseline) {
-        Text("Line breaks:").modifier(TrailingAlignmentStyle())
+        Text("Line breaks:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         VStack(alignment: .leading, spacing: .grid(1)) {
           Toggle(isOn: viewStore.binding(\.$respectsExistingLineBreaks)) {
             Text("Respects existing line breaks")
@@ -205,9 +206,9 @@ public struct FormatterSettingsView: View {
 
   public var fileScopedDeclarationPrivacyView: some View {
     WithViewStore(self.store) { viewStore in
-      HStack(alignment: .centerAlignmentGuide, spacing: 0) {
-        Text("File Scoped Declaration Privacy:").modifier(TrailingAlignmentStyle())
-          .modifier(CenterAlignmentStyle())
+      HStack(alignment: .centerNonSiblings, spacing: 0) {
+        Text("File Scoped Declaration Privacy:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+          .alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
         Picker("", selection: viewStore.binding(\.$fileScopedDeclarationPrivacy.accessLevel)) {
           Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.private.rawValue)
             .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.private)
@@ -224,7 +225,7 @@ public struct FormatterSettingsView: View {
 
   @FocusState var shouldFocusFirstTextField: Bool
   public var body: some View {
-    VStack(alignment: .trailingAlignmentGuide, spacing: .grid(2)) {
+    VStack(alignment: .trailingLabel, spacing: .grid(2)) {
       indentationView
       tabWidthView
       lineLenghtView

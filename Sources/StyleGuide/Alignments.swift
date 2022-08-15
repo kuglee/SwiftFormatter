@@ -1,35 +1,19 @@
 import SwiftUI
 
 extension HorizontalAlignment {
-  private enum TrailingAlignment: AlignmentID {
+  private enum TrailingLabel: AlignmentID {
     static func defaultValue(in context: ViewDimensions) -> CGFloat { context[.trailing] }
   }
 
-  public static let trailingAlignmentGuide = HorizontalAlignment(TrailingAlignment.self)
-}
-
-public struct TrailingAlignmentStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.alignmentGuide(.trailingAlignmentGuide) { $0[.trailing] }
-  }
+  public static let trailingLabel = HorizontalAlignment(TrailingLabel.self)
 }
 
 extension VerticalAlignment {
-  private enum CenterAlignment: AlignmentID {
+  private enum CenterNonSiblings: AlignmentID {
     static func defaultValue(in context: ViewDimensions) -> CGFloat {
       context[VerticalAlignment.center]
     }
   }
 
-  public static let centerAlignmentGuide = VerticalAlignment(CenterAlignment.self)
-}
-
-public struct CenterAlignmentStyle: ViewModifier {
-  public init() {}
-
-  public func body(content: Content) -> some View {
-    content.alignmentGuide(.centerAlignmentGuide) { $0[VerticalAlignment.center] }
-  }
+  public static let centerNonSiblings = VerticalAlignment(CenterNonSiblings.self)
 }
