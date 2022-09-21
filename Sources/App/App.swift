@@ -80,36 +80,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 }
 
-extension ReducerProtocol where State == AppFeature.State, Action == AppFeature.Action {
-  func saveMiddleware() -> some ReducerProtocol<State, Action> {
+extension ReducerProtocol<AppFeature.State, AppFeature.Action> {
+  func saveMiddleware() -> SaveMiddleware<Self> { SaveMiddleware(upstream: self) }
+}
+
+struct SaveMiddleware<Upstream: ReducerProtocol<AppFeature.State, AppFeature.Action>>:
+  ReducerProtocol
+{
+  let upstream: Upstream
+
+  var body: some ReducerProtocol<AppFeature.State, AppFeature.Action> {
+    self.upstream
     Reduce { state, action in
       switch action {
       case .settingsFeature(.formatterSettings(.binding(\.$shouldTrimTrailingWhitespace))):
-        let effects = self.reduce(into: &state, action: action)
-        let newState = state
-
-        return .concatenate(
-          .fireAndForget {
-            Defaults[.shouldTrimTrailingWhitespace] = newState.shouldTrimTrailingWhitespace
-          },
-          effects
-        )
+        return .run { [state] _ in
+          Defaults[.shouldTrimTrailingWhitespace] = state.shouldTrimTrailingWhitespace
+        }
       case .settingsFeature:
-        let effects = self.reduce(into: &state, action: action)
-        let newState = state
-
-        return .concatenate(
-          .fireAndForget { Defaults[.configuration] = newState.configuration },
-          effects
-        )
+        return .run { [state] _ in Defaults[.configuration] = state.configuration }
       case .setDidRunBefore:
-        let effects = self.reduce(into: &state, action: action)
-        let newState = state
-
-        return .concatenate(
-          .fireAndForget { Defaults[.didRunBefore] = newState.didRunBefore },
-          effects
-        )
+        return .run { [state] _ in Defaults[.didRunBefore] = state.didRunBefore }
       }
     }
   }
