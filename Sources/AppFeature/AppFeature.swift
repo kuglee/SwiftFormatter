@@ -13,37 +13,59 @@ let formatterRulesKeys: [String] = [
   "UseWhereClausesInForLoops",
 ]
 
-public struct AppState: Equatable {
-  public var configuration: Configuration
-  public var selectedTab: Tab = .formatting
-  public var didRunBefore: Bool
-  public var shouldTrimTrailingWhitespace: Bool
+public struct AppFeature: ReducerProtocol {
+  public init() {}
 
-  public init(configuration: Configuration, didRunBefore: Bool, shouldTrimTrailingWhitespace: Bool)
-  {
-    self.didRunBefore = didRunBefore
-    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
-    self.configuration = configuration
+  public struct State: Equatable {
+    public var configuration: Configuration
+    public var selectedTab: Tab = .formatting
+    public var didRunBefore: Bool
+    public var shouldTrimTrailingWhitespace: Bool
 
-    self.configuration.rules = Configuration().rules.filter { formatterRulesKeys.contains($0.key) }
+    public init(
+      configuration: Configuration,
+      didRunBefore: Bool,
+      shouldTrimTrailingWhitespace: Bool
+    ) {
+      self.didRunBefore = didRunBefore
+      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
+      self.configuration = configuration
 
-    for rule in self.configuration.rules {
-      if self.configuration.rules[rule.key] != nil {
-        self.configuration.rules[rule.key] = rule.value
+      self.configuration.rules = Configuration().rules
+        .filter { formatterRulesKeys.contains($0.key) }
+
+      for rule in self.configuration.rules {
+        if self.configuration.rules[rule.key] != nil {
+          self.configuration.rules[rule.key] = rule.value
+        }
       }
+    }
+  }
+
+  public enum Action {
+    case setDidRunBefore
+    case settingsFeature(action: SettingsFeature.Action)
+  }
+
+  public var body: some ReducerProtocol<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .setDidRunBefore:
+        state.didRunBefore = true
+        return .none
+      case .settingsFeature(_): return .none
+      }
+    }
+    Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) {
+      SettingsFeature()
     }
   }
 }
 
-public enum AppAction {
-  case setDidRunBefore
-  case settingsView(SettingsViewAction)
-}
-
-extension AppState {
-  var settingsView: SettingsViewState {
+extension AppFeature.State {
+  var settingsFeature: SettingsFeature.State {
     get {
-      SettingsViewState(
+      SettingsFeature.State(
         configuration: self.configuration,
         shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
         selectedTab: self.selectedTab
@@ -51,41 +73,26 @@ extension AppState {
     }
     set {
       self.configuration = newValue.configuration
-      self.selectedTab = newValue.selectedTab
       self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
+      self.selectedTab = newValue.selectedTab
     }
   }
 }
 
-public let appReducer = Reducer<AppState, AppAction, Void>
-  .combine(
-    Reducer { state, action, _ in
-      switch action {
-      case .setDidRunBefore:
-        state.didRunBefore = true
-        return .none
-      case .settingsView(_): return .none
-      }
-    },
-    settingsViewReducer.pullback(
-      state: \AppState.settingsView,
-      action: /AppAction.settingsView,
-      environment: {}
-    )
+func appViewBody(store: StoreOf<AppFeature>) -> some View {
+  SettingsView(
+    store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
   )
-
-func appViewBody(store: Store<AppState, AppAction>) -> some View {
-  SettingsView(store: store.scope(state: { $0.settingsView }, action: { .settingsView($0) }))
 }
 
 @available(macOS 13.0, *) public struct AppViewMacOS13: View {
-  let store: Store<AppState, AppAction>
+  let store: StoreOf<AppFeature>
   @Environment(\.openWindow) private var openWindow
 
-  public init(store: Store<AppState, AppAction>) { self.store = store }
+  public init(store: StoreOf<AppFeature>) { self.store = store }
 
   public var body: some View {
-    WithViewStore(store) { viewStore in
+    WithViewStore(self.store) { viewStore in
       appViewBody(store: self.store)
         .task {
           if !viewStore.didRunBefore {
@@ -99,9 +106,11 @@ func appViewBody(store: Store<AppState, AppAction>) -> some View {
 }
 
 public struct AppViewMacOS12: View {
-  let store: Store<AppState, AppAction>
+  let store: StoreOf<AppFeature>
 
-  public init(store: Store<AppState, AppAction>) { self.store = store }
+  public init(store: StoreOf<AppFeature>) { self.store = store }
 
-  public var body: some View { appViewBody(store: self.store) }
+  public var body: some View {
+    WithViewStore(self.store) { viewStore in appViewBody(store: store) }
+  }
 }

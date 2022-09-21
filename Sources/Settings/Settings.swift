@@ -10,32 +10,52 @@ public enum Tab {
   case rules
 }
 
-public struct SettingsViewState: Equatable {
-  public var configuration: Configuration
-  public var shouldTrimTrailingWhitespace: Bool
-  public var selectedTab: Tab
+public struct SettingsFeature: ReducerProtocol {
+  public init() {}
 
-  public init(
-    configuration: Configuration,
-    shouldTrimTrailingWhitespace: Bool,
-    selectedTab: Tab = .formatting
-  ) {
-    self.configuration = configuration
-    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
-    self.selectedTab = selectedTab
+  public struct State: Equatable {
+    public var configuration: Configuration
+    public var shouldTrimTrailingWhitespace: Bool
+    public var selectedTab: Tab
+
+    public init(
+      configuration: Configuration,
+      shouldTrimTrailingWhitespace: Bool,
+      selectedTab: Tab = .formatting
+    ) {
+      self.configuration = configuration
+      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
+      self.selectedTab = selectedTab
+    }
+  }
+
+  public enum Action: Equatable {
+    case tabSelected(Tab)
+    case formatterSettings(action: FormatterSettings.Action)
+    case formatterRules(action: FormatterRules.Action)
+  }
+
+  public var body: some ReducerProtocol<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .tabSelected(let selectedTab):
+        state.selectedTab = selectedTab
+        return .none
+      case .formatterSettings(_): return .none
+      case .formatterRules(_): return .none
+      }
+    }
+    Scope(state: \.formatterSettings, action: /Action.formatterSettings(action:)) {
+      FormatterSettings()
+    }
+    Scope(state: \.formatterRules, action: /Action.formatterRules(action:)) { FormatterRules() }
   }
 }
 
-public enum SettingsViewAction: Equatable {
-  case tabSelected(Tab)
-  case formatterSettingsView(FormatterSettingsViewAction)
-  case formatterRulesView(FormatterRulesViewAction)
-}
-
-extension SettingsViewState {
-  var formatterSettingsView: FormatterSettingsViewState {
+extension SettingsFeature.State {
+  var formatterSettings: FormatterSettings.State {
     get {
-      FormatterSettingsViewState(
+      FormatterSettings.State(
         maximumBlankLines: self.configuration.maximumBlankLines,
         lineLength: self.configuration.lineLength,
         tabWidth: self.configuration.tabWidth,
@@ -78,39 +98,16 @@ extension SettingsViewState {
     }
   }
 
-  var formatterRulesView: FormatterRulesViewState {
-    get { FormatterRulesViewState(rules: self.configuration.rules) }
+  var formatterRules: FormatterRules.State {
+    get { FormatterRules.State(rules: self.configuration.rules) }
     set { self.configuration.rules = newValue.rules }
   }
 }
 
-public let settingsViewReducer = Reducer<SettingsViewState, SettingsViewAction, Void>
-  .combine(
-    Reducer { state, action, _ in
-      switch action {
-      case .tabSelected(let selectedTab):
-        state.selectedTab = selectedTab
-        return .none
-      case .formatterSettingsView(_): return .none
-      case .formatterRulesView(_): return .none
-      }
-    },
-    formatterSettingsViewReducer.pullback(
-      state: \SettingsViewState.formatterSettingsView,
-      action: /SettingsViewAction.formatterSettingsView,
-      environment: {}
-    ),
-    formatterRulesViewReducer.pullback(
-      state: \SettingsViewState.formatterRulesView,
-      action: /SettingsViewAction.formatterRulesView,
-      environment: {}
-    )
-  )
-
 public struct SettingsView: View {
-  let store: Store<SettingsViewState, SettingsViewAction>
+  let store: StoreOf<SettingsFeature>
 
-  public init(store: Store<SettingsViewState, SettingsViewAction>) { self.store = store }
+  public init(store: StoreOf<SettingsFeature>) { self.store = store }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
@@ -123,15 +120,15 @@ public struct SettingsView: View {
         Group {
           FormatterSettingsView(
             store: self.store.scope(
-              state: { $0.formatterSettingsView },
-              action: { .formatterSettingsView($0) }
+              state: \.formatterSettings,
+              action: SettingsFeature.Action.formatterSettings
             )
           )
           .tabItem { Text("Formatting") }.tag(Tab.formatting)
           FormatterRulesView(
             store: self.store.scope(
-              state: { $0.formatterRulesView },
-              action: { .formatterRulesView($0) }
+              state: \.formatterRules,
+              action: SettingsFeature.Action.formatterRules
             )
           )
           .tabItem { Text("Rules") }.tag(Tab.rules)

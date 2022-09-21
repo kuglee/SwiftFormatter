@@ -3,71 +3,71 @@ import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
 
-public struct FormatterSettingsViewState: Equatable {
-  @BindableState public var maximumBlankLines: Int
-  @BindableState public var lineLength: Int
-  @BindableState public var tabWidth: Int
-  @BindableState public var indentation: Indent
-  @BindableState public var respectsExistingLineBreaks: Bool
-  @BindableState public var lineBreakBeforeControlFlowKeywords: Bool
-  @BindableState public var lineBreakBeforeEachArgument: Bool
-  @BindableState public var lineBreakBeforeEachGenericRequirement: Bool
-  @BindableState public var prioritizeKeepingFunctionOutputTogether: Bool
-  @BindableState public var indentConditionalCompilationBlocks: Bool
-  @BindableState public var indentSwitchCaseLabels: Bool
-  @BindableState public var lineBreakAroundMultilineExpressionChainComponents: Bool
-  @BindableState public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
-  @BindableState public var shouldTrimTrailingWhitespace: Bool
+public struct FormatterSettings: ReducerProtocol {
+  public init() {}
 
-  public init(
-    maximumBlankLines: Int,
-    lineLength: Int,
-    tabWidth: Int,
-    indentation: Indent,
-    respectsExistingLineBreaks: Bool,
-    lineBreakBeforeControlFlowKeywords: Bool,
-    lineBreakBeforeEachArgument: Bool,
-    lineBreakBeforeEachGenericRequirement: Bool,
-    prioritizeKeepingFunctionOutputTogether: Bool,
-    indentConditionalCompilationBlocks: Bool,
-    indentSwitchCaseLabels: Bool,
-    lineBreakAroundMultilineExpressionChainComponents: Bool,
-    fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration,
-    shouldTrimTrailingWhitespace: Bool
-  ) {
-    self.maximumBlankLines = maximumBlankLines
-    self.lineLength = lineLength
-    self.tabWidth = tabWidth
-    self.indentation = indentation
-    self.respectsExistingLineBreaks = respectsExistingLineBreaks
-    self.lineBreakBeforeControlFlowKeywords = lineBreakBeforeControlFlowKeywords
-    self.lineBreakBeforeEachArgument = lineBreakBeforeEachArgument
-    self.lineBreakBeforeEachGenericRequirement = lineBreakBeforeEachGenericRequirement
-    self.prioritizeKeepingFunctionOutputTogether = prioritizeKeepingFunctionOutputTogether
-    self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
-    self.indentSwitchCaseLabels = indentSwitchCaseLabels
-    self.lineBreakAroundMultilineExpressionChainComponents =
-      lineBreakAroundMultilineExpressionChainComponents
-    self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
-    self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
+  public struct State: Equatable {
+    @BindableState public var maximumBlankLines: Int
+    @BindableState public var lineLength: Int
+    @BindableState public var tabWidth: Int
+    @BindableState public var indentation: Indent
+    @BindableState public var respectsExistingLineBreaks: Bool
+    @BindableState public var lineBreakBeforeControlFlowKeywords: Bool
+    @BindableState public var lineBreakBeforeEachArgument: Bool
+    @BindableState public var lineBreakBeforeEachGenericRequirement: Bool
+    @BindableState public var prioritizeKeepingFunctionOutputTogether: Bool
+    @BindableState public var indentConditionalCompilationBlocks: Bool
+    @BindableState public var indentSwitchCaseLabels: Bool
+    @BindableState public var lineBreakAroundMultilineExpressionChainComponents: Bool
+    @BindableState public var fileScopedDeclarationPrivacy:
+      FileScopedDeclarationPrivacyConfiguration
+    @BindableState public var shouldTrimTrailingWhitespace: Bool
+
+    public init(
+      maximumBlankLines: Int,
+      lineLength: Int,
+      tabWidth: Int,
+      indentation: Indent,
+      respectsExistingLineBreaks: Bool,
+      lineBreakBeforeControlFlowKeywords: Bool,
+      lineBreakBeforeEachArgument: Bool,
+      lineBreakBeforeEachGenericRequirement: Bool,
+      prioritizeKeepingFunctionOutputTogether: Bool,
+      indentConditionalCompilationBlocks: Bool,
+      indentSwitchCaseLabels: Bool,
+      lineBreakAroundMultilineExpressionChainComponents: Bool,
+      fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration,
+      shouldTrimTrailingWhitespace: Bool
+    ) {
+      self.maximumBlankLines = maximumBlankLines
+      self.lineLength = lineLength
+      self.tabWidth = tabWidth
+      self.indentation = indentation
+      self.respectsExistingLineBreaks = respectsExistingLineBreaks
+      self.lineBreakBeforeControlFlowKeywords = lineBreakBeforeControlFlowKeywords
+      self.lineBreakBeforeEachArgument = lineBreakBeforeEachArgument
+      self.lineBreakBeforeEachGenericRequirement = lineBreakBeforeEachGenericRequirement
+      self.prioritizeKeepingFunctionOutputTogether = prioritizeKeepingFunctionOutputTogether
+      self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
+      self.indentSwitchCaseLabels = indentSwitchCaseLabels
+      self.lineBreakAroundMultilineExpressionChainComponents =
+        lineBreakAroundMultilineExpressionChainComponents
+      self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
+      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
+    }
+  }
+
+  public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
+
+  public var body: some ReducerProtocol<State, Action> {
+    BindingReducer()
   }
 }
-
-public enum FormatterSettingsViewAction: Equatable, BindableAction {
-  case binding(BindingAction<FormatterSettingsViewState>)
-}
-
-public let formatterSettingsViewReducer = Reducer<
-  FormatterSettingsViewState, FormatterSettingsViewAction, Void
->
-.empty.binding()
 
 public struct FormatterSettingsView: View {
-  let store: Store<FormatterSettingsViewState, FormatterSettingsViewAction>
+  let store: StoreOf<FormatterSettings>
 
-  public init(store: Store<FormatterSettingsViewState, FormatterSettingsViewAction>) {
-    self.store = store
-  }
+  public init(store: StoreOf<FormatterSettings>) { self.store = store }
 
   public var indentationView: some View {
     WithViewStore(self.store) { viewStore in

@@ -2,32 +2,33 @@ import ComposableArchitecture
 import StyleGuide
 import SwiftUI
 
-public enum FormatterRulesViewAction: Equatable { case ruleFilledOut(key: String, value: Bool) }
+public struct FormatterRules: ReducerProtocol {
+  public init() {}
 
-public struct FormatterRulesViewState: Equatable {
-  public var rules: [String: Bool]
+  public struct State: Equatable {
+    public var rules: [String: Bool]
 
-  public init(rules: [String: Bool]) { self.rules = rules }
-}
+    public init(rules: [String: Bool]) { self.rules = rules }
+  }
 
-public let formatterRulesViewReducer = Reducer<
-  FormatterRulesViewState, FormatterRulesViewAction, Void
-> { state, action, _ in
-  switch action {
-  case .ruleFilledOut(let key, let value):
-    state.rules[key] = value
-    return .none
+  public enum Action: Equatable { case ruleFilledOut(key: String, value: Bool) }
+
+  public var body: some ReducerProtocol<State, Action> {
+    Reduce { state, action in
+      switch action {
+      case .ruleFilledOut(let key, let value):
+        state.rules[key] = value
+        return .none
+      }
+    }
   }
 }
 
 public struct FormatterRulesView: View {
-  let store: Store<FormatterRulesViewState, FormatterRulesViewAction>
+  let store: StoreOf<FormatterRules>
 
-  public init(store: Store<FormatterRulesViewState, FormatterRulesViewAction>) {
-    self.store = store
-  }
+  public init(store: StoreOf<FormatterRules>) { self.store = store }
 
-  var colors: [Color] = [.red, .blue, .yellow]
   public var body: some View {
     WithViewStore(self.store) { viewStore in
       VStack(alignment: .leading, spacing: .grid(1)) {

@@ -12,13 +12,12 @@ public struct App {
 }
 
 let appStore = Store(
-  initialState: AppState(
+  initialState: AppFeature.State(
     configuration: Defaults[.configuration],
     didRunBefore: Defaults[.didRunBefore],
     shouldTrimTrailingWhitespace: Defaults[.shouldTrimTrailingWhitespace]
   ),
-  reducer: appReducer.saveMiddleware(),
-  environment: ()
+  reducer: AppFeature().saveMiddleware()
 )
 
 @available(macOS 13.0, *) struct AppMacOS13: SwiftUI.App {
@@ -81,12 +80,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 }
 
-extension Reducer where State == AppState, Action == AppAction, Environment == Void {
-  func saveMiddleware() -> Reducer {
-    .init { state, action, environment in
+extension ReducerProtocol where State == AppFeature.State, Action == AppFeature.Action {
+  func saveMiddleware() -> some ReducerProtocol<State, Action> {
+    Reduce { state, action in
       switch action {
-      case .settingsView(.formatterSettingsView(.binding(\.$shouldTrimTrailingWhitespace))):
-        let effects = self(&state, action, environment)
+      case .settingsFeature(.formatterSettings(.binding(\.$shouldTrimTrailingWhitespace))):
+        let effects = self.reduce(into: &state, action: action)
         let newState = state
 
         return .concatenate(
@@ -95,8 +94,8 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
           },
           effects
         )
-      case .settingsView:
-        let effects = self(&state, action, environment)
+      case .settingsFeature:
+        let effects = self.reduce(into: &state, action: action)
         let newState = state
 
         return .concatenate(
@@ -104,7 +103,7 @@ extension Reducer where State == AppState, Action == AppAction, Environment == V
           effects
         )
       case .setDidRunBefore:
-        let effects = self(&state, action, environment)
+        let effects = self.reduce(into: &state, action: action)
         let newState = state
 
         return .concatenate(
