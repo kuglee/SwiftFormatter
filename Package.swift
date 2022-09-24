@@ -16,6 +16,7 @@ let package = Package(
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
+    .library(name: "WelcomeFeature", targets: ["WelcomeFeature"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "protocol-beta"),
@@ -29,15 +30,13 @@ let package = Package(
         "AppFeature",
         "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "Defaults",
-        "StyleGuide",
+        "WelcomeFeature",
       ]
     ),
     .target(
       name: "AppExtension",
       dependencies: [
         "AppUserDefaults",
-        "Defaults",
         .product(name: "SwiftFormat", package: "swift-format"),
       ],
       swiftSettings: [
@@ -58,6 +57,7 @@ let package = Package(
     .target(
       name: "AppUserDefaults",
       dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
@@ -87,6 +87,13 @@ let package = Package(
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
-    .target(name: "StyleGuide" ,dependencies: [])
+    .target(name: "StyleGuide" ,dependencies: []),
+    .target(
+      name: "WelcomeFeature",
+      dependencies: [
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "StyleGuide",
+      ]
+    ),
   ]
 )
