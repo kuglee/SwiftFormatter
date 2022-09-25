@@ -5,19 +5,19 @@ import SwiftFormatConfiguration
 import XCTestDynamicOverlay
 import os.log
 
-let extensionDefaults = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+let appUserDefaultsSuite = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
 
 extension Defaults.Keys {
-  static let didRunBefore = Key<Bool>("didRunBefore", default: false, suite: extensionDefaults)
+  static let didRunBefore = Key<Bool>("didRunBefore", default: false, suite: appUserDefaultsSuite)
   static let configuration = Key<Configuration>(
     "configuration",
     default: Configuration(),
-    suite: extensionDefaults
+    suite: appUserDefaultsSuite
   )
   static let shouldTrimTrailingWhitespace = Key<Bool>(
     "shouldTrimTrailingWhitespace",
     default: false,
-    suite: extensionDefaults
+    suite: appUserDefaultsSuite
   )
 }
 
