@@ -56,9 +56,7 @@ public struct AppFeature: ReducerProtocol {
       case .settingsFeature(_): return .none
       }
     }
-    Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) {
-      SettingsFeature()
-    }
+    Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
   }
 }
 

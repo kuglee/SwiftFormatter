@@ -59,9 +59,7 @@ public struct FormatterSettings: ReducerProtocol {
 
   public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
 
-  public var body: some ReducerProtocol<State, Action> {
-    BindingReducer()
-  }
+  public var body: some ReducerProtocol<State, Action> { BindingReducer() }
 }
 
 public struct FormatterSettingsView: View {
