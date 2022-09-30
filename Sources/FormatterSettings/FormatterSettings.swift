@@ -141,7 +141,7 @@ public struct FormatterSettingsView: View {
   public var lineBreaksView: some View {
     WithViewStore(self.store) { viewStore in
       HStack(alignment: .firstTextBaseline) {
-        Text("Line breaks:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+        Text("Line Breaks:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         VStack(alignment: .leading, spacing: .grid(1)) {
           Toggle(isOn: viewStore.binding(\.$respectsExistingLineBreaks)) {
             Text("Respects existing line breaks")
