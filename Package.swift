@@ -14,7 +14,7 @@ let package = Package(
     .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
-    .library(name: "Settings", targets: ["Settings"]),
+    .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
     .library(name: "WelcomeFeature", targets: ["WelcomeFeature"]),
   ],
@@ -50,7 +50,7 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
-        "Settings",
+        "SettingsFeature",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
@@ -78,7 +78,7 @@ let package = Package(
       ]
     ),
     .target(
-      name: "Settings",
+      name: "SettingsFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "FormatterRules",

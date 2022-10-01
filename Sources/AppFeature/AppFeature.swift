@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import Settings
+import SettingsFeature
 import SwiftFormatConfiguration
 import SwiftUI
 
