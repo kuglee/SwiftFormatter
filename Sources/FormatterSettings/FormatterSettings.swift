@@ -263,16 +263,3 @@ extension Indent: RawRepresentable {
     }
   }
 }
-
-extension FileScopedDeclarationPrivacyConfiguration.AccessLevel {
-  public typealias RawValue = String
-
-  public init?(rawValue: RawValue) { nil }
-
-  public var rawValue: RawValue {
-    switch self {
-    case .private: return "Private"
-    case .fileprivate: return "Fileprivate"
-    }
-  }
-}
