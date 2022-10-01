@@ -95,5 +95,20 @@ let package = Package(
         "StyleGuide",
       ]
     ),
+    .testTarget(
+      name: "FormatterSettingsTests",
+      dependencies: [
+        "FormatterSettings",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+      ]
+    ),
+    .testTarget(
+      name: "FormatterRulesTests",
+      dependencies: [
+        "FormatterRules",
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+      ]
+    ),
   ]
 )
