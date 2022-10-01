@@ -3,16 +3,6 @@ import SettingsFeature
 import SwiftFormatConfiguration
 import SwiftUI
 
-let formatterRulesKeys: [String] = [
-  "DoNotUseSemicolons", "FileScopedDeclarationPrivacy", "FullyIndirectEnum", "GroupNumericLiterals",
-  "NoAccessLevelOnExtensionDeclaration", "NoCasesWithOnlyFallthrough",
-  "NoEmptyTrailingClosureParentheses", "NoLabelsInCasePatterns", "NoParensAroundConditions",
-  "NoVoidReturnOnFunctionSignature", "OneCasePerLine", "OneVariableDeclarationPerLine",
-  "OrderedImports", "ReturnVoidInsteadOfEmptyTuple", "UseEarlyExits", "UseShorthandTypeNames",
-  "UseSingleLinePropertyGetter", "UseTripleSlashForDocumentationComments",
-  "UseWhereClausesInForLoops",
-]
-
 public struct AppFeature: ReducerProtocol {
   public init() {}
 
@@ -30,15 +20,6 @@ public struct AppFeature: ReducerProtocol {
       self.didRunBefore = didRunBefore
       self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
       self.configuration = configuration
-
-      self.configuration.rules = Configuration().rules
-        .filter { formatterRulesKeys.contains($0.key) }
-
-      for rule in self.configuration.rules {
-        if self.configuration.rules[rule.key] != nil {
-          self.configuration.rules[rule.key] = rule.value
-        }
-      }
     }
   }
 
