@@ -16,7 +16,7 @@ let appStore = Store(
     didRunBefore: AppUserDefaults.live.getDidRunBefore(),
     shouldTrimTrailingWhitespace: AppUserDefaults.live.getShouldTrimTrailingWhitespace()
   ),
-  reducer: AppFeature().saveMiddleware()
+  reducer: AppFeature().saveSettings()
 )
 
 @available(macOS 13.0, *) struct AppMacOS13: SwiftUI.App {
@@ -57,10 +57,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 extension ReducerProtocol<AppFeature.State, AppFeature.Action> {
-  func saveMiddleware() -> SaveMiddleware<Self> { SaveMiddleware(upstream: self) }
+  func saveSettings() -> SaveSettings<Self> { SaveSettings(upstream: self) }
 }
 
-struct SaveMiddleware<Upstream: ReducerProtocol<AppFeature.State, AppFeature.Action>>:
+struct SaveSettings<Upstream: ReducerProtocol<AppFeature.State, AppFeature.Action>>:
   ReducerProtocol
 {
   @Dependency(\.appUserDefaults) var appUserDefaults
