@@ -75,10 +75,11 @@ struct SaveMiddleware<Upstream: ReducerProtocol<AppFeature.State, AppFeature.Act
         self.appUserDefaults.setShouldTrimTrailingWhitespace(state.shouldTrimTrailingWhitespace)
 
         return .none
-      case .settingsFeature:
+      case .settingsFeature(.formatterRules), .settingsFeature(.formatterSettings):
         self.appUserDefaults.setConfiguration(state.configuration)
 
         return .none
+      case .settingsFeature(_): return .none
       case .setDidRunBefore:
         self.appUserDefaults.setDidRunBefore(state.didRunBefore)
 
