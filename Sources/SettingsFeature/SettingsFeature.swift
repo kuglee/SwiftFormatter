@@ -181,24 +181,53 @@ public struct SettingsFeatureView: View {
     WithViewStore(self.store, observe: \.selectedTab) { viewStore in
       TabView(selection: viewStore.binding(send: SettingsFeature.Action.tabSelected)) {
         Group {
-          FormatterSettingsView(
-            store: self.store.scope(
-              state: \.formatterSettings,
-              action: SettingsFeature.Action.formatterSettings
+          IfView(viewStore.state == .formatting) {
+            FormatterSettingsView(
+              store: self.store.scope(
+                state: \.formatterSettings,
+                action: SettingsFeature.Action.formatterSettings
+              )
             )
-          )
+          }
           .tabItem { Text("Formatting") }.tag(Tab.formatting)
-          FormatterRulesView(
-            store: self.store.scope(
-              state: \.formatterRules,
-              action: SettingsFeature.Action.formatterRules
+
+          IfView(viewStore.state == .rules) {
+            FormatterRulesView(
+              store: self.store.scope(
+                state: \.formatterRules,
+                action: SettingsFeature.Action.formatterRules
+              )
             )
-          )
+          }
           .tabItem { Text("Rules") }.tag(Tab.rules)
         }
         .padding(.grid(3))
       }
       .frame(width: 600, height: 532).padding(.grid(5))
+    }
+  }
+}
+
+// workaround for SwiftUI rerendering non-selected TabViews bug:
+// https://github.com/pointfreeco/swift-composable-architecture/discussions/391
+// can't be an extension method on View because it can't be type checked in a reasonable time
+struct IfView<Content>: View where Content: View {
+  let condition: Bool
+  let content: () -> Content
+
+  init(_ condition: Bool, @ViewBuilder content: @escaping () -> Content) {
+    self.condition = condition
+    self.content = content
+  }
+
+  var body: some View {
+    Group {
+      if self.condition {
+        self.content()
+      } else {
+        // can't use an EmptyView here because with that the tabItem won't be shown
+        Text("")
+      }
     }
   }
 }
