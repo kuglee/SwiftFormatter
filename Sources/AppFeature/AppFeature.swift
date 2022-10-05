@@ -10,10 +10,10 @@ public struct AppFeature: ReducerProtocol {
   public init() {}
 
   public struct State: Equatable {
-    public var configuration: Configuration
-    public var selectedTab: Tab = .formatting
-    public var didRunBefore: Bool
-    public var shouldTrimTrailingWhitespace: Bool
+    var configuration: Configuration
+    var selectedTab: Tab = .formatting
+    var didRunBefore: Bool
+    var shouldTrimTrailingWhitespace: Bool
 
     public init(
       configuration: Configuration,
