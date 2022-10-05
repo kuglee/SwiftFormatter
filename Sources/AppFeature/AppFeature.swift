@@ -59,7 +59,7 @@ extension AppFeature.State {
 }
 
 func appViewBody(store: StoreOf<AppFeature>) -> some View {
-  SettingsView(
+  SettingsFeatureView(
     store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
   )
 }

@@ -172,7 +172,7 @@ extension SettingsFeature.State {
   }
 }
 
-public struct SettingsView: View {
+public struct SettingsFeatureView: View {
   let store: StoreOf<SettingsFeature>
 
   public init(store: StoreOf<SettingsFeature>) { self.store = store }
