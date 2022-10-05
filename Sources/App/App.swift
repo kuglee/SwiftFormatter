@@ -1,5 +1,4 @@
 import AppFeature
-import AppUserDefaults
 import ComposableArchitecture
 import SwiftUI
 import WelcomeFeature
@@ -10,14 +9,7 @@ public struct App {
   }
 }
 
-let appStore = Store(
-  initialState: AppFeature.State(
-    configuration: AppUserDefaults.live.getConfiguration(),
-    didRunBefore: AppUserDefaults.live.getDidRunBefore(),
-    shouldTrimTrailingWhitespace: AppUserDefaults.live.getShouldTrimTrailingWhitespace()
-  ),
-  reducer: AppFeature()
-)
+let appStore = Store(initialState: AppFeature.State(), reducer: AppFeature())
 
 @available(macOS 13.0, *) struct AppMacOS13: SwiftUI.App {
   @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate

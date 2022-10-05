@@ -16,9 +16,9 @@ public struct AppFeature: ReducerProtocol {
     var shouldTrimTrailingWhitespace: Bool
 
     public init(
-      configuration: Configuration,
-      didRunBefore: Bool,
-      shouldTrimTrailingWhitespace: Bool
+      configuration: Configuration = AppUserDefaults.live.getConfiguration(),
+      didRunBefore: Bool = AppUserDefaults.live.getDidRunBefore(),
+      shouldTrimTrailingWhitespace: Bool = AppUserDefaults.live.getShouldTrimTrailingWhitespace()
     ) {
       self.didRunBefore = didRunBefore
       self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace

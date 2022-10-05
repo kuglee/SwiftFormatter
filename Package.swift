@@ -28,7 +28,6 @@ let package = Package(
       name: "App",
       dependencies: [
         "AppFeature",
-        "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "WelcomeFeature",
       ]
