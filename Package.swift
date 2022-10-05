@@ -48,8 +48,8 @@ let package = Package(
     .target(
       name: "AppFeature",
       dependencies: [
+        "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "Defaults",
         "SettingsFeature",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]

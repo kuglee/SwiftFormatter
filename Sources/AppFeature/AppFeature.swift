@@ -1,9 +1,12 @@
+import AppUserDefaults
 import ComposableArchitecture
 import SettingsFeature
 import SwiftFormatConfiguration
 import SwiftUI
 
 public struct AppFeature: ReducerProtocol {
+  @Dependency(\.appUserDefaults) var appUserDefaults
+
   public init() {}
 
   public struct State: Equatable {
@@ -38,6 +41,18 @@ public struct AppFeature: ReducerProtocol {
       }
     }
     Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
+      .onChange(of: \.configuration) { configuration, _, _ in
+        self.appUserDefaults.setConfiguration(configuration)
+        return .none
+      }
+      .onChange(of: \.shouldTrimTrailingWhitespace) { shouldTrimTrailingWhitespace, _, _ in
+        self.appUserDefaults.setShouldTrimTrailingWhitespace(shouldTrimTrailingWhitespace)
+        return .none
+      }
+      .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
+        self.appUserDefaults.setDidRunBefore(didRunBefore)
+        return .none
+      }
   }
 }
 
@@ -91,5 +106,57 @@ public struct AppViewMacOS12: View {
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in appViewBody(store: store) }
+  }
+}
+
+// from Isowords: https://github.com/pointfreeco/isowords/blob/9661c88cbf8e6d0bc41b6069f38ff6df29b9c2c4/Sources/TcaHelpers/OnChange.swift
+extension ReducerProtocol {
+  @inlinable public func onChange<ChildState: Equatable>(
+    of toLocalState: @escaping (State) -> ChildState,
+    perform additionalEffects: @escaping (ChildState, inout State, Action) -> Effect<Action, Never>
+  ) -> some ReducerProtocol<State, Action> {
+    self.onChange(of: toLocalState) { additionalEffects($1, &$2, $3) }
+  }
+
+  @inlinable public func onChange<ChildState: Equatable>(
+    of toLocalState: @escaping (State) -> ChildState,
+    perform additionalEffects: @escaping (ChildState, ChildState, inout State, Action) -> Effect<
+      Action, Never
+    >
+  ) -> some ReducerProtocol<State, Action> {
+    ChangeReducer(base: self, toLocalState: toLocalState, perform: additionalEffects)
+  }
+}
+
+@usableFromInline
+struct ChangeReducer<Base: ReducerProtocol, ChildState: Equatable>: ReducerProtocol {
+  @usableFromInline let base: Base
+
+  @usableFromInline let toLocalState: (Base.State) -> ChildState
+
+  @usableFromInline let perform:
+    (ChildState, ChildState, inout Base.State, Base.Action) -> Effect<Base.Action, Never>
+
+  @usableFromInline init(
+    base: Base,
+    toLocalState: @escaping (Base.State) -> ChildState,
+    perform: @escaping (ChildState, ChildState, inout Base.State, Base.Action) -> Effect<
+      Base.Action, Never
+    >
+  ) {
+    self.base = base
+    self.toLocalState = toLocalState
+    self.perform = perform
+  }
+
+  @inlinable public func reduce(into state: inout Base.State, action: Base.Action) -> Effect<
+    Base.Action, Never
+  > {
+    let previousLocalState = self.toLocalState(state)
+    let effects = self.base.reduce(into: &state, action: action)
+    let localState = self.toLocalState(state)
+
+    return previousLocalState != localState
+      ? .merge(effects, self.perform(previousLocalState, localState, &state, action)) : effects
   }
 }

@@ -16,7 +16,7 @@ let appStore = Store(
     didRunBefore: AppUserDefaults.live.getDidRunBefore(),
     shouldTrimTrailingWhitespace: AppUserDefaults.live.getShouldTrimTrailingWhitespace()
   ),
-  reducer: AppFeature().saveSettings()
+  reducer: AppFeature()
 )
 
 @available(macOS 13.0, *) struct AppMacOS13: SwiftUI.App {
@@ -54,37 +54,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
 
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
-}
-
-extension ReducerProtocol<AppFeature.State, AppFeature.Action> {
-  func saveSettings() -> SaveSettings<Self> { SaveSettings(upstream: self) }
-}
-
-struct SaveSettings<Upstream: ReducerProtocol<AppFeature.State, AppFeature.Action>>:
-  ReducerProtocol
-{
-  @Dependency(\.appUserDefaults) var appUserDefaults
-
-  let upstream: Upstream
-
-  var body: some ReducerProtocol<AppFeature.State, AppFeature.Action> {
-    self.upstream
-    Reduce { state, action in
-      switch action {
-      case .settingsFeature(.formatterSettings(.binding(\.$shouldTrimTrailingWhitespace))):
-        self.appUserDefaults.setShouldTrimTrailingWhitespace(state.shouldTrimTrailingWhitespace)
-
-        return .none
-      case .settingsFeature(.formatterRules), .settingsFeature(.formatterSettings):
-        self.appUserDefaults.setConfiguration(state.configuration)
-
-        return .none
-      case .settingsFeature(_): return .none
-      case .setDidRunBefore:
-        self.appUserDefaults.setDidRunBefore(state.didRunBefore)
-
-        return .none
-      }
-    }
-  }
 }
