@@ -178,13 +178,8 @@ public struct SettingsFeatureView: View {
   public init(store: StoreOf<SettingsFeature>) { self.store = store }
 
   public var body: some View {
-    WithViewStore(self.store) { viewStore in
-      TabView(
-        selection: Binding(
-          get: { viewStore.selectedTab },
-          set: { viewStore.send(.tabSelected($0)) }
-        )
-      ) {
+    WithViewStore(self.store, observe: \.selectedTab) { viewStore in
+      TabView(selection: viewStore.binding(send: SettingsFeature.Action.tabSelected)) {
         Group {
           FormatterSettingsView(
             store: self.store.scope(
