@@ -1,9 +1,9 @@
 import ComposableArchitecture
 import Defaults
+import Dependencies
 import Foundation
 import SwiftFormatConfiguration
 import XCTestDynamicOverlay
-import os.log
 
 let appUserDefaultsSuite = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
 
