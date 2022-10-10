@@ -1,7 +1,7 @@
 import AppUserDefaults
 import ComposableArchitecture
+import ConfigurationWrapper
 import SettingsFeature
-import SwiftFormatConfiguration
 import SwiftUI
 
 public struct AppFeature: ReducerProtocol {
@@ -10,13 +10,13 @@ public struct AppFeature: ReducerProtocol {
   public init() {}
 
   public struct State: Equatable {
-    var configuration: Configuration
+    var configuration: ConfigurationWrapper
     var selectedTab: Tab = .formatting
     var didRunBefore: Bool
     var shouldTrimTrailingWhitespace: Bool
 
     public init(
-      configuration: Configuration = AppUserDefaults.live.getConfiguration(),
+      configuration: ConfigurationWrapper = AppUserDefaults.live.getConfigurationWrapper(),
       didRunBefore: Bool = AppUserDefaults.live.getDidRunBefore(),
       shouldTrimTrailingWhitespace: Bool = AppUserDefaults.live.getShouldTrimTrailingWhitespace()
     ) {
@@ -42,7 +42,7 @@ public struct AppFeature: ReducerProtocol {
     }
     Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
       .onChange(of: \.configuration) { configuration, _, _ in
-        self.appUserDefaults.setConfiguration(configuration)
+        self.appUserDefaults.setConfigurationWrapper(configuration)
         return .none
       }
       .onChange(of: \.shouldTrimTrailingWhitespace) { shouldTrimTrailingWhitespace, _, _ in

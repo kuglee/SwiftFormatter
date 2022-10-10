@@ -37,7 +37,9 @@ class FormatSourceCommand: NSObject, XCSourceEditorCommand {
       ? invocation.buffer.completeBufferTrimmed : invocation.buffer.completeBuffer
     var formattedSource = ""
 
-    let formatter = SwiftFormatter(configuration: AppUserDefaults.live.getConfiguration())
+    let formatter = SwiftFormatter(
+      configuration: AppUserDefaults.live.getConfigurationWrapper().toConfiguration()
+    )
     do { try formatter.format(source: source, assumingFileURL: nil, to: &formattedSource) } catch {
       os_log("Unable to format source: %{public}@", error.localizedDescription)
     }

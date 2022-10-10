@@ -1,8 +1,8 @@
 import ComposableArchitecture
+import ConfigurationWrapper
 import FormatterRules
 import FormatterSettings
 import StyleGuide
-import SwiftFormatConfiguration
 import SwiftUI
 
 public enum Tab {
@@ -10,18 +10,16 @@ public enum Tab {
   case rules
 }
 
-let defaultRules = Configuration().rules
-
 public struct SettingsFeature: ReducerProtocol {
   public init() {}
 
   public struct State: Equatable {
-    public var configuration: Configuration
+    public var configuration: ConfigurationWrapper
     public var shouldTrimTrailingWhitespace: Bool
     public var selectedTab: Tab
 
     public init(
-      configuration: Configuration,
+      configuration: ConfigurationWrapper,
       shouldTrimTrailingWhitespace: Bool,
       selectedTab: Tab = .formatting
     ) {
@@ -100,75 +98,9 @@ extension SettingsFeature.State {
     }
   }
 
-  func getRuleValue(key: RuleKey) -> Bool {
-    self.configuration.rules[key.rawValue] ?? defaultRules[key.rawValue] ?? false
-  }
-
   var formatterRules: FormatterRules.State {
-    get {
-      FormatterRules.State(
-        doNotUseSemicolons: self.getRuleValue(key: .doNotUseSemicolons),
-        fileScopedDeclarationPrivacy: self.getRuleValue(key: .fileScopedDeclarationPrivacy),
-        fullyIndirectEnum: self.getRuleValue(key: .fullyIndirectEnum),
-        groupNumericLiterals: self.getRuleValue(key: .groupNumericLiterals),
-        noAccessLevelOnExtensionDeclaration: self.getRuleValue(
-          key: .noAccessLevelOnExtensionDeclaration
-        ),
-        noCasesWithOnlyFallthrough: self.getRuleValue(key: .noCasesWithOnlyFallthrough),
-        noEmptyTrailingClosureParentheses: self.getRuleValue(
-          key: .noEmptyTrailingClosureParentheses
-        ),
-        noLabelsInCasePatterns: self.getRuleValue(key: .noLabelsInCasePatterns),
-        noParensAroundConditions: self.getRuleValue(key: .noParensAroundConditions),
-        noVoidReturnOnFunctionSignature: self.getRuleValue(key: .noVoidReturnOnFunctionSignature),
-        oneCasePerLine: self.getRuleValue(key: .oneCasePerLine),
-        oneVariableDeclarationPerLine: self.getRuleValue(key: .oneVariableDeclarationPerLine),
-        orderedImports: self.getRuleValue(key: .orderedImports),
-        returnVoidInsteadOfEmptyTuple: self.getRuleValue(key: .returnVoidInsteadOfEmptyTuple),
-        useEarlyExits: self.getRuleValue(key: .useEarlyExits),
-        useShorthandTypeNames: self.getRuleValue(key: .useShorthandTypeNames),
-        useSingleLinePropertyGetter: self.getRuleValue(key: .useSingleLinePropertyGetter),
-        useTripleSlashForDocumentationComments: self.getRuleValue(
-          key: .useTripleSlashForDocumentationComments
-        ),
-        useWhereClausesInForLoops: self.getRuleValue(key: .useWhereClausesInForLoops)
-      )
-    }
-    set {
-      self.configuration.rules[RuleKey.doNotUseSemicolons.rawValue] = newValue.doNotUseSemicolons
-      self.configuration.rules[RuleKey.fileScopedDeclarationPrivacy.rawValue] =
-        newValue.fileScopedDeclarationPrivacy
-      self.configuration.rules[RuleKey.fullyIndirectEnum.rawValue] = newValue.fullyIndirectEnum
-      self.configuration.rules[RuleKey.groupNumericLiterals.rawValue] =
-        newValue.groupNumericLiterals
-      self.configuration.rules[RuleKey.noAccessLevelOnExtensionDeclaration.rawValue] =
-        newValue.noAccessLevelOnExtensionDeclaration
-      self.configuration.rules[RuleKey.noCasesWithOnlyFallthrough.rawValue] =
-        newValue.noCasesWithOnlyFallthrough
-      self.configuration.rules[RuleKey.noEmptyTrailingClosureParentheses.rawValue] =
-        newValue.noEmptyTrailingClosureParentheses
-      self.configuration.rules[RuleKey.noLabelsInCasePatterns.rawValue] =
-        newValue.noLabelsInCasePatterns
-      self.configuration.rules[RuleKey.noParensAroundConditions.rawValue] =
-        newValue.noParensAroundConditions
-      self.configuration.rules[RuleKey.noVoidReturnOnFunctionSignature.rawValue] =
-        newValue.noVoidReturnOnFunctionSignature
-      self.configuration.rules[RuleKey.oneCasePerLine.rawValue] = newValue.oneCasePerLine
-      self.configuration.rules[RuleKey.oneVariableDeclarationPerLine.rawValue] =
-        newValue.oneVariableDeclarationPerLine
-      self.configuration.rules[RuleKey.orderedImports.rawValue] = newValue.orderedImports
-      self.configuration.rules[RuleKey.returnVoidInsteadOfEmptyTuple.rawValue] =
-        newValue.returnVoidInsteadOfEmptyTuple
-      self.configuration.rules[RuleKey.useEarlyExits.rawValue] = newValue.useEarlyExits
-      self.configuration.rules[RuleKey.useShorthandTypeNames.rawValue] =
-        newValue.useShorthandTypeNames
-      self.configuration.rules[RuleKey.useSingleLinePropertyGetter.rawValue] =
-        newValue.useSingleLinePropertyGetter
-      self.configuration.rules[RuleKey.useTripleSlashForDocumentationComments.rawValue] =
-        newValue.useTripleSlashForDocumentationComments
-      self.configuration.rules[RuleKey.useWhereClausesInForLoops.rawValue] =
-        newValue.useWhereClausesInForLoops
-    }
+    get { FormatterRules.State(rules: self.configuration.rules) }
+    set { self.configuration.rules = newValue.rules }
   }
 }
 
@@ -230,26 +162,4 @@ struct IfView<Content>: View where Content: View {
       }
     }
   }
-}
-
-enum RuleKey: String, CaseIterable {
-  case doNotUseSemicolons = "DoNotUseSemicolons"
-  case fileScopedDeclarationPrivacy = "FileScopedDeclarationPrivacy"
-  case fullyIndirectEnum = "FullyIndirectEnum"
-  case groupNumericLiterals = "GroupNumericLiterals"
-  case noAccessLevelOnExtensionDeclaration = "NoAccessLevelOnExtensionDeclaration"
-  case noCasesWithOnlyFallthrough = "NoCasesWithOnlyFallthrough"
-  case noEmptyTrailingClosureParentheses = "NoEmptyTrailingClosureParentheses"
-  case noLabelsInCasePatterns = "NoLabelsInCasePatterns"
-  case noParensAroundConditions = "NoParensAroundConditions"
-  case noVoidReturnOnFunctionSignature = "NoVoidReturnOnFunctionSignature"
-  case oneCasePerLine = "OneCasePerLine"
-  case oneVariableDeclarationPerLine = "OneVariableDeclarationPerLine"
-  case orderedImports = "OrderedImports"
-  case returnVoidInsteadOfEmptyTuple = "ReturnVoidInsteadOfEmptyTuple"
-  case useEarlyExits = "UseEarlyExits"
-  case useShorthandTypeNames = "UseShorthandTypeNames"
-  case useSingleLinePropertyGetter = "UseSingleLinePropertyGetter"
-  case useTripleSlashForDocumentationComments = "UseTripleSlashForDocumentationComments"
-  case useWhereClausesInForLoops = "UseWhereClausesInForLoops"
 }

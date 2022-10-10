@@ -12,6 +12,7 @@ let package = Package(
     .library(name: "AppExtension", targets: ["AppExtension"]),
     .library(name: "AppFeature", targets: ["AppFeature"]),
     .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
+    .library(name: "ConfigurationWrapper", targets: ["ConfigurationWrapper"]),
     .library(name: "FormatterRules", targets: ["FormatterRules"]),
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
@@ -50,20 +51,27 @@ let package = Package(
         "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "SettingsFeature",
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
     .target(
       name: "AppUserDefaults",
       dependencies: [
+        "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
         .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
     .target(
+      name: "ConfigurationWrapper",
+      dependencies: [
+        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+      ]
+    ),
+    .target(
       name: "FormatterRules",
       dependencies: [
+        "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
       ]
@@ -80,10 +88,10 @@ let package = Package(
       name: "SettingsFeature",
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "ConfigurationWrapper",
         "FormatterRules",
         "FormatterSettings",
         "StyleGuide",
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
@@ -105,8 +113,9 @@ let package = Package(
     .testTarget(
       name: "FormatterRulesTests",
       dependencies: [
-        "FormatterRules",
+        "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "FormatterRules",
       ]
     ),
   ]

@@ -1,4 +1,4 @@
-import ComposableArchitecture
+import ConfigurationWrapper
 import Defaults
 import Dependencies
 import Foundation
@@ -36,8 +36,8 @@ extension DependencyValues {
 }
 
 public struct AppUserDefaults {
-  public var getConfiguration: () -> Configuration
-  public var setConfiguration: (Configuration) -> Void
+  public var getConfigurationWrapper: () -> ConfigurationWrapper
+  public var setConfigurationWrapper: (ConfigurationWrapper) -> Void
   public var getShouldTrimTrailingWhitespace: () -> Bool
   public var setShouldTrimTrailingWhitespace: (Bool) -> Void
   public var getDidRunBefore: () -> Bool
@@ -46,8 +46,8 @@ public struct AppUserDefaults {
 
 extension AppUserDefaults {
   public static let live = Self(
-    getConfiguration: { Defaults[.configuration] },
-    setConfiguration: { newValue in Defaults[.configuration] = newValue },
+    getConfigurationWrapper: { ConfigurationWrapper(configuration: Defaults[.configuration]) },
+    setConfigurationWrapper: { newValue in Defaults[.configuration] = newValue.toConfiguration() },
     getShouldTrimTrailingWhitespace: { Defaults[.shouldTrimTrailingWhitespace] },
     setShouldTrimTrailingWhitespace: { newValue in
       Defaults[.shouldTrimTrailingWhitespace] = newValue
@@ -59,11 +59,11 @@ extension AppUserDefaults {
 
 extension AppUserDefaults {
   public static let unimplemented = Self(
-    getConfiguration: XCTUnimplemented(
-      "\(Self.self).getConfiguration",
-      placeholder: Configuration()
+    getConfigurationWrapper: XCTUnimplemented(
+      "\(Self.self).getConfigurationWrapper",
+      placeholder: ConfigurationWrapper()
     ),
-    setConfiguration: XCTUnimplemented("\(Self.self).setConfiguration"),
+    setConfigurationWrapper: XCTUnimplemented("\(Self.self).setConfigurationWrapper"),
     getShouldTrimTrailingWhitespace: XCTUnimplemented(
       "\(Self.self).getShouldTrimTrailingWhitespace",
       placeholder: false
