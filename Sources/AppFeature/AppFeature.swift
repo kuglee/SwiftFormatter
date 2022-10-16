@@ -40,6 +40,11 @@ public struct AppFeature: ReducerProtocol {
       case .settingsFeature(_): return .none
       }
     }
+    .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
+      self.appUserDefaults.setDidRunBefore(didRunBefore)
+      return .none
+    }
+
     Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
       .onChange(of: \.configuration) { configuration, _, _ in
         self.appUserDefaults.setConfigurationWrapper(configuration)
@@ -47,10 +52,6 @@ public struct AppFeature: ReducerProtocol {
       }
       .onChange(of: \.shouldTrimTrailingWhitespace) { shouldTrimTrailingWhitespace, _, _ in
         self.appUserDefaults.setShouldTrimTrailingWhitespace(shouldTrimTrailingWhitespace)
-        return .none
-      }
-      .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
-        self.appUserDefaults.setDidRunBefore(didRunBefore)
         return .none
       }
   }
