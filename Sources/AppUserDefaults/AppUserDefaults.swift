@@ -1,27 +1,22 @@
+import AppConstants
 import ConfigurationWrapper
 import Defaults
 import Dependencies
 import Foundation
 import SwiftFormatConfiguration
 import XCTestDynamicOverlay
+import os.log
 
-let appUserDefaultsSuite = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!
+let appUserDefaultsSuite = UserDefaults(suiteName: AppConstants.appGroupName)!
 
 extension Defaults.Keys {
   static let didRunBefore = Key<Bool>("didRunBefore", default: false, suite: appUserDefaultsSuite)
-  static let configuration = Key<Configuration>(
-    "configuration",
-    default: Configuration(),
-    suite: appUserDefaultsSuite
-  )
   static let shouldTrimTrailingWhitespace = Key<Bool>(
     "shouldTrimTrailingWhitespace",
     default: false,
     suite: appUserDefaultsSuite
   )
 }
-
-extension Configuration: Defaults.Serializable {}
 
 public enum AppUserDefaultsKey: DependencyKey {
   public static let liveValue = AppUserDefaults.live
@@ -46,8 +41,24 @@ public struct AppUserDefaults {
 
 extension AppUserDefaults {
   public static let live = Self(
-    getConfigurationWrapper: { ConfigurationWrapper(configuration: Defaults[.configuration]) },
-    setConfigurationWrapper: { newValue in Defaults[.configuration] = newValue.toConfiguration() },
+    getConfigurationWrapper: {
+      let configuration =
+        (try? Configuration(contentsOf: AppConstants.configFileURL)) ?? Configuration()
+
+      return ConfigurationWrapper(configuration: configuration)
+    },
+    setConfigurationWrapper: { configurationWrapper in
+      do {
+        let jsonString = try configurationWrapper.toConfiguration().toJSON()
+
+        try? FileManager.default.createDirectory(
+          at: AppConstants.configFileURL.deletingLastPathComponent(),
+          withIntermediateDirectories: true
+        )
+
+        try jsonString.write(to: AppConstants.configFileURL, atomically: false, encoding: .utf8)
+      } catch { os_log("%{public}@", error.localizedDescription) }
+    },
     getShouldTrimTrailingWhitespace: { Defaults[.shouldTrimTrailingWhitespace] },
     setShouldTrimTrailingWhitespace: { newValue in
       Defaults[.shouldTrimTrailingWhitespace] = newValue
@@ -74,4 +85,34 @@ extension AppUserDefaults {
     getDidRunBefore: XCTUnimplemented("\(Self.self).getDidRunBefore", placeholder: false),
     setDidRunBefore: XCTUnimplemented("\(Self.self).setDidRunBefore")
   )
+}
+
+extension Configuration {
+  func toJSON() throws -> String {
+    do {
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = [.prettyPrinted]
+      encoder.outputFormatting.insert(.sortedKeys)
+
+      let data = try encoder.encode(self)
+      guard let jsonString = String(data: data, encoding: .utf8) else {
+        throw ConfigurationError.encodingError
+      }
+
+      return jsonString
+    } catch { throw ConfigurationError.dumpError(cause: error) }
+  }
+}
+
+enum ConfigurationError: Error, LocalizedError {
+  case encodingError
+  case dumpError(cause: Error)
+
+  var localizedDescription: String {
+    switch self {
+    case .encodingError:
+      return "Could not dump the default configuration: the JSON was not valid UTF-8"
+    case let .dumpError(cause): return "Could not dump the default configuration: \(cause)"
+    }
+  }
 }
