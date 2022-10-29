@@ -2,7 +2,7 @@
 
 import PackageDescription
 
-let xcodeKitFrameworkPath = "/Applications/Xcode-beta.app/Contents/Developer/Library/Frameworks/"
+let xcodeKitFrameworkPath = "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/"
 
 let package = Package(
   name: "SwiftFormatter",
