@@ -11,6 +11,7 @@
 		5D1AB85622B75D7000F15F08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85522B75D7000F15F08 /* Assets.xcassets */; };
 		5D1AB85922B75D7000F15F08 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D1AB85822B75D7000F15F08 /* Preview Assets.xcassets */; };
 		5D3C54D02895A21900BFD803 /* AppExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 5D3C54CF2895A21900BFD803 /* AppExtension */; };
+		5D3D72F8290DB29F000D3E43 /* lib_InternalSwiftSyntaxParser.dylib in Copy lib_InternalSwiftSyntaxParser.dylib */ = {isa = PBXBuildFile; fileRef = 5D6FF1022896974A003F31DF /* lib_InternalSwiftSyntaxParser.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5D79EDB228917BD8001442F4 /* App in Frameworks */ = {isa = PBXBuildFile; productRef = 5D79EDB128917BD8001442F4 /* App */; };
 		5DA2B9A02286048F0051C256 /* SourceEditorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA2B99F2286048F0051C256 /* SourceEditorExtension.swift */; };
 		5DAAAA68244B2BBE00BCEF22 /* Swift Formatter Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5DA2B99A2286048F0051C256 /* Swift Formatter Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -54,6 +55,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		5D3D72F7290DB271000D3E43 /* Copy lib_InternalSwiftSyntaxParser.dylib */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				5D3D72F8290DB29F000D3E43 /* lib_InternalSwiftSyntaxParser.dylib in Copy lib_InternalSwiftSyntaxParser.dylib */,
+			);
+			name = "Copy lib_InternalSwiftSyntaxParser.dylib";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DAAAA6B244B2BBF00BCEF22 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,7 +331,7 @@
 				5DC4DE3628FBE417008AE234 /* Copy SwiftFormatterService */,
 				5DC4DE3828FBE457008AE234 /* Rename SwiftFormatterService */,
 				5DC4DE3B28FBE4B7008AE234 /* Copy swift-format */,
-				5DC4DE3D28FBE4F1008AE234 /* Copy lib_InternalSwiftSyntaxParser.dylib */,
+				5D3D72F7290DB271000D3E43 /* Copy lib_InternalSwiftSyntaxParser.dylib */,
 			);
 			buildRules = (
 			);
@@ -476,25 +488,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "mv -f $BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/SwiftFormatterService $BUILT_PRODUCTS_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME\n";
-		};
-		5DC4DE3D28FBE4F1008AE234 /* Copy lib_InternalSwiftSyntaxParser.dylib */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy lib_InternalSwiftSyntaxParser.dylib";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/lib_InternalSwiftSyntaxParser.dylib\"",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cp \"$BUILT_PRODUCTS_DIR/lib_InternalSwiftSyntaxParser.dylib\" $BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
