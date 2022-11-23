@@ -33,7 +33,6 @@ let package = Package(
       dependencies: [
         "AppFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "WelcomeFeature",
       ]
     ),
     .target(name: "AppConstants" ,dependencies: []),
@@ -56,6 +55,7 @@ let package = Package(
         "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "SettingsFeature",
+        "WelcomeFeature",
       ]
     ),
     .target(

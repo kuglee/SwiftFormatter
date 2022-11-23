@@ -3,6 +3,7 @@ import ComposableArchitecture
 import ConfigurationWrapper
 import SettingsFeature
 import SwiftUI
+import WelcomeFeature
 
 public struct AppFeature: ReducerProtocol {
   @Dependency(\.appUserDefaults) var appUserDefaults
@@ -27,23 +28,23 @@ public struct AppFeature: ReducerProtocol {
   }
 
   public enum Action {
-    case setDidRunBefore
+    case welcomeFeature(action: WelcomeFeature.Action)
     case settingsFeature(action: SettingsFeature.Action)
   }
 
   public var body: some ReducerProtocol<State, Action> {
     Reduce { state, action in
       switch action {
-      case .setDidRunBefore:
-        state.didRunBefore = true
-        return .none
+      case .welcomeFeature(_): return .none
       case .settingsFeature(_): return .none
       }
     }
-    .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
-      self.appUserDefaults.setDidRunBefore(didRunBefore)
-      return .none
-    }
+
+    Scope(state: \.welcomeFeature, action: /Action.welcomeFeature(action:)) { WelcomeFeature() }
+      .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
+        self.appUserDefaults.setDidRunBefore(didRunBefore)
+        return .none
+      }
 
     Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
       .onChange(of: \.configuration) { configuration, _, _ in
@@ -58,6 +59,11 @@ public struct AppFeature: ReducerProtocol {
 }
 
 extension AppFeature.State {
+  var welcomeFeature: WelcomeFeature.State {
+    get { return WelcomeFeature.State(isDismissed: self.didRunBefore) }
+    set { self.didRunBefore = newValue.isDismissed }
+  }
+
   var settingsFeature: SettingsFeature.State {
     get {
       SettingsFeature.State(
@@ -74,39 +80,22 @@ extension AppFeature.State {
   }
 }
 
-func appViewBody(store: StoreOf<AppFeature>) -> some View {
-  SettingsFeatureView(
-    store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
-  )
-}
-
-@available(macOS 13.0, *) public struct AppViewMacOS13: View {
+public struct AppFeatureView: View {
   let store: StoreOf<AppFeature>
-  @Environment(\.openWindow) private var openWindow
 
   public init(store: StoreOf<AppFeature>) { self.store = store }
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
-      appViewBody(store: self.store)
-        .task {
-          if !viewStore.didRunBefore {
-            viewStore.send(.setDidRunBefore)
-            try? await Task.sleep(nanoseconds: NSEC_PER_SEC / 2)
-            openWindow(id: "welcome")
-          }
-        }
+      SettingsFeatureView(
+        store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
+      )
+      .sheet(isPresented: Binding.constant(!viewStore.didRunBefore)) {
+        WelcomeFeatureView(
+          store: self.store.scope(state: \.welcomeFeature, action: AppFeature.Action.welcomeFeature)
+        )
+      }
     }
-  }
-}
-
-public struct AppViewMacOS12: View {
-  let store: StoreOf<AppFeature>
-
-  public init(store: StoreOf<AppFeature>) { self.store = store }
-
-  public var body: some View {
-    WithViewStore(self.store) { viewStore in appViewBody(store: store) }
   }
 }
 
