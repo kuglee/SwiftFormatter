@@ -28,23 +28,23 @@ public struct AppFeature: ReducerProtocol {
   }
 
   public enum Action {
-    case welcomeFeature(action: WelcomeFeature.Action)
+    case dismissWelcomeSheet
     case settingsFeature(action: SettingsFeature.Action)
   }
 
   public var body: some ReducerProtocol<State, Action> {
     Reduce { state, action in
       switch action {
-      case .welcomeFeature(_): return .none
+      case .dismissWelcomeSheet:
+        state.didRunBefore = true
+        return .none
       case .settingsFeature(_): return .none
       }
     }
-
-    Scope(state: \.welcomeFeature, action: /Action.welcomeFeature(action:)) { WelcomeFeature() }
-      .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
-        self.appUserDefaults.setDidRunBefore(didRunBefore)
-        return .none
-      }
+    .onChange(of: \.didRunBefore) { didRunBefore, _, _ in
+      self.appUserDefaults.setDidRunBefore(didRunBefore)
+      return .none
+    }
 
     Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
       .onChange(of: \.configuration) { configuration, _, _ in
@@ -59,11 +59,6 @@ public struct AppFeature: ReducerProtocol {
 }
 
 extension AppFeature.State {
-  var welcomeFeature: WelcomeFeature.State {
-    get { return WelcomeFeature.State(isDismissed: self.didRunBefore) }
-    set { self.didRunBefore = newValue.isDismissed }
-  }
-
   var settingsFeature: SettingsFeature.State {
     get {
       SettingsFeature.State(
@@ -86,15 +81,11 @@ public struct AppFeatureView: View {
   public init(store: StoreOf<AppFeature>) { self.store = store }
 
   public var body: some View {
-    WithViewStore(self.store) { viewStore in
+    WithViewStore(self.store.scope(state: { !$0.didRunBefore })) { viewStore in
       SettingsFeatureView(
         store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
       )
-      .sheet(isPresented: Binding.constant(!viewStore.didRunBefore)) {
-        WelcomeFeatureView(
-          store: self.store.scope(state: \.welcomeFeature, action: AppFeature.Action.welcomeFeature)
-        )
-      }
+      .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) { WelcomeFeatureView() }
     }
   }
 }

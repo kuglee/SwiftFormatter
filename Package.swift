@@ -105,7 +105,6 @@ let package = Package(
     .target(
       name: "WelcomeFeature",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
       ]
     ),
