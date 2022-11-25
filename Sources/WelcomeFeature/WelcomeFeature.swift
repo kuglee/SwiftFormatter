@@ -68,17 +68,17 @@ extension Workspace {
 }
 
 enum SettingsStrings {
-  static let systemSettingsString: String = {
+  static let systemSettingsName: String = {
     if #available(macOS 13.0, *) { return "System Settings" } else { return "System Preferences" }
   }()
 
-  static let extensionsPathString: String = {
+  static let settingsURL: String = {
     if #available(macOS 13.0, *) {
-      return "\(systemSettingsString) > Privacy & Security > Extensions"
+      return "x-apple.systempreferences:com.apple.ExtensionsPreferences"
     } else {
-      return "\(systemSettingsString) > Extensions"
+      return "/System/Library/PreferencePanes/Extensions.prefPane"
     }
-  }()
+  }()!
 }
 
 public struct WelcomeFeatureView: View {
@@ -88,31 +88,78 @@ public struct WelcomeFeatureView: View {
 
   public var body: some View {
     WithViewStore(self.store) { viewStore in
-      VStack(spacing: .grid(4)) {
-        Text(
-          "Before Swift Formatter can be used in Xcode its extension must be enabled in \(SettingsStrings.systemSettingsString)"
-        )
-        VStack(spacing: .grid(3)) {
-          Text("Enabling the Extension").font(.system(.headline))
-          VStack(spacing: .grid(2)) {
-            Text(
-              "The extension can be enabled and disabled in \(SettingsStrings.extensionsPathString) > Xcode Source Editor"
-            )
-            Button(action: { viewStore.send(.openExtensionsSettings) }) {
-              Text("Open \(SettingsStrings.extensionsPathString)")
+      VStack(spacing: 0) {
+        VStack(spacing: .grid(9)) {
+          Image(systemName: "square.and.pencil").resizable().aspectRatio(contentMode: .fit)
+            .frame(height: 46).foregroundColor(.accentColor)
+          Text("Welcome to Swift Formatter").font(.largeTitle).multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+          VStack(alignment: .leading, spacing: .grid(5)) {
+            EqualIconWidthDomain {
+              WelcomeItemView(
+                title: "Enabling the Extension",
+                subtitle:
+                  "Before Swift Formatter can be used in Xcode its extension must be enabled in \(SettingsStrings.systemSettingsName).",
+                image: Image(systemName: "gear")
+              )
+              WelcomeItemView(
+                title: "Using the Extension",
+                subtitle:
+                  "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar.",
+                image: Image(systemName: "filemenu.and.selection")
+              )
             }
           }
+          .padding(.leading, .grid(15)).padding(.trailing, .grid(18))
         }
         VStack(spacing: .grid(3)) {
-          Text("Using the Extension").font(.system(.headline))
-          Text(
-            "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar."
-          )
+          Button(action: { viewStore.send(.openExtensionsSettings) }) {
+            Text("Open \(SettingsStrings.systemSettingsName)")
+          }
+          .buttonStyle(.link)
+          Button(action: { viewStore.send(.closeButtonTapped) }) {
+            Text("Continue").frame(minWidth: 84)
+          }
+          .controlSize(.large).keyboardShortcut(.defaultAction)
         }
-        Button(action: { viewStore.send(.closeButtonTapped) }) { Text("Close") }
-          .padding(.top, .grid(3))
+        .padding(.top, .grid(14))
       }
-      .multilineTextAlignment(.center).padding().frame(width: 500, height: 320, alignment: .top)
     }
+    .padding(.top, .grid(18)).padding(.bottom, .grid(8)).frame(width: 510, alignment: .top)
+  }
+}
+
+public struct WelcomeFeatureView_Previews: PreviewProvider {
+  public static var previews: some View {
+    WelcomeFeatureView(
+      store: Store(initialState: WelcomeFeature.State(), reducer: WelcomeFeature())
+    )
+  }
+}
+
+struct WelcomeItemView: View {
+  let title: String
+  let subtitle: String
+  let image: Image
+
+  init(title: String, subtitle: String, image: Image) {
+    self.title = title
+    self.subtitle = subtitle
+    self.image = image
+  }
+
+  var body: some View {
+    Label {
+      VStack(alignment: .leading, spacing: .grid(1)) {
+        Text("\(self.title)").bold().foregroundColor(.primary)
+          .fixedSize(horizontal: false, vertical: true)
+        Text(self.subtitle).fixedSize(horizontal: false, vertical: true)
+      }
+    } icon: {
+      self.image.resizable().aspectRatio(contentMode: .fit).frame(width: 28)
+        .foregroundColor(.accentColor).padding(.trailing)
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+    .multilineTextAlignment(.leading)
   }
 }
