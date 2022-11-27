@@ -85,7 +85,10 @@ public struct AppFeatureView: View {
       SettingsFeatureView(
         store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
       )
-      .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) { WelcomeFeatureView() }
+      .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) {
+        WelcomeFeatureView()
+          .background(VisualEffect(material: .windowBackground, blendingMode: .withinWindow))
+      }
     }
   }
 }
