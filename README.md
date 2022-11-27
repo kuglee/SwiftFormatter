@@ -1,3 +1,9 @@
+<picture>
+  <source srcset="Sources/AppAssets/Assets.xcassets/AppIcon.imageset/AppIcon.png" media="(prefers-color-scheme: dark)">
+  <img src="Sources/AppAssets/Assets.xcassets/AppIconLight.imageset/AppIconLight.png" width="256">
+</picture>
+
+
 # Swift Formatter
 Xcode extension for [swift-format](https://github.com/apple/swift-format).
 
