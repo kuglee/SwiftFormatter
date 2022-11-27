@@ -1,3 +1,4 @@
+import AppAssets
 import AppFeature
 import ComposableArchitecture
 import SwiftUI
@@ -17,8 +18,28 @@ public struct App: SwiftUI.App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+  var interfaceStyle: InterfaceStyle {
+    let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Unspecified"
+    return InterfaceStyle(rawValue: type) ?? InterfaceStyle.Unspecified
+  }
+
+  func setAppIcon() {
+    NSApplication.shared.applicationIconImage = NSImage(
+      named: self.interfaceStyle != .Dark ? "AppIconLight" : "AppIcon",
+      in: AppAssets.bundle
+    )!
+  }
+
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     NSApplication.shared.windows.first?.styleMask = [.titled, .closable, .miniaturizable]
+
+    self.setAppIcon()
+
+    DistributedNotificationCenter.default.addObserver(
+      forName: .AppleInterfaceThemeChangedNotification,
+      object: nil,
+      queue: OperationQueue.main
+    ) { _ in self.setAppIcon() }
   }
 
   func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
@@ -32,4 +53,16 @@ extension Scene {
       return self
     }
   }
+}
+
+enum InterfaceStyle: String {
+  case Light
+  case Dark
+  case Unspecified
+}
+
+extension Notification.Name {
+  static let AppleInterfaceThemeChangedNotification = Notification.Name(
+    "AppleInterfaceThemeChangedNotification"
+  )
 }

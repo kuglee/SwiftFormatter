@@ -1,3 +1,4 @@
+import AppAssets
 import StyleGuide
 import SwiftUI
 
@@ -16,6 +17,7 @@ enum SettingsStrings {
 }
 
 public struct WelcomeFeatureView: View {
+  @Environment(\.colorScheme) var colorScheme: ColorScheme
   @Environment(\.presentationMode) @Binding var presentationMode
 
   public init() {}
@@ -23,8 +25,13 @@ public struct WelcomeFeatureView: View {
   public var body: some View {
     VStack(spacing: 0) {
       VStack(spacing: .grid(9)) {
-        Image(systemName: "square.and.pencil").resizable().aspectRatio(contentMode: .fit)
-          .frame(height: 46).foregroundColor(.accentColor)
+        Image(
+          nsImage: NSImage(
+            named: self.colorScheme != .dark ? "AppIconLight" : "AppIcon",
+            in: AppAssets.bundle
+          )!
+        )
+        .resizable().aspectRatio(contentMode: .fit).frame(height: 72)
         Text("Welcome to Swift Formatter").font(.largeTitle).multilineTextAlignment(.center)
           .fixedSize(horizontal: false, vertical: true)
         VStack(alignment: .leading, spacing: .grid(5)) {

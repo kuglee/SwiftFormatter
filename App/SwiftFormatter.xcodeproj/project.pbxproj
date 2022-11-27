@@ -560,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconDark;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Application/Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -588,6 +589,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = AppIconDark;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Application/Swift Formatter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
