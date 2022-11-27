@@ -1,87 +1,95 @@
-import ComposableArchitecture
+import AppAssets
 import StyleGuide
 import SwiftUI
-import XCTestDynamicOverlay
 
-public struct WelcomeFeature: ReducerProtocol {
-  @Dependency(\.workspace) var workspace
+enum SettingsStrings {
+  static let systemSettingsName: String = {
+    if #available(macOS 13.0, *) { return "System Settings" } else { return "System Preferences" }
+  }()
+
+  static let settingsURL: String = {
+    if #available(macOS 13.0, *) {
+      return "x-apple.systempreferences:com.apple.ExtensionsPreferences"
+    } else {
+      return "/System/Library/PreferencePanes/Extensions.prefPane"
+    }
+  }()!
+}
+
+public struct WelcomeFeatureView: View {
+  @Environment(\.colorScheme) var colorScheme: ColorScheme
+  @Environment(\.presentationMode) @Binding var presentationMode
 
   public init() {}
 
-  public struct State: Equatable { public init() {} }
-
-  public enum Action { case openExtensionsSettings }
-
-  public var body: some ReducerProtocol<State, Action> {
-    Reduce { state, action in
-      switch action {
-      case .openExtensionsSettings:
-        return .run { _ in await self.workspace.openExtensionsPreferences() }
-      }
-    }
-  }
-}
-
-public enum WorkspaceKeys: DependencyKey {
-  public static let liveValue = Workspace.live
-  public static let testValue = Workspace.unimplemented
-}
-
-extension DependencyValues {
-  public var workspace: Workspace {
-    get { self[WorkspaceKeys.self] }
-    set { self[WorkspaceKeys.self] = newValue }
-  }
-}
-
-public struct Workspace { public var openExtensionsPreferences: () async -> Void }
-
-extension Workspace {
-  public static let live = Self(openExtensionsPreferences: {
-    NSWorkspace.shared.open(
-      URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences")!
-    )
-  })
-}
-
-extension Workspace {
-  public static let unimplemented = Self(
-    openExtensionsPreferences: XCTUnimplemented("\(Self.self).openExtensionsPreferences")
-  )
-}
-
-@available(macOS 13.0, *) public struct WelcomeFeatureView: View {
-  let store: StoreOf<WelcomeFeature>
-  @Environment(\.openWindow) private var openWindow
-
-  public init(store: StoreOf<WelcomeFeature>) { self.store = store }
-
   public var body: some View {
-    WithViewStore(self.store) { viewStore in
-      VStack(spacing: .grid(4)) {
-        Text(
-          "Before Swift Formatter can be used in Xcode its extension must be enabled in System Settings."
+    VStack(spacing: 0) {
+      VStack(spacing: .grid(9)) {
+        Image(
+          nsImage: NSImage(
+            named: self.colorScheme != .dark ? "AppIconLight" : "AppIcon",
+            in: AppAssets.bundle
+          )!
         )
-        VStack(spacing: .grid(3)) {
-          Text("Enabling the Extension").font(.system(.headline))
-          VStack(spacing: .grid(2)) {
-            Text(
-              "The extension can be enabled and disabled in System Settings > Privacy & Security > Extensions > Xcode Source Editor"
+        .resizable().aspectRatio(contentMode: .fit).frame(height: 72)
+        Text("Welcome to Swift Formatter").font(.largeTitle).multilineTextAlignment(.center)
+          .fixedSize(horizontal: false, vertical: true)
+        VStack(alignment: .leading, spacing: .grid(5)) {
+          EqualIconWidthDomain {
+            WelcomeItemView(
+              title: "Enabling the Extension",
+              subtitle:
+                "Before Swift Formatter can be used in Xcode its extension must be enabled in \(SettingsStrings.systemSettingsName).",
+              image: Image(systemName: "gear")
             )
-            Button(action: { viewStore.send(.openExtensionsSettings) }) {
-              Text("Open System Settings > Privacy & Security > Extensions")
-            }
-            .frame(maxWidth: .infinity)
+            WelcomeItemView(
+              title: "Using the Extension",
+              subtitle:
+                "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar.",
+              image: Image(systemName: "filemenu.and.selection")
+            )
           }
         }
-        VStack(spacing: .grid(3)) {
-          Text("Using the Extension").font(.system(.headline))
-          Text(
-            "To use the extension in Xcode choose Editor > Swift Formatter > Format Source from the menu bar."
-          )
-        }
+        .padding(.leading, .grid(15)).padding(.trailing, .grid(18))
       }
-      .multilineTextAlignment(.center).padding().frame(width: 500, height: 300, alignment: .top)
+      VStack(spacing: .grid(3)) {
+        Text(.init("[Open \(SettingsStrings.systemSettingsName)](\(SettingsStrings.settingsURL))"))
+        Button(action: { self.presentationMode.dismiss() }) { Text("Continue").frame(minWidth: 84) }
+          .controlSize(.large).keyboardShortcut(.defaultAction)
+      }
+      .padding(.top, .grid(14))
     }
+    .padding(.top, .grid(18)).padding(.bottom, .grid(8)).frame(width: 510, alignment: .top)
+  }
+}
+
+public struct WelcomeFeatureView_Previews: PreviewProvider {
+  public static var previews: some View { WelcomeFeatureView() }
+}
+
+struct WelcomeItemView: View {
+  let title: String
+  let subtitle: String
+  let image: Image
+
+  init(title: String, subtitle: String, image: Image) {
+    self.title = title
+    self.subtitle = subtitle
+    self.image = image
+  }
+
+  var body: some View {
+    Label {
+      VStack(alignment: .leading, spacing: .grid(1)) {
+        Text("\(self.title)").bold().foregroundColor(.primary)
+          .fixedSize(horizontal: false, vertical: true)
+        Text(self.subtitle).fixedSize(horizontal: false, vertical: true)
+      }
+    } icon: {
+      self.image.resizable().aspectRatio(contentMode: .fit).frame(width: 28)
+        .foregroundColor(.accentColor).padding(.trailing)
+        .frame(maxHeight: .infinity, alignment: .top)
+    }
+    .multilineTextAlignment(.leading)
   }
 }

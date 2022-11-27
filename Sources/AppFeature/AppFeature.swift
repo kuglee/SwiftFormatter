@@ -3,6 +3,7 @@ import ComposableArchitecture
 import ConfigurationWrapper
 import SettingsFeature
 import SwiftUI
+import WelcomeFeature
 
 public struct AppFeature: ReducerProtocol {
   @Dependency(\.appUserDefaults) var appUserDefaults
@@ -27,14 +28,14 @@ public struct AppFeature: ReducerProtocol {
   }
 
   public enum Action {
-    case setDidRunBefore
+    case dismissWelcomeSheet
     case settingsFeature(action: SettingsFeature.Action)
   }
 
   public var body: some ReducerProtocol<State, Action> {
     Reduce { state, action in
       switch action {
-      case .setDidRunBefore:
+      case .dismissWelcomeSheet:
         state.didRunBefore = true
         return .none
       case .settingsFeature(_): return .none
@@ -74,39 +75,21 @@ extension AppFeature.State {
   }
 }
 
-func appViewBody(store: StoreOf<AppFeature>) -> some View {
-  SettingsFeatureView(
-    store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
-  )
-}
-
-@available(macOS 13.0, *) public struct AppViewMacOS13: View {
+public struct AppFeatureView: View {
   let store: StoreOf<AppFeature>
-  @Environment(\.openWindow) private var openWindow
 
   public init(store: StoreOf<AppFeature>) { self.store = store }
 
   public var body: some View {
-    WithViewStore(self.store) { viewStore in
-      appViewBody(store: self.store)
-        .task {
-          if !viewStore.didRunBefore {
-            viewStore.send(.setDidRunBefore)
-            try? await Task.sleep(nanoseconds: NSEC_PER_SEC / 2)
-            openWindow(id: "welcome")
-          }
-        }
+    WithViewStore(self.store.scope(state: { !$0.didRunBefore })) { viewStore in
+      SettingsFeatureView(
+        store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
+      )
+      .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) {
+        WelcomeFeatureView()
+          .background(VisualEffect(material: .windowBackground, blendingMode: .withinWindow))
+      }
     }
-  }
-}
-
-public struct AppViewMacOS12: View {
-  let store: StoreOf<AppFeature>
-
-  public init(store: StoreOf<AppFeature>) { self.store = store }
-
-  public var body: some View {
-    WithViewStore(self.store) { viewStore in appViewBody(store: store) }
   }
 }
 

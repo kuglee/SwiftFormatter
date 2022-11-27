@@ -9,6 +9,7 @@ let package = Package(
   platforms: [.macOS(.v12)],
   products: [
     .library(name: "App", targets: ["App"]),
+    .library(name: "AppAssets", targets: ["AppAssets"]),
     .library(name: "AppConstants", targets: ["AppConstants"]),
     .library(name: "AppExtension", targets: ["AppExtension"]),
     .library(name: "AppFeature", targets: ["AppFeature"]),
@@ -31,9 +32,16 @@ let package = Package(
     .target(
       name: "App",
       dependencies: [
+        "AppAssets",
         "AppFeature",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        "WelcomeFeature",
+      ]
+    ),
+    .target(
+      name: "AppAssets",
+      dependencies: [],
+      resources: [
+        .process("Assets.xcassets")
       ]
     ),
     .target(name: "AppConstants" ,dependencies: []),
@@ -56,6 +64,7 @@ let package = Package(
         "AppUserDefaults",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "SettingsFeature",
+        "WelcomeFeature",
       ]
     ),
     .target(
@@ -105,7 +114,7 @@ let package = Package(
     .target(
       name: "WelcomeFeature",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        "AppAssets",
         "StyleGuide",
       ]
     ),
