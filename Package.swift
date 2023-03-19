@@ -22,7 +22,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.41.2"),
-    .package(url: "https://github.com/kuglee/swift-format", branch: "release/5.7"),
+    .package(url: "https://github.com/kuglee/swift-format", branch: "main"),
     .package(url: "https://github.com/sindresorhus/Defaults", branch: "v6.3.0"),
   ],
   targets: [
