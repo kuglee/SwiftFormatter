@@ -10,7 +10,6 @@ let package = Package(
   products: [
     .library(name: "App", targets: ["App"]),
     .library(name: "AppAssets", targets: ["AppAssets"]),
-    .library(name: "AppConstants", targets: ["AppConstants"]),
     .library(name: "AppExtension", targets: ["AppExtension"]),
     .library(name: "AppFeature", targets: ["AppFeature"]),
     .library(name: "AppUserDefaults", targets: ["AppUserDefaults"]),
@@ -19,13 +18,11 @@ let package = Package(
     .library(name: "FormatterSettings", targets: ["FormatterSettings"]),
     .library(name: "SettingsFeature", targets: ["SettingsFeature"]),
     .library(name: "StyleGuide", targets: ["StyleGuide"]),
-    .library(name: "SwiftFormatterServiceProtocol", targets: ["SwiftFormatterServiceProtocol"]),
     .library(name: "WelcomeFeature", targets: ["WelcomeFeature"]),
-    .executable(name: "SwiftFormatterService", targets: ["SwiftFormatterService"]),
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.41.2"),
-    .package(url: "https://github.com/apple/swift-format", branch: "release/5.7"),
+    .package(url: "https://github.com/kuglee/swift-format", branch: "main"),
     .package(url: "https://github.com/sindresorhus/Defaults", branch: "v6.3.0"),
   ],
   targets: [
@@ -44,13 +41,11 @@ let package = Package(
         .process("Assets.xcassets")
       ]
     ),
-    .target(name: "AppConstants" ,dependencies: []),
     .target(
       name: "AppExtension",
       dependencies: [
-        "AppConstants",
         "AppUserDefaults",
-        "SwiftFormatterServiceProtocol",
+        .product(name: "SwiftFormat", package: "swift-format"),
       ],
       swiftSettings: [
           .unsafeFlags([
@@ -70,7 +65,6 @@ let package = Package(
     .target(
       name: "AppUserDefaults",
       dependencies: [
-        "AppConstants",
         "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
@@ -110,18 +104,12 @@ let package = Package(
       ]
     ),
     .target(name: "StyleGuide" ,dependencies: []),
-    .target(name: "SwiftFormatterServiceProtocol", dependencies: []),
     .target(
       name: "WelcomeFeature",
       dependencies: [
         "AppAssets",
         "StyleGuide",
       ]
-    ),
-    .executableTarget(
-      name: "SwiftFormatterService",
-      dependencies: ["SwiftFormatterServiceProtocol", "AppUserDefaults"],
-      exclude: ["SwiftFormatterService.plist"]
     ),
     .testTarget(
       name: "FormatterSettingsTests",
