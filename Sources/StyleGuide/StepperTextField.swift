@@ -10,7 +10,8 @@ public struct StepperTextField: View {
   }
 
   public var body: some View {
-    TextField("", value: self.$value, formatter: uIntNumberFormatter).frame(width: width)
+    TextField("", value: self.$value, formatter: uIntNumberFormatter)
+      .multilineTextAlignment(.trailing).frame(width: width)
   }
 }
 

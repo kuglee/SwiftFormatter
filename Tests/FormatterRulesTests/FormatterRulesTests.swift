@@ -8,16 +8,19 @@ import XCTest
   func testSetBindings() async {
     let store = TestStore(
       initialState: FormatterRules.State(
+        alwaysUseLiteralForEmptyCollectionInit: false,
         doNotUseSemicolons: false,
         fileScopedDeclarationPrivacy: false,
         fullyIndirectEnum: false,
         groupNumericLiterals: false,
         noAccessLevelOnExtensionDeclaration: false,
+        noAssignmentInExpressions: false,
         noCasesWithOnlyFallthrough: false,
         noEmptyTrailingClosureParentheses: false,
         noLabelsInCasePatterns: false,
         noParensAroundConditions: false,
         noVoidReturnOnFunctionSignature: false,
+        omitExplicitReturns: false,
         oneCasePerLine: false,
         oneVariableDeclarationPerLine: false,
         orderedImports: false,
@@ -31,6 +34,9 @@ import XCTest
       reducer: { FormatterRules() }
     )
 
+    await store.send(.set(\.$alwaysUseLiteralForEmptyCollectionInit, true)) {
+      $0.alwaysUseLiteralForEmptyCollectionInit = true
+    }
     await store.send(.set(\.$doNotUseSemicolons, true)) { $0.doNotUseSemicolons = true }
     await store.send(.set(\.$fileScopedDeclarationPrivacy, true)) {
       $0.fileScopedDeclarationPrivacy = true
@@ -39,6 +45,9 @@ import XCTest
     await store.send(.set(\.$groupNumericLiterals, true)) { $0.groupNumericLiterals = true }
     await store.send(.set(\.$noAccessLevelOnExtensionDeclaration, true)) {
       $0.noAccessLevelOnExtensionDeclaration = true
+    }
+    await store.send(.set(\.$noAssignmentInExpressions, true)) {
+      $0.noAssignmentInExpressions = true
     }
     await store.send(.set(\.$noCasesWithOnlyFallthrough, true)) {
       $0.noCasesWithOnlyFallthrough = true
@@ -51,6 +60,7 @@ import XCTest
     await store.send(.set(\.$noVoidReturnOnFunctionSignature, true)) {
       $0.noVoidReturnOnFunctionSignature = true
     }
+    await store.send(.set(\.$omitExplicitReturns, true)) { $0.omitExplicitReturns = true }
     await store.send(.set(\.$oneCasePerLine, true)) { $0.oneCasePerLine = true }
     await store.send(.set(\.$oneVariableDeclarationPerLine, true)) {
       $0.oneVariableDeclarationPerLine = true

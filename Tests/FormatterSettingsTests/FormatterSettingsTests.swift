@@ -8,6 +8,7 @@ import XCTest
   func testSetBindings() async {
     let store = TestStore(
       initialState: FormatterSettings.State(
+        shouldTrimTrailingWhitespace: false,
         maximumBlankLines: 0,
         lineLength: 0,
         tabWidth: 0,
@@ -18,14 +19,19 @@ import XCTest
         lineBreakBeforeEachGenericRequirement: false,
         prioritizeKeepingFunctionOutputTogether: false,
         indentConditionalCompilationBlocks: false,
-        indentSwitchCaseLabels: false,
         lineBreakAroundMultilineExpressionChainComponents: false,
+        indentSwitchCaseLabels: false,
         fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration(),
-        shouldTrimTrailingWhitespace: false
+        spacesAroundRangeFormationOperators: false,
+        noAssignmentInExpressions: NoAssignmentInExpressionsConfiguration(),
+        multiElementCollectionTrailingCommas: false
       ),
       reducer: { FormatterSettings() }
     )
 
+    await store.send(.set(\.$shouldTrimTrailingWhitespace, true)) {
+      $0.shouldTrimTrailingWhitespace = true
+    }
     await store.send(.set(\.$maximumBlankLines, 1)) { $0.maximumBlankLines = 1 }
     await store.send(.set(\.$lineLength, 1)) { $0.lineLength = 1 }
     await store.send(.set(\.$tabWidth, 1)) { $0.tabWidth = 1 }
@@ -50,10 +56,10 @@ import XCTest
     await store.send(.set(\.$indentConditionalCompilationBlocks, true)) {
       $0.indentConditionalCompilationBlocks = true
     }
-    await store.send(.set(\.$indentSwitchCaseLabels, true)) { $0.indentSwitchCaseLabels = true }
     await store.send(.set(\.$lineBreakAroundMultilineExpressionChainComponents, true)) {
       $0.lineBreakAroundMultilineExpressionChainComponents = true
     }
+    await store.send(.set(\.$indentSwitchCaseLabels, true)) { $0.indentSwitchCaseLabels = true }
     await store.send(
       .set(
         \.$fileScopedDeclarationPrivacy,
@@ -73,8 +79,15 @@ import XCTest
         return fileScopedDeclarationPrivacyConfiguration
       }()
     }
-    await store.send(.set(\.$shouldTrimTrailingWhitespace, true)) {
-      $0.shouldTrimTrailingWhitespace = true
+    await store.send(.set(\.$spacesAroundRangeFormationOperators, true)) {
+      $0.spacesAroundRangeFormationOperators = true
+    }
+    await store.send(.set(\.$noAssignmentInExpressionsText, "test1,\t    test2    ")) {
+      $0.noAssignmentInExpressionsText = "test1,\t    test2    "
+      $0.noAssignmentInExpressions.allowedFunctions = ["test1", "test2"]
+    }
+    await store.send(.set(\.$multiElementCollectionTrailingCommas, true)) {
+      $0.multiElementCollectionTrailingCommas = true
     }
   }
 }

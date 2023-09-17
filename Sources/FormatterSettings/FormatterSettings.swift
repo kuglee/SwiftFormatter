@@ -7,6 +7,7 @@ public struct FormatterSettings: Reducer {
   public init() {}
 
   public struct State: Equatable {
+    @BindingState public var shouldTrimTrailingWhitespace: Bool
     @BindingState public var maximumBlankLines: Int
     @BindingState public var lineLength: Int
     @BindingState public var tabWidth: Int
@@ -17,12 +18,16 @@ public struct FormatterSettings: Reducer {
     @BindingState public var lineBreakBeforeEachGenericRequirement: Bool
     @BindingState public var prioritizeKeepingFunctionOutputTogether: Bool
     @BindingState public var indentConditionalCompilationBlocks: Bool
-    @BindingState public var indentSwitchCaseLabels: Bool
     @BindingState public var lineBreakAroundMultilineExpressionChainComponents: Bool
+    @BindingState public var indentSwitchCaseLabels: Bool
     @BindingState public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
-    @BindingState public var shouldTrimTrailingWhitespace: Bool
+    @BindingState public var spacesAroundRangeFormationOperators: Bool
+    public var noAssignmentInExpressions: NoAssignmentInExpressionsConfiguration
+    @BindingState var noAssignmentInExpressionsText: String
+    @BindingState public var multiElementCollectionTrailingCommas: Bool
 
     public init(
+      shouldTrimTrailingWhitespace: Bool,
       maximumBlankLines: Int,
       lineLength: Int,
       tabWidth: Int,
@@ -33,11 +38,14 @@ public struct FormatterSettings: Reducer {
       lineBreakBeforeEachGenericRequirement: Bool,
       prioritizeKeepingFunctionOutputTogether: Bool,
       indentConditionalCompilationBlocks: Bool,
-      indentSwitchCaseLabels: Bool,
       lineBreakAroundMultilineExpressionChainComponents: Bool,
+      indentSwitchCaseLabels: Bool,
       fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration,
-      shouldTrimTrailingWhitespace: Bool
+      spacesAroundRangeFormationOperators: Bool,
+      noAssignmentInExpressions: NoAssignmentInExpressionsConfiguration,
+      multiElementCollectionTrailingCommas: Bool
     ) {
+      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
       self.maximumBlankLines = maximumBlankLines
       self.lineLength = lineLength
       self.tabWidth = tabWidth
@@ -48,17 +56,36 @@ public struct FormatterSettings: Reducer {
       self.lineBreakBeforeEachGenericRequirement = lineBreakBeforeEachGenericRequirement
       self.prioritizeKeepingFunctionOutputTogether = prioritizeKeepingFunctionOutputTogether
       self.indentConditionalCompilationBlocks = indentConditionalCompilationBlocks
-      self.indentSwitchCaseLabels = indentSwitchCaseLabels
       self.lineBreakAroundMultilineExpressionChainComponents =
         lineBreakAroundMultilineExpressionChainComponents
       self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
-      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
+      self.indentSwitchCaseLabels = indentSwitchCaseLabels
+      self.spacesAroundRangeFormationOperators = spacesAroundRangeFormationOperators
+      self.noAssignmentInExpressions = noAssignmentInExpressions
+      self.noAssignmentInExpressionsText = noAssignmentInExpressions.allowedFunctions.joined(
+        separator: ", "
+      )
+      self.multiElementCollectionTrailingCommas = multiElementCollectionTrailingCommas
     }
   }
 
   public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
 
-  public var body: some ReducerOf<Self> { BindingReducer() }
+  public var body: some ReducerOf<Self> {
+    BindingReducer()
+
+    Reduce { state, action in
+      switch action {
+      case .binding(\.$noAssignmentInExpressionsText):
+        state.noAssignmentInExpressions.allowedFunctions = state.noAssignmentInExpressionsText
+          .replacingOccurrences(of: "\\s", with: "", options: .regularExpression)
+          .components(separatedBy: ",")
+
+        return .none
+      case .binding: return .none
+      }
+    }
+  }
 }
 
 public struct FormatterSettingsView: View {
@@ -76,7 +103,7 @@ public struct FormatterSettingsView: View {
             Text("Length:").alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
             Stepper(
               value: viewStore.$indentation.count,
-              in: 0...1000,
+              in: 0 ... 1000,
               step: 1,
               label: { StepperTextField(value: viewStore.$indentation.count) }
             )
@@ -108,7 +135,7 @@ public struct FormatterSettingsView: View {
         Text("Tab Width:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.$tabWidth,
-          in: 0...1000,
+          in: 0 ... 1000,
           step: 1,
           label: { StepperTextField(value: viewStore.$tabWidth) }
         )
@@ -120,13 +147,13 @@ public struct FormatterSettingsView: View {
     }
   }
 
-  @MainActor public var lineLenghtView: some View {
+  @MainActor public var lineLengthView: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(spacing: 0) {
         Text("Line Length:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.$lineLength,
-          in: 0...1000,
+          in: 0 ... 1000,
           step: 1,
           label: { StepperTextField(value: viewStore.$lineLength) }
         )
@@ -186,7 +213,7 @@ public struct FormatterSettingsView: View {
             Text("Maximum blank lines")
             Stepper(
               value: viewStore.$maximumBlankLines,
-              in: 0...1000,
+              in: 0 ... 1000,
               step: 1,
               label: { StepperTextField(value: viewStore.$maximumBlankLines) }
             )
@@ -194,6 +221,49 @@ public struct FormatterSettingsView: View {
               "The maximum number of consecutive blank lines that are allowed to be present in a source file. Any number larger than this will be collapsed down to the maximum."
             )
           }
+        }
+      }
+    }
+  }
+
+  @MainActor public var spacingView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      HStack(alignment: .firstTextBaseline) {
+        Text("Spacing:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+        VStack(alignment: .leading, spacing: .grid(1)) {
+          Toggle(isOn: viewStore.$spacesAroundRangeFormationOperators) {
+            Text("Spaces around range formation operators")
+          }
+          .help(
+            "Determines whether whitespace should be forced before and after the range formation operators ... and ..<."
+          )
+        }
+      }
+    }
+  }
+
+  @MainActor public var trailingCommaView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      HStack(alignment: .firstTextBaseline) {
+        Text("Trailing Comma:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+        VStack(alignment: .leading, spacing: .grid(1)) {
+          Toggle(isOn: viewStore.$multiElementCollectionTrailingCommas) {
+            Text("Multi-element collection trailing commas")
+          }
+          .help("Determines whether multi-element collection literals should have trailing commas.")
+        }
+      }
+    }
+  }
+
+  @MainActor public var noAssignmentInExpressionsView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      HStack(alignment: .firstTextBaseline) {
+        Text("No Assignment In Expressions:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+        VStack(alignment: .leading, spacing: .grid(1)) {
+          TextField("", text: viewStore.$noAssignmentInExpressionsText)
+            .help("Contains exceptions for the NoAssignmentInExpressions rule.")
+            .frame(maxWidth: 350)
         }
       }
     }
@@ -221,13 +291,15 @@ public struct FormatterSettingsView: View {
   @FocusState var shouldFocusFirstTextField: Bool
   public var body: some View {
     VStack(alignment: .trailingLabel, spacing: .grid(2)) {
-      indentationView
-      tabWidthView
-      lineLenghtView
-      lineBreaksView
-      fileScopedDeclarationPrivacyView
+      self.indentationView
+      self.tabWidthView
+      self.lineLengthView
+      self.lineBreaksView
+      self.spacingView
+      self.trailingCommaView
+      self.fileScopedDeclarationPrivacyView
+      self.noAssignmentInExpressionsView
     }
-    .multilineTextAlignment(.trailing)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     .focused($shouldFocusFirstTextField).task { shouldFocusFirstTextField = false }
   }

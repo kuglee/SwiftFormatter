@@ -56,6 +56,7 @@ extension SettingsFeature.State {
   var formatterSettings: FormatterSettings.State {
     get {
       FormatterSettings.State(
+        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
         maximumBlankLines: self.configuration.maximumBlankLines,
         lineLength: self.configuration.lineLength,
         tabWidth: self.configuration.tabWidth,
@@ -68,14 +69,18 @@ extension SettingsFeature.State {
         prioritizeKeepingFunctionOutputTogether: self.configuration
           .prioritizeKeepingFunctionOutputTogether,
         indentConditionalCompilationBlocks: self.configuration.indentConditionalCompilationBlocks,
-        indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         lineBreakAroundMultilineExpressionChainComponents: self.configuration
           .lineBreakAroundMultilineExpressionChainComponents,
+        indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy,
-        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace
+        spacesAroundRangeFormationOperators: self.configuration.spacesAroundRangeFormationOperators,
+        noAssignmentInExpressions: self.configuration.noAssignmentInExpressions,
+        multiElementCollectionTrailingCommas: self.configuration
+          .multiElementCollectionTrailingCommas
       )
     }
     set {
+      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
       self.configuration.maximumBlankLines = newValue.maximumBlankLines
       self.configuration.lineLength = newValue.lineLength
       self.configuration.tabWidth = newValue.tabWidth
@@ -94,7 +99,11 @@ extension SettingsFeature.State {
       self.configuration.lineBreakAroundMultilineExpressionChainComponents =
         newValue.lineBreakAroundMultilineExpressionChainComponents
       self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
-      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
+      self.configuration.spacesAroundRangeFormationOperators =
+        newValue.spacesAroundRangeFormationOperators
+      self.configuration.noAssignmentInExpressions = newValue.noAssignmentInExpressions
+      self.configuration.multiElementCollectionTrailingCommas =
+        newValue.multiElementCollectionTrailingCommas
     }
   }
 
@@ -102,18 +111,22 @@ extension SettingsFeature.State {
     get {
 
       FormatterRules.State(
+        alwaysUseLiteralForEmptyCollectionInit: self.configuration.rules
+          .alwaysUseLiteralForEmptyCollectionInit,
         doNotUseSemicolons: self.configuration.rules.doNotUseSemicolons,
         fileScopedDeclarationPrivacy: self.configuration.rules.fileScopedDeclarationPrivacy,
         fullyIndirectEnum: self.configuration.rules.fullyIndirectEnum,
         groupNumericLiterals: self.configuration.rules.groupNumericLiterals,
         noAccessLevelOnExtensionDeclaration: self.configuration.rules
           .noAccessLevelOnExtensionDeclaration,
+        noAssignmentInExpressions: self.configuration.rules.noAssignmentInExpressions,
         noCasesWithOnlyFallthrough: self.configuration.rules.noCasesWithOnlyFallthrough,
         noEmptyTrailingClosureParentheses: self.configuration.rules
           .noEmptyTrailingClosureParentheses,
         noLabelsInCasePatterns: self.configuration.rules.noLabelsInCasePatterns,
         noParensAroundConditions: self.configuration.rules.noParensAroundConditions,
         noVoidReturnOnFunctionSignature: self.configuration.rules.noVoidReturnOnFunctionSignature,
+        omitExplicitReturns: self.configuration.rules.omitExplicitReturns,
         oneCasePerLine: self.configuration.rules.oneCasePerLine,
         oneVariableDeclarationPerLine: self.configuration.rules.oneVariableDeclarationPerLine,
         orderedImports: self.configuration.rules.orderedImports,
@@ -127,12 +140,15 @@ extension SettingsFeature.State {
       )
     }
     set {
+      self.configuration.rules.alwaysUseLiteralForEmptyCollectionInit =
+        newValue.alwaysUseLiteralForEmptyCollectionInit
       self.configuration.rules.doNotUseSemicolons = newValue.doNotUseSemicolons
       self.configuration.rules.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
       self.configuration.rules.fullyIndirectEnum = newValue.fullyIndirectEnum
       self.configuration.rules.groupNumericLiterals = newValue.groupNumericLiterals
       self.configuration.rules.noAccessLevelOnExtensionDeclaration =
         newValue.noAccessLevelOnExtensionDeclaration
+      self.configuration.rules.noAssignmentInExpressions = newValue.noAssignmentInExpressions
       self.configuration.rules.noCasesWithOnlyFallthrough = newValue.noCasesWithOnlyFallthrough
       self.configuration.rules.noEmptyTrailingClosureParentheses =
         newValue.noEmptyTrailingClosureParentheses
@@ -140,6 +156,7 @@ extension SettingsFeature.State {
       self.configuration.rules.noParensAroundConditions = newValue.noParensAroundConditions
       self.configuration.rules.noVoidReturnOnFunctionSignature =
         newValue.noVoidReturnOnFunctionSignature
+      self.configuration.rules.omitExplicitReturns = newValue.omitExplicitReturns
       self.configuration.rules.oneCasePerLine = newValue.oneCasePerLine
       self.configuration.rules.oneVariableDeclarationPerLine =
         newValue.oneVariableDeclarationPerLine
