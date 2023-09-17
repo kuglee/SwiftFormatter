@@ -95,50 +95,50 @@ public struct FormatterRulesView: View {
         Text("Formatting rules:")
         List {
           Toggle(isOn: viewStore.$alwaysUseLiteralForEmptyCollectionInit) {
-            Text("Always Use Literal For Empty Collection Init")
+            Text("Always use literal for empty collection init")
           }
-          Toggle(isOn: viewStore.$doNotUseSemicolons) { Text("Do Not Use Semicolons") }
+          Toggle(isOn: viewStore.$doNotUseSemicolons) { Text("Do not use semicolons") }
           Toggle(isOn: viewStore.$fileScopedDeclarationPrivacy) {
-            Text("File Scoped Declaration Privacy")
+            Text("File scoped declaration privacy")
           }
-          Toggle(isOn: viewStore.$fullyIndirectEnum) { Text("Fully Indirect Enum") }
-          Toggle(isOn: viewStore.$groupNumericLiterals) { Text("Group Numeric Literals") }
+          Toggle(isOn: viewStore.$fullyIndirectEnum) { Text("Fully indirect enum") }
+          Toggle(isOn: viewStore.$groupNumericLiterals) { Text("Group numeric literals") }
           Toggle(isOn: viewStore.$noAccessLevelOnExtensionDeclaration) {
-            Text("No Access Level On Extension Declaration")
+            Text("No access level on extension declaration")
           }
           Toggle(isOn: viewStore.$noAssignmentInExpressions) {
-            Text("No Assignment In Expressions")
+            Text("No assignment in expressions")
           }
           Toggle(isOn: viewStore.$noCasesWithOnlyFallthrough) {
-            Text("No Cases With Only Fallthrough")
+            Text("No cases with only fallthrough")
           }
           Toggle(isOn: viewStore.$noEmptyTrailingClosureParentheses) {
-            Text("No Empty Trailing Closure Parentheses")
+            Text("No empty trailing closure parentheses")
           }
-          Toggle(isOn: viewStore.$noLabelsInCasePatterns) { Text("No Labels In Case Patterns") }
-          Toggle(isOn: viewStore.$noParensAroundConditions) { Text("No Parens Around Conditions") }
+          Toggle(isOn: viewStore.$noLabelsInCasePatterns) { Text("No labels in case patterns") }
+          Toggle(isOn: viewStore.$noParensAroundConditions) { Text("No parens around conditions") }
           Toggle(isOn: viewStore.$noVoidReturnOnFunctionSignature) {
-            Text("No Void Return On Function Signature")
+            Text("No Void return on function signature")
           }
-          Toggle(isOn: viewStore.$omitExplicitReturns) { Text("Omit Explicit Returns") }
-          Toggle(isOn: viewStore.$oneCasePerLine) { Text("One Case Per Line") }
+          Toggle(isOn: viewStore.$omitExplicitReturns) { Text("Omit explicit returns") }
+          Toggle(isOn: viewStore.$oneCasePerLine) { Text("One case per line") }
           Toggle(isOn: viewStore.$oneVariableDeclarationPerLine) {
-            Text("One Variable Declaration Per Line")
+            Text("One variable declaration per line")
           }
-          Toggle(isOn: viewStore.$orderedImports) { Text("Ordered Imports") }
+          Toggle(isOn: viewStore.$orderedImports) { Text("Ordered imports") }
           Toggle(isOn: viewStore.$returnVoidInsteadOfEmptyTuple) {
-            Text("Return Void Instead Of Empty Tuple")
+            Text("Return Void instead of empty tuple")
           }
-          Toggle(isOn: viewStore.$useEarlyExits) { Text("Use Early Exits") }
-          Toggle(isOn: viewStore.$useShorthandTypeNames) { Text("Use Shorthand Type Names") }
+          Toggle(isOn: viewStore.$useEarlyExits) { Text("Use early exits") }
+          Toggle(isOn: viewStore.$useShorthandTypeNames) { Text("Use shorthand type names") }
           Toggle(isOn: viewStore.$useSingleLinePropertyGetter) {
-            Text("Use Single Line Property Getter")
+            Text("Use single line property getter")
           }
           Toggle(isOn: viewStore.$useTripleSlashForDocumentationComments) {
-            Text("Use Triple Slash For Documentation Comments")
+            Text("Use triple slash for documentation comments")
           }
           Toggle(isOn: viewStore.$useWhereClausesInForLoops) {
-            Text("Use Where Clauses In For Loops")
+            Text("Use where clauses in for loops")
           }
         }
         .listStyle(.bordered(alternatesRowBackgrounds: true))
