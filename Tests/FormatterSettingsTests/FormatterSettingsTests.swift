@@ -1,9 +1,8 @@
 import ComposableArchitecture
+import SwiftFormatConfiguration
 import XCTest
 
 @testable import FormatterSettings
-// @testable because FileScopedDeclarationPrivacyConfiguration doesn't have a public initializer
-@testable import SwiftFormatConfiguration
 
 @MainActor final class FormatterSettingsTests: XCTestCase {
   func testSetBindings() async {
@@ -24,7 +23,7 @@ import XCTest
         fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration(),
         shouldTrimTrailingWhitespace: false
       ),
-      reducer: FormatterSettings()
+      reducer: { FormatterSettings() }
     )
 
     await store.send(.set(\.$maximumBlankLines, 1)) { $0.maximumBlankLines = 1 }
@@ -58,12 +57,21 @@ import XCTest
     await store.send(
       .set(
         \.$fileScopedDeclarationPrivacy,
-        FileScopedDeclarationPrivacyConfiguration(accessLevel: .fileprivate)
+        {
+          var fileScopedDeclarationPrivacyConfiguration =
+            FileScopedDeclarationPrivacyConfiguration()
+          fileScopedDeclarationPrivacyConfiguration.accessLevel = .fileprivate
+
+          return fileScopedDeclarationPrivacyConfiguration
+        }()
       )
     ) {
-      $0.fileScopedDeclarationPrivacy = FileScopedDeclarationPrivacyConfiguration(
-        accessLevel: .fileprivate
-      )
+      $0.fileScopedDeclarationPrivacy = {
+        var fileScopedDeclarationPrivacyConfiguration = FileScopedDeclarationPrivacyConfiguration()
+        fileScopedDeclarationPrivacyConfiguration.accessLevel = .fileprivate
+
+        return fileScopedDeclarationPrivacyConfiguration
+      }()
     }
     await store.send(.set(\.$shouldTrimTrailingWhitespace, true)) {
       $0.shouldTrimTrailingWhitespace = true

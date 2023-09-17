@@ -10,7 +10,7 @@ public struct App: SwiftUI.App {
 
   public var body: some Scene {
     WindowGroup {
-      AppFeatureView(store: Store(initialState: AppFeature.State(), reducer: AppFeature()))
+      AppFeatureView(store: Store(initialState: AppFeature.State(), reducer: { AppFeature() }))
         .onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
     }
     .commands { CommandGroup(replacing: .newItem, addition: {}) }.contentSizedWindowResizability()

@@ -3,25 +3,24 @@ import StyleGuide
 import SwiftFormatConfiguration
 import SwiftUI
 
-public struct FormatterSettings: ReducerProtocol {
+public struct FormatterSettings: Reducer {
   public init() {}
 
   public struct State: Equatable {
-    @BindableState public var maximumBlankLines: Int
-    @BindableState public var lineLength: Int
-    @BindableState public var tabWidth: Int
-    @BindableState public var indentation: Indent
-    @BindableState public var respectsExistingLineBreaks: Bool
-    @BindableState public var lineBreakBeforeControlFlowKeywords: Bool
-    @BindableState public var lineBreakBeforeEachArgument: Bool
-    @BindableState public var lineBreakBeforeEachGenericRequirement: Bool
-    @BindableState public var prioritizeKeepingFunctionOutputTogether: Bool
-    @BindableState public var indentConditionalCompilationBlocks: Bool
-    @BindableState public var indentSwitchCaseLabels: Bool
-    @BindableState public var lineBreakAroundMultilineExpressionChainComponents: Bool
-    @BindableState public var fileScopedDeclarationPrivacy:
-      FileScopedDeclarationPrivacyConfiguration
-    @BindableState public var shouldTrimTrailingWhitespace: Bool
+    @BindingState public var maximumBlankLines: Int
+    @BindingState public var lineLength: Int
+    @BindingState public var tabWidth: Int
+    @BindingState public var indentation: Indent
+    @BindingState public var respectsExistingLineBreaks: Bool
+    @BindingState public var lineBreakBeforeControlFlowKeywords: Bool
+    @BindingState public var lineBreakBeforeEachArgument: Bool
+    @BindingState public var lineBreakBeforeEachGenericRequirement: Bool
+    @BindingState public var prioritizeKeepingFunctionOutputTogether: Bool
+    @BindingState public var indentConditionalCompilationBlocks: Bool
+    @BindingState public var indentSwitchCaseLabels: Bool
+    @BindingState public var lineBreakAroundMultilineExpressionChainComponents: Bool
+    @BindingState public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
+    @BindingState public var shouldTrimTrailingWhitespace: Bool
 
     public init(
       maximumBlankLines: Int,
@@ -59,7 +58,7 @@ public struct FormatterSettings: ReducerProtocol {
 
   public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
 
-  public var body: some ReducerProtocol<State, Action> { BindingReducer() }
+  public var body: some ReducerOf<Self> { BindingReducer() }
 }
 
 public struct FormatterSettingsView: View {
@@ -67,8 +66,8 @@ public struct FormatterSettingsView: View {
 
   public init(store: StoreOf<FormatterSettings>) { self.store = store }
 
-  public var indentationView: some View {
-    WithViewStore(self.store) { viewStore in
+  @MainActor public var indentationView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(alignment: .centerNonSiblings) {
         Text("Indentation:").alignmentGuide(.trailingLabel) { $0[.trailing] }
           .alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
@@ -76,44 +75,42 @@ public struct FormatterSettingsView: View {
           HStack(spacing: 0) {
             Text("Length:").alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
             Stepper(
-              value: viewStore.binding(\.$indentation.count),
+              value: viewStore.$indentation.count,
               in: 0...1000,
               step: 1,
-              label: { StepperTextField(value: viewStore.binding(\.$indentation.count)) }
+              label: { StepperTextField(value: viewStore.$indentation.count) }
             )
             .help("The amount of whitespace that should be added when indenting one level")
-            Picker("", selection: viewStore.binding(\.$indentation)) {
+            Picker("", selection: viewStore.$indentation) {
               Text(Indent.spaces(Int()).rawValue).tag(Indent.spaces(viewStore.indentation.count))
               Text(Indent.tabs(Int()).rawValue).tag(Indent.tabs(viewStore.indentation.count))
             }
             .help("The type of whitespace that should be added when indenting").fixedSize()
           }
-          Toggle(isOn: viewStore.binding(\.$indentConditionalCompilationBlocks)) {
+          Toggle(isOn: viewStore.$indentConditionalCompilationBlocks) {
             Text("Indent conditional compilation blocks")
           }
           .help(
             "Determines if conditional compilation blocks are indented. If this setting is false the body of #if, #elseif, and #else is not indented."
           )
-          Toggle(isOn: viewStore.binding(\.$indentSwitchCaseLabels)) {
-            Text("Indent switch case labels")
-          }
-          .help(
-            "Determines if case statements should be indented compared to the containing switch block"
-          )
+          Toggle(isOn: viewStore.$indentSwitchCaseLabels) { Text("Indent switch case labels") }
+            .help(
+              "Determines if case statements should be indented compared to the containing switch block"
+            )
         }
       }
     }
   }
 
-  public var tabWidthView: some View {
-    WithViewStore(self.store) { viewStore in
+  @MainActor public var tabWidthView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(spacing: 0) {
         Text("Tab Width:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
-          value: viewStore.binding(\.$tabWidth),
+          value: viewStore.$tabWidth,
           in: 0...1000,
           step: 1,
-          label: { StepperTextField(value: viewStore.binding(\.$tabWidth)) }
+          label: { StepperTextField(value: viewStore.$tabWidth) }
         )
         .help(
           "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
@@ -123,63 +120,63 @@ public struct FormatterSettingsView: View {
     }
   }
 
-  public var lineLenghtView: some View {
-    WithViewStore(self.store) { viewStore in
+  @MainActor public var lineLenghtView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(spacing: 0) {
         Text("Line Length:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
-          value: viewStore.binding(\.$lineLength),
+          value: viewStore.$lineLength,
           in: 0...1000,
           step: 1,
-          label: { StepperTextField(value: viewStore.binding(\.$lineLength)) }
+          label: { StepperTextField(value: viewStore.$lineLength) }
         )
         .help("The maximum allowed length of a line, in characters")
       }
     }
   }
 
-  public var lineBreaksView: some View {
-    WithViewStore(self.store) { viewStore in
+  @MainActor public var lineBreaksView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(alignment: .firstTextBaseline) {
         Text("Line Breaks:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         VStack(alignment: .leading, spacing: .grid(1)) {
-          Toggle(isOn: viewStore.binding(\.$respectsExistingLineBreaks)) {
+          Toggle(isOn: viewStore.$respectsExistingLineBreaks) {
             Text("Respects existing line breaks")
           }
           .help(
             "Indicates whether or not existing line breaks in the source code should be honored (if they are valid according to the style guidelines being enforced). If this settings is false, then the formatter will be more opinionated by only inserting line breaks where absolutely necessary and removing any others, effectively canonicalizing the output."
           )
-          Toggle(isOn: viewStore.binding(\.$lineBreakBeforeControlFlowKeywords)) {
+          Toggle(isOn: viewStore.$lineBreakBeforeControlFlowKeywords) {
             Text("Line break before control flow keywords")
           }
           .help(
             "Determines the line-breaking behavior for control flow keywords that follow a closing brace, like else and catch. If true, a line break will be added before the keyword, forcing it onto its own line. If false, the keyword will be placed after the closing brace (separated by a space)."
           )
-          Toggle(isOn: viewStore.binding(\.$lineBreakBeforeEachArgument)) {
+          Toggle(isOn: viewStore.$lineBreakBeforeEachArgument) {
             Text("Line break before each argument")
           }
           .help(
             "Determines the line-breaking behavior for generic arguments and function arguments when a declaration is wrapped onto multiple lines. If true, a line break will be added before each argument, forcing the entire argument list to be laid out vertically. If false, arguments will be laid out horizontally first, with line breaks only being fired when the line length would be exceeded."
           )
-          Toggle(isOn: viewStore.binding(\.$lineBreakBeforeEachGenericRequirement)) {
+          Toggle(isOn: viewStore.$lineBreakBeforeEachGenericRequirement) {
             Text("Line break before each generic requirement")
           }
           .help(
             "Determines the line-breaking behavior for generic requirements when the requirements list is wrapped onto multiple lines. If true, a line break will be added before each requirement, forcing the entire requirements list to be laid out vertically. If false, requirements will be laid out horizontally first, with line breaks only being fired when the line length would be exceeded."
           )
-          Toggle(isOn: viewStore.binding(\.$lineBreakAroundMultilineExpressionChainComponents)) {
+          Toggle(isOn: viewStore.$lineBreakAroundMultilineExpressionChainComponents) {
             Text("Line break around multiline expression chain components")
           }
           .help(
             "Determines whether line breaks should be forced before and after multiline components of dot-chained expressions, such as function calls and subscripts chained together through member access (i.e. \".\" expressions). When any component is multiline and this option is true, a line break is forced before the \".\" of the component and after the component's closing delimiter (i.e. right paren, right bracket, right brace, etc.)."
           )
-          Toggle(isOn: viewStore.binding(\.$prioritizeKeepingFunctionOutputTogether)) {
+          Toggle(isOn: viewStore.$prioritizeKeepingFunctionOutputTogether) {
             Text("Prioritize keeping function output together")
           }
           .help(
             "Determines if function-like declaration outputs should be prioritized to be together with the function signature right (closing) parenthesis. If false, function output (i.e. throws, return type) is not prioritized to be together with the signature's right parenthesis, and when the line length would be exceeded, a line break will be fired after the function signature first, indenting the declaration output one additional level. If true, A line break will be fired further up in the function's declaration (e.g. generic parameters, parameters) before breaking on the function's output."
           )
-          Toggle(isOn: viewStore.binding(\.$shouldTrimTrailingWhitespace)) {
+          Toggle(isOn: viewStore.$shouldTrimTrailingWhitespace) {
             Text("Trim trailing whitespace before formatting")
           }
           .help(
@@ -188,10 +185,10 @@ public struct FormatterSettingsView: View {
           HStack(spacing: 0) {
             Text("Maximum blank lines")
             Stepper(
-              value: viewStore.binding(\.$maximumBlankLines),
+              value: viewStore.$maximumBlankLines,
               in: 0...1000,
               step: 1,
-              label: { StepperTextField(value: viewStore.binding(\.$maximumBlankLines)) }
+              label: { StepperTextField(value: viewStore.$maximumBlankLines) }
             )
             .help(
               "The maximum number of consecutive blank lines that are allowed to be present in a source file. Any number larger than this will be collapsed down to the maximum."
@@ -202,12 +199,12 @@ public struct FormatterSettingsView: View {
     }
   }
 
-  public var fileScopedDeclarationPrivacyView: some View {
-    WithViewStore(self.store) { viewStore in
+  @MainActor public var fileScopedDeclarationPrivacyView: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(alignment: .centerNonSiblings, spacing: 0) {
         Text("File Scoped Declaration Privacy:").alignmentGuide(.trailingLabel) { $0[.trailing] }
           .alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
-        Picker("", selection: viewStore.binding(\.$fileScopedDeclarationPrivacy.accessLevel)) {
+        Picker("", selection: viewStore.$fileScopedDeclarationPrivacy.accessLevel) {
           Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.private.rawValue)
             .tag(FileScopedDeclarationPrivacyConfiguration.AccessLevel.private)
           Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.fileprivate.rawValue)

@@ -10,7 +10,7 @@ public enum Tab {
   case rules
 }
 
-public struct SettingsFeature: ReducerProtocol {
+public struct SettingsFeature: Reducer {
   public init() {}
 
   public struct State: Equatable {
@@ -35,7 +35,7 @@ public struct SettingsFeature: ReducerProtocol {
     case formatterRules(action: FormatterRules.Action)
   }
 
-  public var body: some ReducerProtocol<State, Action> {
+  public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .tabSelected(let selectedTab):
@@ -99,8 +99,60 @@ extension SettingsFeature.State {
   }
 
   var formatterRules: FormatterRules.State {
-    get { FormatterRules.State(rules: self.configuration.rules) }
-    set { self.configuration.rules = newValue.rules }
+    get {
+
+      FormatterRules.State(
+        doNotUseSemicolons: self.configuration.rules.doNotUseSemicolons,
+        fileScopedDeclarationPrivacy: self.configuration.rules.fileScopedDeclarationPrivacy,
+        fullyIndirectEnum: self.configuration.rules.fullyIndirectEnum,
+        groupNumericLiterals: self.configuration.rules.groupNumericLiterals,
+        noAccessLevelOnExtensionDeclaration: self.configuration.rules
+          .noAccessLevelOnExtensionDeclaration,
+        noCasesWithOnlyFallthrough: self.configuration.rules.noCasesWithOnlyFallthrough,
+        noEmptyTrailingClosureParentheses: self.configuration.rules
+          .noEmptyTrailingClosureParentheses,
+        noLabelsInCasePatterns: self.configuration.rules.noLabelsInCasePatterns,
+        noParensAroundConditions: self.configuration.rules.noParensAroundConditions,
+        noVoidReturnOnFunctionSignature: self.configuration.rules.noVoidReturnOnFunctionSignature,
+        oneCasePerLine: self.configuration.rules.oneCasePerLine,
+        oneVariableDeclarationPerLine: self.configuration.rules.oneVariableDeclarationPerLine,
+        orderedImports: self.configuration.rules.orderedImports,
+        returnVoidInsteadOfEmptyTuple: self.configuration.rules.returnVoidInsteadOfEmptyTuple,
+        useEarlyExits: self.configuration.rules.useEarlyExits,
+        useShorthandTypeNames: self.configuration.rules.useShorthandTypeNames,
+        useSingleLinePropertyGetter: self.configuration.rules.useSingleLinePropertyGetter,
+        useTripleSlashForDocumentationComments: self.configuration.rules
+          .useTripleSlashForDocumentationComments,
+        useWhereClausesInForLoops: self.configuration.rules.useWhereClausesInForLoops
+      )
+    }
+    set {
+      self.configuration.rules.doNotUseSemicolons = newValue.doNotUseSemicolons
+      self.configuration.rules.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
+      self.configuration.rules.fullyIndirectEnum = newValue.fullyIndirectEnum
+      self.configuration.rules.groupNumericLiterals = newValue.groupNumericLiterals
+      self.configuration.rules.noAccessLevelOnExtensionDeclaration =
+        newValue.noAccessLevelOnExtensionDeclaration
+      self.configuration.rules.noCasesWithOnlyFallthrough = newValue.noCasesWithOnlyFallthrough
+      self.configuration.rules.noEmptyTrailingClosureParentheses =
+        newValue.noEmptyTrailingClosureParentheses
+      self.configuration.rules.noLabelsInCasePatterns = newValue.noLabelsInCasePatterns
+      self.configuration.rules.noParensAroundConditions = newValue.noParensAroundConditions
+      self.configuration.rules.noVoidReturnOnFunctionSignature =
+        newValue.noVoidReturnOnFunctionSignature
+      self.configuration.rules.oneCasePerLine = newValue.oneCasePerLine
+      self.configuration.rules.oneVariableDeclarationPerLine =
+        newValue.oneVariableDeclarationPerLine
+      self.configuration.rules.orderedImports = newValue.orderedImports
+      self.configuration.rules.returnVoidInsteadOfEmptyTuple =
+        newValue.returnVoidInsteadOfEmptyTuple
+      self.configuration.rules.useEarlyExits = newValue.useEarlyExits
+      self.configuration.rules.useShorthandTypeNames = newValue.useShorthandTypeNames
+      self.configuration.rules.useSingleLinePropertyGetter = newValue.useSingleLinePropertyGetter
+      self.configuration.rules.useTripleSlashForDocumentationComments =
+        newValue.useTripleSlashForDocumentationComments
+      self.configuration.rules.useWhereClausesInForLoops = newValue.useWhereClausesInForLoops
+    }
   }
 }
 
