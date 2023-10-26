@@ -11,19 +11,18 @@ public struct AppFeature: Reducer {
   public init() {}
 
   public struct State: Equatable {
-    var configuration: ConfigurationWrapper
-    var selectedTab: Tab = .formatting
+    public var settingsFeatureState: SettingsFeature.State
     var didRunBefore: Bool
-    var shouldTrimTrailingWhitespace: Bool
 
     public init(
-      configuration: ConfigurationWrapper = AppUserDefaults.live.getConfigurationWrapper(),
-      didRunBefore: Bool = AppUserDefaults.live.getDidRunBefore(),
-      shouldTrimTrailingWhitespace: Bool = AppUserDefaults.live.getShouldTrimTrailingWhitespace()
+      settingsFeatureState: SettingsFeature.State = SettingsFeature.State(
+        configuration: AppUserDefaults.live.getConfigurationWrapper(),
+        shouldTrimTrailingWhitespace: AppUserDefaults.live.getShouldTrimTrailingWhitespace()
+      ),
+      didRunBefore: Bool = AppUserDefaults.live.getDidRunBefore()
     ) {
+      self.settingsFeatureState = settingsFeatureState
       self.didRunBefore = didRunBefore
-      self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
-      self.configuration = configuration
     }
   }
 
@@ -42,35 +41,28 @@ public struct AppFeature: Reducer {
       }
     }
     .onChange(of: \.didRunBefore) { _, newValue in
-      Reduce { state, action in .run { send in self.appUserDefaults.setDidRunBefore(newValue) } }
-    }
-    Scope(state: \.settingsFeature, action: /Action.settingsFeature(action:)) { SettingsFeature() }
-      .onChange(of: \.configuration) { _, newValue in
-        Reduce { state, action in
-          .run { send in self.appUserDefaults.setConfigurationWrapper(newValue) }
-        }
-      }
-      .onChange(of: \.shouldTrimTrailingWhitespace) { _, newValue in
-        Reduce { state, action in
-          .run { send in self.appUserDefaults.setShouldTrimTrailingWhitespace(newValue) }
-        }
-      }
-  }
-}
+      Reduce { state, action in
+        self.appUserDefaults.setDidRunBefore(newValue)
 
-extension AppFeature.State {
-  var settingsFeature: SettingsFeature.State {
-    get {
-      SettingsFeature.State(
-        configuration: self.configuration,
-        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
-        selectedTab: self.selectedTab
-      )
+        return .none
+      }
     }
-    set {
-      self.configuration = newValue.configuration
-      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
-      self.selectedTab = newValue.selectedTab
+    Scope(state: \.settingsFeatureState, action: /Action.settingsFeature(action:)) {
+      SettingsFeature()
+    }
+    .onChange(of: \.settingsFeatureState.configuration) { _, newValue in
+      Reduce { state, action in
+        self.appUserDefaults.setConfigurationWrapper(newValue)
+
+        return .none
+      }
+    }
+    .onChange(of: \.settingsFeatureState.shouldTrimTrailingWhitespace) { _, newValue in
+      Reduce { state, action in
+        self.appUserDefaults.setShouldTrimTrailingWhitespace(newValue)
+
+        return .none
+      }
     }
   }
 }
@@ -83,7 +75,7 @@ public struct AppFeatureView: View {
   public var body: some View {
     WithViewStore(self.store, observe: { !$0.didRunBefore }) { viewStore in
       SettingsFeatureView(
-        store: store.scope(state: \.settingsFeature, action: AppFeature.Action.settingsFeature)
+        store: store.scope(state: \.settingsFeatureState, action: AppFeature.Action.settingsFeature)
       )
       .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) {
         WelcomeFeatureView()
