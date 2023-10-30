@@ -91,8 +91,8 @@ public struct FormatterRulesView: View {
 
   public var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
-      VStack(alignment: .leading, spacing: .grid(1)) {
-        Text("Formatting rules:")
+      VStack(alignment: .leading, spacing: .grid(2)) {
+        Text("Enable the rules you want to be applied when formatting.")
         List {
           Toggle(isOn: viewStore.$alwaysUseLiteralForEmptyCollectionInit) {
             Text("Always use literal for empty collection init")
