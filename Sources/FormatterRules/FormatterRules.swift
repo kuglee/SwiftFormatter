@@ -99,7 +99,7 @@ public struct FormatterRulesView: View {
           }
           Toggle(isOn: viewStore.$doNotUseSemicolons) { Text("Do not use semicolons") }
           Toggle(isOn: viewStore.$fileScopedDeclarationPrivacy) {
-            Text("File scoped declaration privacy")
+            Text("File-scoped declaration privacy")
           }
           Toggle(isOn: viewStore.$fullyIndirectEnum) { Text("Fully indirect enum") }
           Toggle(isOn: viewStore.$groupNumericLiterals) { Text("Group numeric literals") }

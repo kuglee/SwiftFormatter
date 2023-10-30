@@ -272,7 +272,7 @@ public struct FormatterSettingsView: View {
   @MainActor public var fileScopedDeclarationPrivacyView: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
       HStack(alignment: .centerNonSiblings, spacing: 0) {
-        Text("File Scoped Declaration Privacy:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+        Text("File-scoped Declaration Privacy:").alignmentGuide(.trailingLabel) { $0[.trailing] }
           .alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
         Picker("", selection: viewStore.$fileScopedDeclarationPrivacy.accessLevel) {
           Text(FileScopedDeclarationPrivacyConfiguration.AccessLevel.private.rawValue)
