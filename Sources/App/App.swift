@@ -33,6 +33,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     NSApplication.shared.windows.first?.styleMask = [.titled, .closable, .miniaturizable]
 
+    // always open in front
+    NSApplication.shared.activate(ignoringOtherApps: true)
+
     self.setAppIcon()
 
     DistributedNotificationCenter.default.addObserver(
