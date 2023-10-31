@@ -17,15 +17,33 @@ public struct SettingsFeature: Reducer {
     public var configuration: ConfigurationWrapper
     public var shouldTrimTrailingWhitespace: Bool
     public var selectedTab: Tab
+    public var noAssignmentInExpressionsState: NoAssignmentInExpressions.State
+    public var focusedField: FormatterSettings.State.Field?
 
     public init(
       configuration: ConfigurationWrapper,
       shouldTrimTrailingWhitespace: Bool,
-      selectedTab: Tab = .formatting
+      selectedTab: Tab = .formatting,
+      focusedField: FormatterSettings.State.Field? = nil
     ) {
+      @Dependency(\.uuid) var uuid
+
       self.configuration = configuration
       self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
       self.selectedTab = selectedTab
+      self.focusedField = focusedField
+      self.noAssignmentInExpressionsState = .init(
+        noAssignmentInExpressionsItems: IdentifiedArray(
+          uniqueElements: configuration.noAssignmentInExpressions.allowedFunctions.map {
+            NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem(
+              id: uuid(),
+              text: $0
+            )
+          }
+        ),
+        noAssignmentInExpressionsListState: nil,
+        editingState: nil
+      )
     }
   }
 
@@ -36,6 +54,11 @@ public struct SettingsFeature: Reducer {
   }
 
   public var body: some ReducerOf<Self> {
+    Scope(state: \.formatterSettings, action: /Action.formatterSettings(action:)) {
+      FormatterSettings()
+    }
+    Scope(state: \.formatterRules, action: /Action.formatterRules(action:)) { FormatterRules() }
+
     Reduce { state, action in
       switch action {
       case .tabSelected(let selectedTab):
@@ -45,10 +68,6 @@ public struct SettingsFeature: Reducer {
       case .formatterRules(_): return .none
       }
     }
-    Scope(state: \.formatterSettings, action: /Action.formatterSettings(action:)) {
-      FormatterSettings()
-    }
-    Scope(state: \.formatterRules, action: /Action.formatterRules(action:)) { FormatterRules() }
   }
 }
 
@@ -74,9 +93,10 @@ extension SettingsFeature.State {
         indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
         fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy,
         spacesAroundRangeFormationOperators: self.configuration.spacesAroundRangeFormationOperators,
-        noAssignmentInExpressions: self.configuration.noAssignmentInExpressions,
         multiElementCollectionTrailingCommas: self.configuration
-          .multiElementCollectionTrailingCommas
+          .multiElementCollectionTrailingCommas,
+        noAssignmentInExpressionsState: self.noAssignmentInExpressionsState,
+        focusedField: self.focusedField
       )
     }
     set {
@@ -101,15 +121,17 @@ extension SettingsFeature.State {
       self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
       self.configuration.spacesAroundRangeFormationOperators =
         newValue.spacesAroundRangeFormationOperators
-      self.configuration.noAssignmentInExpressions = newValue.noAssignmentInExpressions
+      self.noAssignmentInExpressionsState = newValue.noAssignmentInExpressionsState
+      self.configuration.noAssignmentInExpressions.allowedFunctions = newValue
+        .noAssignmentInExpressionsState.noAssignmentInExpressionsItems.map(\.text)
       self.configuration.multiElementCollectionTrailingCommas =
         newValue.multiElementCollectionTrailingCommas
+      self.focusedField = newValue.focusedField
     }
   }
 
   var formatterRules: FormatterRules.State {
     get {
-
       FormatterRules.State(
         alwaysUseLiteralForEmptyCollectionInit: self.configuration.rules
           .alwaysUseLiteralForEmptyCollectionInit,
@@ -204,7 +226,7 @@ public struct SettingsFeatureView: View {
         }
         .padding(.grid(3))
       }
-      .frame(width: 600, height: 532).padding(.grid(5))
+      .frame(width: 600, height: 600).padding(.grid(5))
     }
   }
 }

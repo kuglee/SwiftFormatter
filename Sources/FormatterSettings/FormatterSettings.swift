@@ -22,9 +22,19 @@ public struct FormatterSettings: Reducer {
     @BindingState public var indentSwitchCaseLabels: Bool
     @BindingState public var fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration
     @BindingState public var spacesAroundRangeFormationOperators: Bool
-    public var noAssignmentInExpressions: NoAssignmentInExpressionsConfiguration
-    @BindingState var noAssignmentInExpressionsText: String
     @BindingState public var multiElementCollectionTrailingCommas: Bool
+
+    public var noAssignmentInExpressionsState: NoAssignmentInExpressions.State
+
+    public enum Field: Equatable, Hashable {
+      case noAssignmentInExpressions(NoAssignmentInExpressions.State.EditingState)
+      case indentationLength
+      case lineLength
+      case tabWidth
+      case maximumBlankLines
+    }
+
+    @BindingState public var focusedField: Field?
 
     public init(
       shouldTrimTrailingWhitespace: Bool,
@@ -42,8 +52,9 @@ public struct FormatterSettings: Reducer {
       indentSwitchCaseLabels: Bool,
       fileScopedDeclarationPrivacy: FileScopedDeclarationPrivacyConfiguration,
       spacesAroundRangeFormationOperators: Bool,
-      noAssignmentInExpressions: NoAssignmentInExpressionsConfiguration,
-      multiElementCollectionTrailingCommas: Bool
+      multiElementCollectionTrailingCommas: Bool,
+      noAssignmentInExpressionsState: NoAssignmentInExpressions.State,
+      focusedField: Field? = nil
     ) {
       self.shouldTrimTrailingWhitespace = shouldTrimTrailingWhitespace
       self.maximumBlankLines = maximumBlankLines
@@ -61,28 +72,51 @@ public struct FormatterSettings: Reducer {
       self.fileScopedDeclarationPrivacy = fileScopedDeclarationPrivacy
       self.indentSwitchCaseLabels = indentSwitchCaseLabels
       self.spacesAroundRangeFormationOperators = spacesAroundRangeFormationOperators
-      self.noAssignmentInExpressions = noAssignmentInExpressions
-      self.noAssignmentInExpressionsText = noAssignmentInExpressions.allowedFunctions.joined(
-        separator: ", "
-      )
       self.multiElementCollectionTrailingCommas = multiElementCollectionTrailingCommas
+      self.noAssignmentInExpressionsState = noAssignmentInExpressionsState
+      self.focusedField = focusedField
+
+      if self.focusedField == .noAssignmentInExpressions(.textField) {
+        self.noAssignmentInExpressionsState.editingState = .textField
+      } else if self.focusedField == .noAssignmentInExpressions(.popover) {
+        self.noAssignmentInExpressionsState.editingState = .popover
+      }
     }
   }
 
-  public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
+  public enum Action: Equatable, BindableAction {
+    case binding(BindingAction<State>)
+    case noAssignmentInExpressionsAction(action: NoAssignmentInExpressions.Action)
+    case wholeViewTapped
+  }
 
   public var body: some ReducerOf<Self> {
-    BindingReducer()
+    CombineReducers {
+      BindingReducer()
+      Scope(
+        state: \.noAssignmentInExpressionsState,
+        action: /Action.noAssignmentInExpressionsAction
+      ) { NoAssignmentInExpressions() }
 
-    Reduce { state, action in
-      switch action {
-      case .binding(\.$noAssignmentInExpressionsText):
-        state.noAssignmentInExpressions.allowedFunctions = state.noAssignmentInExpressionsText
-          .replacingOccurrences(of: "\\s", with: "", options: .regularExpression)
-          .components(separatedBy: ",")
+      Reduce { state, action in
+        switch action {
+        case .binding: return .none
+        case .noAssignmentInExpressionsAction: return .none
+        case .wholeViewTapped:
+          state.focusedField = nil
+          state.noAssignmentInExpressionsState.editingState = nil
+
+          return .none
+        }
+      }
+    }
+    .onChange(of: \.noAssignmentInExpressionsState.editingState) { oldValue, newValue in
+      Reduce { state, action in
+        guard let newValue else { return .none }
+
+        state.focusedField = .noAssignmentInExpressions(newValue)
 
         return .none
-      case .binding: return .none
       }
     }
   }
@@ -92,6 +126,8 @@ public struct FormatterSettingsView: View {
   let store: StoreOf<FormatterSettings>
 
   public init(store: StoreOf<FormatterSettings>) { self.store = store }
+
+  @FocusState var focusedField: FormatterSettings.State.Field?
 
   @MainActor public var indentationView: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
@@ -105,7 +141,10 @@ public struct FormatterSettingsView: View {
               value: viewStore.$indentation.count,
               in: 0 ... 1000,
               step: 1,
-              label: { StepperTextField(value: viewStore.$indentation.count) }
+              label: {
+                StepperTextField(value: viewStore.$indentation.count.removeDuplicates())
+                  .focused(self.$focusedField, equals: .indentationLength)
+              }
             )
             .help("The amount of whitespace that should be added when indenting one level")
             Picker("", selection: viewStore.$indentation) {
@@ -137,7 +176,10 @@ public struct FormatterSettingsView: View {
           value: viewStore.$tabWidth,
           in: 0 ... 1000,
           step: 1,
-          label: { StepperTextField(value: viewStore.$tabWidth) }
+          label: {
+            StepperTextField(value: viewStore.$tabWidth.removeDuplicates())
+              .focused(self.$focusedField, equals: .tabWidth)
+          }
         )
         .help(
           "The number of spaces that should be considered equivalent to one tab character. This is used during line length calculations when tabs are used for indentation."
@@ -155,7 +197,10 @@ public struct FormatterSettingsView: View {
           value: viewStore.$lineLength,
           in: 0 ... 1000,
           step: 1,
-          label: { StepperTextField(value: viewStore.$lineLength) }
+          label: {
+            StepperTextField(value: viewStore.$lineLength.removeDuplicates())
+              .focused(self.$focusedField, equals: .lineLength)
+          }
         )
         .help("The maximum allowed length of a line, in characters")
       }
@@ -215,7 +260,10 @@ public struct FormatterSettingsView: View {
               value: viewStore.$maximumBlankLines,
               in: 0 ... 1000,
               step: 1,
-              label: { StepperTextField(value: viewStore.$maximumBlankLines) }
+              label: {
+                StepperTextField(value: viewStore.$maximumBlankLines.removeDuplicates())
+                  .focused(self.$focusedField, equals: .maximumBlankLines)
+              }
             )
             .help(
               "The maximum number of consecutive blank lines that are allowed to be present in a source file. Any number larger than this will be collapsed down to the maximum."
@@ -257,14 +305,16 @@ public struct FormatterSettingsView: View {
   }
 
   @MainActor public var noAssignmentInExpressionsView: some View {
-    WithViewStore(self.store, observe: { $0 }) { viewStore in
-      HStack(alignment: .firstTextBaseline) {
-        Text("No Assignment In Expressions:").alignmentGuide(.trailingLabel) { $0[.trailing] }
-        VStack(alignment: .leading, spacing: .grid(1)) {
-          TextField("", text: viewStore.$noAssignmentInExpressionsText)
-            .help("Contains exceptions for the NoAssignmentInExpressions rule.")
-            .frame(maxWidth: 350)
-        }
+    HStack(alignment: .firstTextBaseline) {
+      Text("No Assignment In Expressions:").alignmentGuide(.trailingLabel) { $0[.trailing] }
+      VStack(alignment: .leading, spacing: .grid(1)) {
+        NoAssignmentInExpressionsView(
+          store: self.store.scope(
+            state: \.noAssignmentInExpressionsState,
+            action: FormatterSettings.Action.noAssignmentInExpressionsAction
+          )
+        )
+        .help("Contains exceptions for the NoAssignmentInExpressions rule.").frame(maxWidth: 350)
       }
     }
   }
@@ -288,20 +338,32 @@ public struct FormatterSettingsView: View {
     }
   }
 
-  @FocusState var shouldFocusFirstTextField: Bool
+  @State var shouldUnsetFocus: Bool = false
+
   public var body: some View {
-    VStack(alignment: .trailingLabel, spacing: .grid(2)) {
-      self.indentationView
-      self.tabWidthView
-      self.lineLengthView
-      self.lineBreaksView
-      self.spacingView
-      self.trailingCommaView
-      self.fileScopedDeclarationPrivacyView
-      self.noAssignmentInExpressionsView
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      VStack(alignment: .trailingLabel, spacing: .grid(2)) {
+        self.indentationView
+        self.tabWidthView
+        self.lineLengthView
+        self.lineBreaksView
+        self.spacingView
+        self.trailingCommaView
+        self.fileScopedDeclarationPrivacyView
+        self.noAssignmentInExpressionsView
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).contentShape(Rectangle())
+      .onTapGesture {
+        // WORKAROUND: SwiftUI automatically sets the focus to the last focused text field
+        // The task delays the action just enought that the action is sent after the focus change
+        Task { viewStore.send(.wholeViewTapped) }
+      }
+      .bind(viewStore.$focusedField, to: self.$focusedField)
+
+      // disable autofocus when the inital focusedField value is nil
+      .onAppear { if viewStore.focusedField == nil { self.shouldUnsetFocus = true } }
+      .task { if self.shouldUnsetFocus { self.focusedField = nil } }
     }
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    .focused($shouldFocusFirstTextField).task { shouldFocusFirstTextField = false }
   }
 }
 
@@ -330,5 +392,369 @@ extension Indent: RawRepresentable {
       case .tabs: self = .tabs(newValue)
       }
     }
+  }
+}
+
+public struct NoAssignmentInExpressions: Reducer {
+  @Dependency(\.uuid) var uuid
+
+  public init() {}
+
+  public struct State: Equatable {
+    public var noAssignmentInExpressionsItems:
+      IdentifiedArrayOf<NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem>
+    @PresentationState public var noAssignmentInExpressionsListState:
+      NoAssignmentInExpressionsList.State?
+
+    public enum EditingState: Equatable {
+      case textField
+      case popover
+    }
+
+    @BindingState public var editingState: EditingState?
+
+    public init(
+      noAssignmentInExpressionsItems: IdentifiedArrayOf<
+        NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem
+      >,
+      noAssignmentInExpressionsListState: NoAssignmentInExpressionsList.State? = nil,
+      editingState: EditingState?
+    ) {
+      self.noAssignmentInExpressionsItems = noAssignmentInExpressionsItems
+      self.noAssignmentInExpressionsListState = noAssignmentInExpressionsListState
+      self.editingState = editingState
+    }
+
+    public var noAssignmentInExpressionsItemsText: String {
+      self.noAssignmentInExpressionsItems.map(\.text).joined(separator: " ")
+    }
+  }
+
+  public enum Action: Equatable, BindableAction {
+    case binding(BindingAction<State>)
+    case noAssignmentInExpressionsItemsAction(
+      PresentationAction<NoAssignmentInExpressionsList.Action>
+    )
+    case noAssignmentInExpressionsTextChanged(newValue: String)
+    case gearIconTapped
+    case textFieldTapped
+    case popoverOpened
+  }
+
+  public var body: some ReducerOf<Self> {
+    CombineReducers {
+      BindingReducer()
+
+      Reduce { state, action in
+        switch action {
+        case .binding: return .none
+        case .noAssignmentInExpressionsItemsAction(action: .dismiss):
+          state.editingState = nil
+
+          return .none
+
+        case .popoverOpened:
+          state.editingState = .popover
+
+          return .none
+        case .noAssignmentInExpressionsItemsAction: return .none
+        case let .noAssignmentInExpressionsTextChanged(newValue):
+          state.noAssignmentInExpressionsItems = IdentifiedArray(
+            uniqueElements: newValue.split(separator: " ", omittingEmptySubsequences: false)
+              .map {
+                NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem(
+                  id: self.uuid(),
+                  text: String($0)
+                )
+              }
+          )
+
+          return .none
+        case .textFieldTapped:
+          state.editingState = .textField
+
+          return .none
+        case .gearIconTapped:
+          state.noAssignmentInExpressionsItems = state.noAssignmentInExpressionsItems.filter {
+            !$0.text.isEmpty
+          }
+          state.noAssignmentInExpressionsListState = .init(
+            noAssignmentInExpressionsItems: state.noAssignmentInExpressionsItems
+          )
+
+          // WORKAROUND: SwiftUI automatically sets the focus to the last focused text field
+          return .run { send in await send(.popoverOpened) }
+        }
+      }
+      .ifLet(
+        \.$noAssignmentInExpressionsListState,
+        action: /Action.noAssignmentInExpressionsItemsAction
+      ) { NoAssignmentInExpressionsList() }
+      .onChange(of: \.noAssignmentInExpressionsListState?.noAssignmentInExpressionsItems) {
+        _,
+        newValue in
+        Reduce { state, action in
+          guard let newValue else { return .none }
+
+          state.noAssignmentInExpressionsItems = newValue
+
+          return .none
+        }
+      }
+    }
+    .onChange(of: \.editingState) { oldValue, newValue in
+      Reduce { state, action in
+        for i in state.noAssignmentInExpressionsItems.indices {
+          let item = state.noAssignmentInExpressionsItems.elements[i]
+
+          state.noAssignmentInExpressionsItems.update(
+            .init(
+              id: item.id,
+              text: item.text.trimmingCharacters(in: .whitespaces)
+                .replacingOccurrences(of: " ", with: "_")
+            ),
+            at: i
+          )
+        }
+
+        return .none
+      }
+    }
+  }
+}
+
+public struct NoAssignmentInExpressionsView: View {
+  let store: StoreOf<NoAssignmentInExpressions>
+
+  public init(store: StoreOf<NoAssignmentInExpressions>) { self.store = store }
+
+  @FocusState var focusedField: NoAssignmentInExpressions.State.EditingState?
+
+  public var body: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      HStack(spacing: .grid(2)) {
+        TextField(
+          "",
+          text:
+            viewStore.binding(
+              get: { $0.noAssignmentInExpressionsItemsText },
+              send: { .noAssignmentInExpressionsTextChanged(newValue: $0) }
+            )
+            .removeDuplicates()
+        )
+        .focused(self.$focusedField, equals: .textField)
+        .help("Contains exceptions for the NoAssignmentInExpressions rule.")
+        .frame(maxWidth: .infinity, alignment: .leading)
+        self.popupButton
+      }
+      .bind(viewStore.$editingState, to: self.$focusedField)
+    }
+  }
+
+  // WORKAROUND: dismissing the popover by clicking on the gear button doesn't trigger the
+  // wholeViewTapped action so can't disable focus after that.
+  // And we can't always set the focusedField to nil after dismissing since it's possible to dismiss
+  // the popover by clicking into a TextField
+  var popupButton: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      ZStack {
+        VStack {
+          if viewStore.noAssignmentInExpressionsListState == nil {
+            Button(action: { viewStore.send(.gearIconTapped) }) {
+              Image(systemName: "gearshape.fill")
+            }
+          }
+        }
+        .popover(
+          store: self.store.scope(
+            state: \.$noAssignmentInExpressionsListState,
+            action: { .noAssignmentInExpressionsItemsAction($0) }
+          ),
+          arrowEdge: .trailing
+        ) {
+          NoAssignmentInExpressionsListView(store: $0).frame(width: 400, height: 200)
+            .padding(.grid(2)).focused(self.$focusedField, equals: .popover)
+        }
+        if let _ = viewStore.noAssignmentInExpressionsListState {
+          Button(action: {}) { Image(systemName: "gearshape.fill") }.allowsHitTesting(false)
+        }
+      }
+    }
+  }
+}
+
+public struct NoAssignmentInExpressionsList: Reducer {
+  @Dependency(\.uuid) var uuid
+
+  public init() {}
+
+  public struct State: Equatable {
+    public struct NoAssignmentInExpressionsListItem: Equatable, Identifiable {
+      public let id: UUID
+      public var text: String
+
+      public init(id: UUID, text: String) {
+        self.id = id
+        self.text = text
+      }
+    }
+
+    @BindingState public var noAssignmentInExpressionsItems:
+      IdentifiedArrayOf<NoAssignmentInExpressionsListItem>
+    @BindingState public var selectedItemIds: Set<UUID>
+    @BindingState var focusedItemId: UUID? = nil
+
+    public init(
+      noAssignmentInExpressionsItems: IdentifiedArrayOf<NoAssignmentInExpressionsListItem>,
+      selectedItemIds: Set<UUID> = []
+    ) {
+      self.noAssignmentInExpressionsItems = noAssignmentInExpressionsItems
+      self.selectedItemIds = selectedItemIds
+    }
+
+    public var firstSelectedItemIndex: Int? {
+      for (index, item) in self.noAssignmentInExpressionsItems.enumerated() {
+        if self.selectedItemIds.contains(item.id) { return index }
+      }
+
+      return nil
+    }
+  }
+
+  public enum Action: Equatable, BindableAction {
+    case addButtonTapped
+    case binding(BindingAction<State>)
+    case move(IndexSet, Int)
+    case removeButtonTapped
+  }
+
+  public var body: some ReducerOf<Self> {
+    BindingReducer()
+      .onChange(of: \.focusedItemId) { oldValue, _ in
+        Reduce { state, action in
+          guard let oldValue else { return .none }
+
+          guard let previousFocusedItem = state.noAssignmentInExpressionsItems[id: oldValue],
+            let itemIndex = state.noAssignmentInExpressionsItems.firstIndex(of: previousFocusedItem)
+          else {
+            XCTFail("The previously focued item is not found among the items.")
+
+            return .none
+          }
+
+          let itemLines = previousFocusedItem.text.split(whereSeparator: \.isNewline)
+
+          guard itemLines.count > 1 else { return .none }
+
+          let newItems: [State.NoAssignmentInExpressionsListItem] = itemLines.dropFirst()
+            .map { .init(id: self.uuid(), text: String($0)) }
+
+          state.noAssignmentInExpressionsItems[id: oldValue]?.text = String(itemLines.first!)
+
+          state.noAssignmentInExpressionsItems.insert(
+            contentsOf: newItems,
+            at: state.noAssignmentInExpressionsItems.index(after: itemIndex)
+          )
+
+          return .none
+        }
+      }
+
+    Reduce { state, action in
+      switch action {
+      case .addButtonTapped:
+        let newItem: State.NoAssignmentInExpressionsListItem = .init(id: self.uuid(), text: "")
+
+        if state.selectedItemIds.isEmpty {
+          state.noAssignmentInExpressionsItems.append(newItem)
+        } else {
+          guard let firstSelectedIndex = state.firstSelectedItemIndex else {
+            XCTFail("The first selected item is not found among the items.")
+
+            return .none
+          }
+
+          state.noAssignmentInExpressionsItems.insert(newItem, at: firstSelectedIndex)
+        }
+
+        state.focusedItemId = newItem.id
+        state.selectedItemIds = [newItem.id]
+
+        return .none
+      case .binding: return .none
+      case let .move(source, destination):
+        state.noAssignmentInExpressionsItems.move(fromOffsets: source, toOffset: destination)
+
+        return .none
+      case .removeButtonTapped:
+        guard !state.selectedItemIds.isEmpty else { return .none }
+
+        guard let firstSelectedItemIndex = state.firstSelectedItemIndex else {
+          XCTFail("The first selected item is not found among the items.")
+
+          return .none
+        }
+
+        for id in state.selectedItemIds { state.noAssignmentInExpressionsItems.remove(id: id) }
+
+        state.selectedItemIds = []
+
+        guard !state.noAssignmentInExpressionsItems.isEmpty else { return .none }
+
+        let newItemIndex =
+          firstSelectedItemIndex < state.noAssignmentInExpressionsItems.ids.count
+          ? firstSelectedItemIndex
+          : state.noAssignmentInExpressionsItems.index(before: firstSelectedItemIndex)
+        let newItemId = state.noAssignmentInExpressionsItems.ids[newItemIndex]
+
+        state.selectedItemIds.insert(newItemId)
+
+        return .none
+      }
+    }
+  }
+}
+
+public struct NoAssignmentInExpressionsListView: View {
+  let store: StoreOf<NoAssignmentInExpressionsList>
+
+  public init(store: StoreOf<NoAssignmentInExpressionsList>) { self.store = store }
+
+  @FocusState var focusedField: UUID?
+
+  public var body: some View {
+    WithViewStore(self.store, observe: { $0 }) { viewStore in
+      VStack(spacing: 0) {
+        List(selection: viewStore.$selectedItemIds) {
+          ForEach(viewStore.$noAssignmentInExpressionsItems) { $item in
+            TextField("", text: $item.text).focused(self.$focusedField, equals: item.id)
+          }
+          .onMove { viewStore.send(.move($0, $1)) }
+        }
+        .listStyle(.bordered(alternatesRowBackgrounds: true))
+        .onDeleteCommand { viewStore.send(.removeButtonTapped) }  // doesn't work on ForEach
+        HStack(spacing: 0) {
+          Button(action: { viewStore.send(.addButtonTapped) }) { Image(systemName: "plus") }
+          Button(action: { viewStore.send(.removeButtonTapped) }) { Image(systemName: "minus") }
+            .disabled(viewStore.selectedItemIds.isEmpty)
+        }
+        .buttonStyle(.primary).frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 2).border([.bottom, .leading, .trailing], .borderColor).background()
+        .offset(x: 0, y: -1)  // hides the bottom border of the List
+      }
+      .bind(viewStore.$focusedItemId, to: self.$focusedField)
+    }
+  }
+}
+
+extension Binding where Value: Equatable {
+  func removeDuplicates() -> Self {
+    .init(
+      get: { self.wrappedValue },
+      set: { newValue, transaction in
+        guard newValue != self.wrappedValue else { return }
+        self.transaction(transaction).wrappedValue = newValue
+      }
+    )
   }
 }
