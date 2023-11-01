@@ -10,7 +10,7 @@ public struct App: SwiftUI.App {
 
   public var body: some Scene {
     WindowGroup {
-      AppFeatureView(store: Store(initialState: AppFeature.State(), reducer: AppFeature()))
+      AppFeatureView(store: Store(initialState: AppFeature.State(), reducer: { AppFeature() }))
         .onAppear { NSWindow.allowsAutomaticWindowTabbing = false }
     }
     .commands { CommandGroup(replacing: .newItem, addition: {}) }.contentSizedWindowResizability()
@@ -32,6 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     NSApplication.shared.windows.first?.styleMask = [.titled, .closable, .miniaturizable]
+
+    // always open in front
+    NSApplication.shared.activate(ignoringOtherApps: true)
 
     self.setAppIcon()
 
