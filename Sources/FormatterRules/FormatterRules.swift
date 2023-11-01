@@ -25,6 +25,7 @@ public struct FormatterRules: Reducer {
     @BindingState public var orderedImports: Bool
     @BindingState public var returnVoidInsteadOfEmptyTuple: Bool
     @BindingState public var useEarlyExits: Bool
+    @BindingState public var useExplicitNilCheckInConditions: Bool
     @BindingState public var useShorthandTypeNames: Bool
     @BindingState public var useSingleLinePropertyGetter: Bool
     @BindingState public var useTripleSlashForDocumentationComments: Bool
@@ -49,6 +50,7 @@ public struct FormatterRules: Reducer {
       orderedImports: Bool,
       returnVoidInsteadOfEmptyTuple: Bool,
       useEarlyExits: Bool,
+      useExplicitNilCheckInConditions: Bool,
       useShorthandTypeNames: Bool,
       useSingleLinePropertyGetter: Bool,
       useTripleSlashForDocumentationComments: Bool,
@@ -72,6 +74,7 @@ public struct FormatterRules: Reducer {
       self.orderedImports = orderedImports
       self.returnVoidInsteadOfEmptyTuple = returnVoidInsteadOfEmptyTuple
       self.useEarlyExits = useEarlyExits
+      self.useExplicitNilCheckInConditions = useExplicitNilCheckInConditions
       self.useShorthandTypeNames = useShorthandTypeNames
       self.useSingleLinePropertyGetter = useSingleLinePropertyGetter
       self.useTripleSlashForDocumentationComments = useTripleSlashForDocumentationComments
@@ -176,6 +179,12 @@ public struct FormatterRulesView: View {
             .help(
               "If enabled, if ... else { return/throw/break/continue } constructs will be replaced with equivalent guard ... else { return/throw/break/continue } constructs"
             )
+          Toggle(isOn: viewStore.$useExplicitNilCheckInConditions) {
+            Text("Use explicit nil check in conditions")
+          }
+          .help(
+            "If enabled, let _ = expr inside a condition list will be replaced by expr != nil"
+          )
           Toggle(isOn: viewStore.$useShorthandTypeNames) { Text("Use shorthand type names") }
             .help(
               "If enabled, where possible, shorthand types replace long form types; e.g. Array<Element> is converted to [Element]"

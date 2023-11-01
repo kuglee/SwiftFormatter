@@ -68,13 +68,13 @@ let package = Package(
         "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "Defaults",
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        .product(name: "SwiftFormat", package: "swift-format"),
       ]
     ),
     .target(
       name: "ConfigurationWrapper",
       dependencies: [
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        .product(name: "SwiftFormat", package: "swift-format"),
       ]
     ),
     .target(
@@ -90,7 +90,7 @@ let package = Package(
       dependencies: [
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         "StyleGuide",
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        .product(name: "SwiftFormat", package: "swift-format"),
       ]
     ),
     .target(
@@ -116,7 +116,7 @@ let package = Package(
       dependencies: [
         "FormatterSettings",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-        .product(name: "SwiftFormatConfiguration", package: "swift-format"),
+        .product(name: "SwiftFormat", package: "swift-format"),
       ]
     ),
     .testTarget(

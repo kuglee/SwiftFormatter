@@ -1,6 +1,6 @@
 import ComposableArchitecture
 import StyleGuide
-import SwiftFormatConfiguration
+import SwiftFormat
 import SwiftUI
 
 public struct FormatterSettings: Reducer {
@@ -575,7 +575,7 @@ public struct NoAssignmentInExpressionsView: View {
           NoAssignmentInExpressionsListView(store: $0).frame(width: 400, height: 200)
             .padding(.grid(2)).focused(self.$focusedField, equals: .popover)
         }
-        if let _ = viewStore.noAssignmentInExpressionsListState {
+        if viewStore.noAssignmentInExpressionsListState != nil {
           Button(action: {}) { Image(systemName: "gearshape.fill") }.allowsHitTesting(false)
         }
       }

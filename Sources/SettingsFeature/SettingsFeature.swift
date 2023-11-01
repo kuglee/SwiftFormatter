@@ -154,6 +154,7 @@ extension SettingsFeature.State {
         orderedImports: self.configuration.rules.orderedImports,
         returnVoidInsteadOfEmptyTuple: self.configuration.rules.returnVoidInsteadOfEmptyTuple,
         useEarlyExits: self.configuration.rules.useEarlyExits,
+        useExplicitNilCheckInConditions: self.configuration.rules.useExplicitNilCheckInConditions,
         useShorthandTypeNames: self.configuration.rules.useShorthandTypeNames,
         useSingleLinePropertyGetter: self.configuration.rules.useSingleLinePropertyGetter,
         useTripleSlashForDocumentationComments: self.configuration.rules
@@ -186,6 +187,8 @@ extension SettingsFeature.State {
       self.configuration.rules.returnVoidInsteadOfEmptyTuple =
         newValue.returnVoidInsteadOfEmptyTuple
       self.configuration.rules.useEarlyExits = newValue.useEarlyExits
+      self.configuration.rules.useExplicitNilCheckInConditions =
+        newValue.useExplicitNilCheckInConditions
       self.configuration.rules.useShorthandTypeNames = newValue.useShorthandTypeNames
       self.configuration.rules.useSingleLinePropertyGetter = newValue.useSingleLinePropertyGetter
       self.configuration.rules.useTripleSlashForDocumentationComments =

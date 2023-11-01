@@ -26,6 +26,7 @@ import XCTest
         orderedImports: false,
         returnVoidInsteadOfEmptyTuple: false,
         useEarlyExits: false,
+        useExplicitNilCheckInConditions: false,
         useShorthandTypeNames: false,
         useSingleLinePropertyGetter: false,
         useTripleSlashForDocumentationComments: false,
@@ -70,6 +71,9 @@ import XCTest
       $0.returnVoidInsteadOfEmptyTuple = true
     }
     await store.send(.set(\.$useEarlyExits, true)) { $0.useEarlyExits = true }
+    await store.send(.set(\.$useExplicitNilCheckInConditions, true)) {
+      $0.useExplicitNilCheckInConditions = true
+    }
     await store.send(.set(\.$useShorthandTypeNames, true)) { $0.useShorthandTypeNames = true }
     await store.send(.set(\.$useSingleLinePropertyGetter, true)) {
       $0.useSingleLinePropertyGetter = true

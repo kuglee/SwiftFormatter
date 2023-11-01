@@ -2,7 +2,7 @@ import ConfigurationWrapper
 import Defaults
 import Dependencies
 import Foundation
-import SwiftFormatConfiguration
+import SwiftFormat
 import XCTestDynamicOverlay
 
 let appUserDefaultsSuite = UserDefaults(suiteName: "group.com.kuglee.SwiftFormatter")!

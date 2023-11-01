@@ -1,9 +1,9 @@
-import SwiftFormatConfiguration
+import SwiftFormat
 
 public struct ConfigurationWrapper: Equatable {
   private var configuration: Configuration
 
-  public func toConfiguration() -> Configuration { return self.configuration }
+  public func toConfiguration() -> Configuration { self.configuration }
 
   public init(configuration: Configuration = Configuration()) { self.configuration = configuration }
 
@@ -91,6 +91,7 @@ public struct ConfigurationWrapper: Equatable {
     public var orderedImports: Bool
     public var returnVoidInsteadOfEmptyTuple: Bool
     public var useEarlyExits: Bool
+    public var useExplicitNilCheckInConditions: Bool
     public var useShorthandTypeNames: Bool
     public var useSingleLinePropertyGetter: Bool
     public var useTripleSlashForDocumentationComments: Bool
@@ -115,6 +116,7 @@ public struct ConfigurationWrapper: Equatable {
       orderedImports: Bool,
       returnVoidInsteadOfEmptyTuple: Bool,
       useEarlyExits: Bool,
+      useExplicitNilCheckInConditions: Bool,
       useShorthandTypeNames: Bool,
       useSingleLinePropertyGetter: Bool,
       useTripleSlashForDocumentationComments: Bool,
@@ -138,12 +140,12 @@ public struct ConfigurationWrapper: Equatable {
       self.orderedImports = orderedImports
       self.returnVoidInsteadOfEmptyTuple = returnVoidInsteadOfEmptyTuple
       self.useEarlyExits = useEarlyExits
+      self.useExplicitNilCheckInConditions = useExplicitNilCheckInConditions
       self.useShorthandTypeNames = useShorthandTypeNames
       self.useSingleLinePropertyGetter = useSingleLinePropertyGetter
       self.useTripleSlashForDocumentationComments = useTripleSlashForDocumentationComments
       self.useWhereClausesInForLoops = useWhereClausesInForLoops
     }
-
   }
 
   private let defaultRules = Configuration().rules
@@ -167,6 +169,7 @@ public struct ConfigurationWrapper: Equatable {
     case orderedImports = "OrderedImports"
     case returnVoidInsteadOfEmptyTuple = "ReturnVoidInsteadOfEmptyTuple"
     case useEarlyExits = "UseEarlyExits"
+    case useExplicitNilCheckInConditions = "UseExplicitNilCheckInConditions"
     case useShorthandTypeNames = "UseShorthandTypeNames"
     case useSingleLinePropertyGetter = "UseSingleLinePropertyGetter"
     case useTripleSlashForDocumentationComments = "UseTripleSlashForDocumentationComments"
@@ -202,6 +205,7 @@ public struct ConfigurationWrapper: Equatable {
         orderedImports: getRuleValue(key: .orderedImports),
         returnVoidInsteadOfEmptyTuple: getRuleValue(key: .returnVoidInsteadOfEmptyTuple),
         useEarlyExits: getRuleValue(key: .useEarlyExits),
+        useExplicitNilCheckInConditions: getRuleValue(key: .useExplicitNilCheckInConditions),
         useShorthandTypeNames: getRuleValue(key: .useShorthandTypeNames),
         useSingleLinePropertyGetter: getRuleValue(key: .useSingleLinePropertyGetter),
         useTripleSlashForDocumentationComments: getRuleValue(
@@ -241,6 +245,8 @@ public struct ConfigurationWrapper: Equatable {
         newValue.returnVoidInsteadOfEmptyTuple
       self.configuration.rules[RuleKey.omitExplicitReturns.rawValue] = newValue.omitExplicitReturns
       self.configuration.rules[RuleKey.useEarlyExits.rawValue] = newValue.useEarlyExits
+      self.configuration.rules[RuleKey.useExplicitNilCheckInConditions.rawValue] =
+        newValue.useExplicitNilCheckInConditions
       self.configuration.rules[RuleKey.useShorthandTypeNames.rawValue] =
         newValue.useShorthandTypeNames
       self.configuration.rules[RuleKey.useSingleLinePropertyGetter.rawValue] =

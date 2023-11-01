@@ -1,5 +1,5 @@
 import ComposableArchitecture
-import SwiftFormatConfiguration
+import SwiftFormat
 import XCTest
 
 @testable import FormatterSettings
