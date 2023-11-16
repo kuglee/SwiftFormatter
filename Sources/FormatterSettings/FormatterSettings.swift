@@ -3,7 +3,7 @@ import StyleGuide
 import SwiftFormat
 import SwiftUI
 
-public struct FormatterSettings: Reducer {
+@Reducer public struct FormatterSettings {
   public init() {}
 
   public struct State: Equatable {
@@ -84,19 +84,18 @@ public struct FormatterSettings: Reducer {
     }
   }
 
-  public enum Action: Equatable, BindableAction {
+  public enum Action: BindableAction {
     case binding(BindingAction<State>)
-    case noAssignmentInExpressionsAction(action: NoAssignmentInExpressions.Action)
+    case noAssignmentInExpressionsAction(NoAssignmentInExpressions.Action)
     case wholeViewTapped
   }
 
   public var body: some ReducerOf<Self> {
     CombineReducers {
       BindingReducer()
-      Scope(
-        state: \.noAssignmentInExpressionsState,
-        action: /Action.noAssignmentInExpressionsAction
-      ) { NoAssignmentInExpressions() }
+      Scope(state: \.noAssignmentInExpressionsState, action: \.noAssignmentInExpressionsAction) {
+        NoAssignmentInExpressions()
+      }
 
       Reduce { state, action in
         switch action {
@@ -139,7 +138,7 @@ public struct FormatterSettingsView: View {
             Text("Length:").alignmentGuide(.centerNonSiblings) { $0[VerticalAlignment.center] }
             Stepper(
               value: viewStore.$indentation.count,
-              in: 0 ... 1000,
+              in: 0...1000,
               step: 1,
               label: {
                 StepperTextField(value: viewStore.$indentation.count.removeDuplicates())
@@ -174,7 +173,7 @@ public struct FormatterSettingsView: View {
         Text("Tab Width:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.$tabWidth,
-          in: 0 ... 1000,
+          in: 0...1000,
           step: 1,
           label: {
             StepperTextField(value: viewStore.$tabWidth.removeDuplicates())
@@ -195,7 +194,7 @@ public struct FormatterSettingsView: View {
         Text("Line Length:").alignmentGuide(.trailingLabel) { $0[.trailing] }
         Stepper(
           value: viewStore.$lineLength,
-          in: 0 ... 1000,
+          in: 0...1000,
           step: 1,
           label: {
             StepperTextField(value: viewStore.$lineLength.removeDuplicates())
@@ -258,7 +257,7 @@ public struct FormatterSettingsView: View {
             Text("Maximum blank lines")
             Stepper(
               value: viewStore.$maximumBlankLines,
-              in: 0 ... 1000,
+              in: 0...1000,
               step: 1,
               label: {
                 StepperTextField(value: viewStore.$maximumBlankLines.removeDuplicates())
@@ -311,7 +310,7 @@ public struct FormatterSettingsView: View {
         NoAssignmentInExpressionsView(
           store: self.store.scope(
             state: \.noAssignmentInExpressionsState,
-            action: FormatterSettings.Action.noAssignmentInExpressionsAction
+            action: { .noAssignmentInExpressionsAction($0) }
           )
         )
         .help("Contains exceptions for the NoAssignmentInExpressions rule.").frame(maxWidth: 350)
@@ -395,7 +394,7 @@ extension Indent: RawRepresentable {
   }
 }
 
-public struct NoAssignmentInExpressions: Reducer {
+@Reducer public struct NoAssignmentInExpressions {
   @Dependency(\.uuid) var uuid
 
   public init() {}
@@ -430,7 +429,7 @@ public struct NoAssignmentInExpressions: Reducer {
     }
   }
 
-  public enum Action: Equatable, BindableAction {
+  public enum Action: BindableAction {
     case binding(BindingAction<State>)
     case noAssignmentInExpressionsItemsAction(
       PresentationAction<NoAssignmentInExpressionsList.Action>
@@ -486,10 +485,8 @@ public struct NoAssignmentInExpressions: Reducer {
           return .run { send in await send(.popoverOpened) }
         }
       }
-      .ifLet(
-        \.$noAssignmentInExpressionsListState,
-        action: /Action.noAssignmentInExpressionsItemsAction
-      ) { NoAssignmentInExpressionsList() }
+      .ifLet(\.$noAssignmentInExpressionsListState, action: \.noAssignmentInExpressionsItemsAction)
+      { NoAssignmentInExpressionsList() }
       .onChange(of: \.noAssignmentInExpressionsListState?.noAssignmentInExpressionsItems) {
         _,
         newValue in
@@ -583,7 +580,7 @@ public struct NoAssignmentInExpressionsView: View {
   }
 }
 
-public struct NoAssignmentInExpressionsList: Reducer {
+@Reducer public struct NoAssignmentInExpressionsList {
   @Dependency(\.uuid) var uuid
 
   public init() {}
@@ -621,7 +618,7 @@ public struct NoAssignmentInExpressionsList: Reducer {
     }
   }
 
-  public enum Action: Equatable, BindableAction {
+  public enum Action: BindableAction {
     case addButtonTapped
     case binding(BindingAction<State>)
     case move(IndexSet, Int)

@@ -22,6 +22,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
     .package(url: "https://github.com/kuglee/swift-format", branch: "fatal-to-normal-errors"),
     .package(url: "https://github.com/sindresorhus/Defaults", branch: "v6.3.0"),
   ],
@@ -67,6 +68,7 @@ let package = Package(
       dependencies: [
         "ConfigurationWrapper",
         .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        .product(name: "DependenciesMacros", package: "swift-dependencies"),
         "Defaults",
         .product(name: "SwiftFormat", package: "swift-format"),
       ]

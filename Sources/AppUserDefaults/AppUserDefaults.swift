@@ -1,6 +1,7 @@
 import ConfigurationWrapper
 import Defaults
 import Dependencies
+import DependenciesMacros
 import Foundation
 import SwiftFormat
 import XCTestDynamicOverlay
@@ -25,7 +26,7 @@ extension Configuration: Defaults.Serializable {}
 
 public enum AppUserDefaultsKey: DependencyKey {
   public static let liveValue = AppUserDefaults.live
-  public static let testValue = AppUserDefaults.unimplemented
+  public static let testValue = AppUserDefaults()
 }
 
 extension DependencyValues {
@@ -35,12 +36,12 @@ extension DependencyValues {
   }
 }
 
-public struct AppUserDefaults {
-  public var getConfigurationWrapper: () -> ConfigurationWrapper
-  public var setConfigurationWrapper: (ConfigurationWrapper) -> Void
-  public var getShouldTrimTrailingWhitespace: () -> Bool
-  public var setShouldTrimTrailingWhitespace: (Bool) -> Void
-  public var getDidRunBefore: () -> Bool
+@DependencyClient public struct AppUserDefaults {
+  public var getConfigurationWrapper: () -> ConfigurationWrapper = { ConfigurationWrapper() }
+  public var setConfigurationWrapper: (_: ConfigurationWrapper) -> Void
+  public var getShouldTrimTrailingWhitespace: () -> Bool = { false }
+  public var setShouldTrimTrailingWhitespace: (_: Bool) -> Void
+  public var getDidRunBefore: () -> Bool = { false }
   public var setDidRunBefore: (Bool) -> Void
 }
 
@@ -54,24 +55,5 @@ extension AppUserDefaults {
     },
     getDidRunBefore: { Defaults[.didRunBefore] },
     setDidRunBefore: { newValue in Defaults[.didRunBefore] = newValue }
-  )
-}
-
-extension AppUserDefaults {
-  public static let unimplemented = Self(
-    getConfigurationWrapper: XCTUnimplemented(
-      "\(Self.self).getConfigurationWrapper",
-      placeholder: ConfigurationWrapper()
-    ),
-    setConfigurationWrapper: XCTUnimplemented("\(Self.self).setConfigurationWrapper"),
-    getShouldTrimTrailingWhitespace: XCTUnimplemented(
-      "\(Self.self).getShouldTrimTrailingWhitespace",
-      placeholder: false
-    ),
-    setShouldTrimTrailingWhitespace: XCTUnimplemented(
-      "\(Self.self).setShouldTrimTrailingWhitespace"
-    ),
-    getDidRunBefore: XCTUnimplemented("\(Self.self).getDidRunBefore", placeholder: false),
-    setDidRunBefore: XCTUnimplemented("\(Self.self).setDidRunBefore")
   )
 }

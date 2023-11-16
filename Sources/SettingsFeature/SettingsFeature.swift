@@ -10,7 +10,7 @@ public enum Tab {
   case rules
 }
 
-public struct SettingsFeature: Reducer {
+@Reducer public struct SettingsFeature {
   public init() {}
 
   public struct State: Equatable {
@@ -45,19 +45,144 @@ public struct SettingsFeature: Reducer {
         editingState: nil
       )
     }
+
+    var formatterSettings: FormatterSettings.State {
+      get {
+        FormatterSettings.State(
+          shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
+          maximumBlankLines: self.configuration.maximumBlankLines,
+          lineLength: self.configuration.lineLength,
+          tabWidth: self.configuration.tabWidth,
+          indentation: self.configuration.indentation,
+          respectsExistingLineBreaks: self.configuration.respectsExistingLineBreaks,
+          lineBreakBeforeControlFlowKeywords: self.configuration.lineBreakBeforeControlFlowKeywords,
+          lineBreakBeforeEachArgument: self.configuration.lineBreakBeforeEachArgument,
+          lineBreakBeforeEachGenericRequirement: self.configuration
+            .lineBreakBeforeEachGenericRequirement,
+          prioritizeKeepingFunctionOutputTogether: self.configuration
+            .prioritizeKeepingFunctionOutputTogether,
+          indentConditionalCompilationBlocks: self.configuration.indentConditionalCompilationBlocks,
+          lineBreakAroundMultilineExpressionChainComponents: self.configuration
+            .lineBreakAroundMultilineExpressionChainComponents,
+          indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
+          fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy,
+          spacesAroundRangeFormationOperators: self.configuration
+            .spacesAroundRangeFormationOperators,
+          multiElementCollectionTrailingCommas: self.configuration
+            .multiElementCollectionTrailingCommas,
+          noAssignmentInExpressionsState: self.noAssignmentInExpressionsState,
+          focusedField: self.focusedField
+        )
+      }
+      set {
+        self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
+        self.configuration.maximumBlankLines = newValue.maximumBlankLines
+        self.configuration.lineLength = newValue.lineLength
+        self.configuration.tabWidth = newValue.tabWidth
+        self.configuration.indentation = newValue.indentation
+        self.configuration.respectsExistingLineBreaks = newValue.respectsExistingLineBreaks
+        self.configuration.lineBreakBeforeControlFlowKeywords =
+          newValue.lineBreakBeforeControlFlowKeywords
+        self.configuration.lineBreakBeforeEachArgument = newValue.lineBreakBeforeEachArgument
+        self.configuration.lineBreakBeforeEachGenericRequirement =
+          newValue.lineBreakBeforeEachGenericRequirement
+        self.configuration.prioritizeKeepingFunctionOutputTogether =
+          newValue.prioritizeKeepingFunctionOutputTogether
+        self.configuration.indentConditionalCompilationBlocks =
+          newValue.indentConditionalCompilationBlocks
+        self.configuration.indentSwitchCaseLabels = newValue.indentSwitchCaseLabels
+        self.configuration.lineBreakAroundMultilineExpressionChainComponents =
+          newValue.lineBreakAroundMultilineExpressionChainComponents
+        self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
+        self.configuration.spacesAroundRangeFormationOperators =
+          newValue.spacesAroundRangeFormationOperators
+        self.noAssignmentInExpressionsState = newValue.noAssignmentInExpressionsState
+        self.configuration.noAssignmentInExpressions.allowedFunctions = newValue
+          .noAssignmentInExpressionsState.noAssignmentInExpressionsItems.map(\.text)
+        self.configuration.multiElementCollectionTrailingCommas =
+          newValue.multiElementCollectionTrailingCommas
+        self.focusedField = newValue.focusedField
+      }
+    }
+
+    var formatterRules: FormatterRules.State {
+      get {
+        FormatterRules.State(
+          alwaysUseLiteralForEmptyCollectionInit: self.configuration.rules
+            .alwaysUseLiteralForEmptyCollectionInit,
+          doNotUseSemicolons: self.configuration.rules.doNotUseSemicolons,
+          fileScopedDeclarationPrivacy: self.configuration.rules.fileScopedDeclarationPrivacy,
+          fullyIndirectEnum: self.configuration.rules.fullyIndirectEnum,
+          groupNumericLiterals: self.configuration.rules.groupNumericLiterals,
+          noAccessLevelOnExtensionDeclaration: self.configuration.rules
+            .noAccessLevelOnExtensionDeclaration,
+          noAssignmentInExpressions: self.configuration.rules.noAssignmentInExpressions,
+          noCasesWithOnlyFallthrough: self.configuration.rules.noCasesWithOnlyFallthrough,
+          noEmptyTrailingClosureParentheses: self.configuration.rules
+            .noEmptyTrailingClosureParentheses,
+          noLabelsInCasePatterns: self.configuration.rules.noLabelsInCasePatterns,
+          noParensAroundConditions: self.configuration.rules.noParensAroundConditions,
+          noVoidReturnOnFunctionSignature: self.configuration.rules.noVoidReturnOnFunctionSignature,
+          omitExplicitReturns: self.configuration.rules.omitExplicitReturns,
+          oneCasePerLine: self.configuration.rules.oneCasePerLine,
+          oneVariableDeclarationPerLine: self.configuration.rules.oneVariableDeclarationPerLine,
+          orderedImports: self.configuration.rules.orderedImports,
+          returnVoidInsteadOfEmptyTuple: self.configuration.rules.returnVoidInsteadOfEmptyTuple,
+          useEarlyExits: self.configuration.rules.useEarlyExits,
+          useExplicitNilCheckInConditions: self.configuration.rules.useExplicitNilCheckInConditions,
+          useShorthandTypeNames: self.configuration.rules.useShorthandTypeNames,
+          useSingleLinePropertyGetter: self.configuration.rules.useSingleLinePropertyGetter,
+          useTripleSlashForDocumentationComments: self.configuration.rules
+            .useTripleSlashForDocumentationComments,
+          useWhereClausesInForLoops: self.configuration.rules.useWhereClausesInForLoops
+        )
+      }
+      set {
+        self.configuration.rules.alwaysUseLiteralForEmptyCollectionInit =
+          newValue.alwaysUseLiteralForEmptyCollectionInit
+        self.configuration.rules.doNotUseSemicolons = newValue.doNotUseSemicolons
+        self.configuration.rules.fileScopedDeclarationPrivacy =
+          newValue.fileScopedDeclarationPrivacy
+        self.configuration.rules.fullyIndirectEnum = newValue.fullyIndirectEnum
+        self.configuration.rules.groupNumericLiterals = newValue.groupNumericLiterals
+        self.configuration.rules.noAccessLevelOnExtensionDeclaration =
+          newValue.noAccessLevelOnExtensionDeclaration
+        self.configuration.rules.noAssignmentInExpressions = newValue.noAssignmentInExpressions
+        self.configuration.rules.noCasesWithOnlyFallthrough = newValue.noCasesWithOnlyFallthrough
+        self.configuration.rules.noEmptyTrailingClosureParentheses =
+          newValue.noEmptyTrailingClosureParentheses
+        self.configuration.rules.noLabelsInCasePatterns = newValue.noLabelsInCasePatterns
+        self.configuration.rules.noParensAroundConditions = newValue.noParensAroundConditions
+        self.configuration.rules.noVoidReturnOnFunctionSignature =
+          newValue.noVoidReturnOnFunctionSignature
+        self.configuration.rules.omitExplicitReturns = newValue.omitExplicitReturns
+        self.configuration.rules.oneCasePerLine = newValue.oneCasePerLine
+        self.configuration.rules.oneVariableDeclarationPerLine =
+          newValue.oneVariableDeclarationPerLine
+        self.configuration.rules.orderedImports = newValue.orderedImports
+        self.configuration.rules.returnVoidInsteadOfEmptyTuple =
+          newValue.returnVoidInsteadOfEmptyTuple
+        self.configuration.rules.useEarlyExits = newValue.useEarlyExits
+        self.configuration.rules.useExplicitNilCheckInConditions =
+          newValue.useExplicitNilCheckInConditions
+        self.configuration.rules.useShorthandTypeNames = newValue.useShorthandTypeNames
+        self.configuration.rules.useSingleLinePropertyGetter = newValue.useSingleLinePropertyGetter
+        self.configuration.rules.useTripleSlashForDocumentationComments =
+          newValue.useTripleSlashForDocumentationComments
+        self.configuration.rules.useWhereClausesInForLoops = newValue.useWhereClausesInForLoops
+      }
+    }
   }
 
-  public enum Action: Equatable {
+  public enum Action {
     case tabSelected(Tab)
-    case formatterSettings(action: FormatterSettings.Action)
-    case formatterRules(action: FormatterRules.Action)
+    case formatterSettings(FormatterSettings.Action)
+    case formatterRules(FormatterRules.Action)
   }
 
   public var body: some ReducerOf<Self> {
-    Scope(state: \.formatterSettings, action: /Action.formatterSettings(action:)) {
-      FormatterSettings()
-    }
-    Scope(state: \.formatterRules, action: /Action.formatterRules(action:)) { FormatterRules() }
+    Scope(state: \.formatterSettings, action: \.formatterSettings) { FormatterSettings() }
+    Scope(state: \.formatterRules, action: \.formatterRules) { FormatterRules() }
 
     Reduce { state, action in
       switch action {
@@ -67,133 +192,6 @@ public struct SettingsFeature: Reducer {
       case .formatterSettings(_): return .none
       case .formatterRules(_): return .none
       }
-    }
-  }
-}
-
-extension SettingsFeature.State {
-  var formatterSettings: FormatterSettings.State {
-    get {
-      FormatterSettings.State(
-        shouldTrimTrailingWhitespace: self.shouldTrimTrailingWhitespace,
-        maximumBlankLines: self.configuration.maximumBlankLines,
-        lineLength: self.configuration.lineLength,
-        tabWidth: self.configuration.tabWidth,
-        indentation: self.configuration.indentation,
-        respectsExistingLineBreaks: self.configuration.respectsExistingLineBreaks,
-        lineBreakBeforeControlFlowKeywords: self.configuration.lineBreakBeforeControlFlowKeywords,
-        lineBreakBeforeEachArgument: self.configuration.lineBreakBeforeEachArgument,
-        lineBreakBeforeEachGenericRequirement: self.configuration
-          .lineBreakBeforeEachGenericRequirement,
-        prioritizeKeepingFunctionOutputTogether: self.configuration
-          .prioritizeKeepingFunctionOutputTogether,
-        indentConditionalCompilationBlocks: self.configuration.indentConditionalCompilationBlocks,
-        lineBreakAroundMultilineExpressionChainComponents: self.configuration
-          .lineBreakAroundMultilineExpressionChainComponents,
-        indentSwitchCaseLabels: self.configuration.indentSwitchCaseLabels,
-        fileScopedDeclarationPrivacy: self.configuration.fileScopedDeclarationPrivacy,
-        spacesAroundRangeFormationOperators: self.configuration.spacesAroundRangeFormationOperators,
-        multiElementCollectionTrailingCommas: self.configuration
-          .multiElementCollectionTrailingCommas,
-        noAssignmentInExpressionsState: self.noAssignmentInExpressionsState,
-        focusedField: self.focusedField
-      )
-    }
-    set {
-      self.shouldTrimTrailingWhitespace = newValue.shouldTrimTrailingWhitespace
-      self.configuration.maximumBlankLines = newValue.maximumBlankLines
-      self.configuration.lineLength = newValue.lineLength
-      self.configuration.tabWidth = newValue.tabWidth
-      self.configuration.indentation = newValue.indentation
-      self.configuration.respectsExistingLineBreaks = newValue.respectsExistingLineBreaks
-      self.configuration.lineBreakBeforeControlFlowKeywords =
-        newValue.lineBreakBeforeControlFlowKeywords
-      self.configuration.lineBreakBeforeEachArgument = newValue.lineBreakBeforeEachArgument
-      self.configuration.lineBreakBeforeEachGenericRequirement =
-        newValue.lineBreakBeforeEachGenericRequirement
-      self.configuration.prioritizeKeepingFunctionOutputTogether =
-        newValue.prioritizeKeepingFunctionOutputTogether
-      self.configuration.indentConditionalCompilationBlocks =
-        newValue.indentConditionalCompilationBlocks
-      self.configuration.indentSwitchCaseLabels = newValue.indentSwitchCaseLabels
-      self.configuration.lineBreakAroundMultilineExpressionChainComponents =
-        newValue.lineBreakAroundMultilineExpressionChainComponents
-      self.configuration.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
-      self.configuration.spacesAroundRangeFormationOperators =
-        newValue.spacesAroundRangeFormationOperators
-      self.noAssignmentInExpressionsState = newValue.noAssignmentInExpressionsState
-      self.configuration.noAssignmentInExpressions.allowedFunctions = newValue
-        .noAssignmentInExpressionsState.noAssignmentInExpressionsItems.map(\.text)
-      self.configuration.multiElementCollectionTrailingCommas =
-        newValue.multiElementCollectionTrailingCommas
-      self.focusedField = newValue.focusedField
-    }
-  }
-
-  var formatterRules: FormatterRules.State {
-    get {
-      FormatterRules.State(
-        alwaysUseLiteralForEmptyCollectionInit: self.configuration.rules
-          .alwaysUseLiteralForEmptyCollectionInit,
-        doNotUseSemicolons: self.configuration.rules.doNotUseSemicolons,
-        fileScopedDeclarationPrivacy: self.configuration.rules.fileScopedDeclarationPrivacy,
-        fullyIndirectEnum: self.configuration.rules.fullyIndirectEnum,
-        groupNumericLiterals: self.configuration.rules.groupNumericLiterals,
-        noAccessLevelOnExtensionDeclaration: self.configuration.rules
-          .noAccessLevelOnExtensionDeclaration,
-        noAssignmentInExpressions: self.configuration.rules.noAssignmentInExpressions,
-        noCasesWithOnlyFallthrough: self.configuration.rules.noCasesWithOnlyFallthrough,
-        noEmptyTrailingClosureParentheses: self.configuration.rules
-          .noEmptyTrailingClosureParentheses,
-        noLabelsInCasePatterns: self.configuration.rules.noLabelsInCasePatterns,
-        noParensAroundConditions: self.configuration.rules.noParensAroundConditions,
-        noVoidReturnOnFunctionSignature: self.configuration.rules.noVoidReturnOnFunctionSignature,
-        omitExplicitReturns: self.configuration.rules.omitExplicitReturns,
-        oneCasePerLine: self.configuration.rules.oneCasePerLine,
-        oneVariableDeclarationPerLine: self.configuration.rules.oneVariableDeclarationPerLine,
-        orderedImports: self.configuration.rules.orderedImports,
-        returnVoidInsteadOfEmptyTuple: self.configuration.rules.returnVoidInsteadOfEmptyTuple,
-        useEarlyExits: self.configuration.rules.useEarlyExits,
-        useExplicitNilCheckInConditions: self.configuration.rules.useExplicitNilCheckInConditions,
-        useShorthandTypeNames: self.configuration.rules.useShorthandTypeNames,
-        useSingleLinePropertyGetter: self.configuration.rules.useSingleLinePropertyGetter,
-        useTripleSlashForDocumentationComments: self.configuration.rules
-          .useTripleSlashForDocumentationComments,
-        useWhereClausesInForLoops: self.configuration.rules.useWhereClausesInForLoops
-      )
-    }
-    set {
-      self.configuration.rules.alwaysUseLiteralForEmptyCollectionInit =
-        newValue.alwaysUseLiteralForEmptyCollectionInit
-      self.configuration.rules.doNotUseSemicolons = newValue.doNotUseSemicolons
-      self.configuration.rules.fileScopedDeclarationPrivacy = newValue.fileScopedDeclarationPrivacy
-      self.configuration.rules.fullyIndirectEnum = newValue.fullyIndirectEnum
-      self.configuration.rules.groupNumericLiterals = newValue.groupNumericLiterals
-      self.configuration.rules.noAccessLevelOnExtensionDeclaration =
-        newValue.noAccessLevelOnExtensionDeclaration
-      self.configuration.rules.noAssignmentInExpressions = newValue.noAssignmentInExpressions
-      self.configuration.rules.noCasesWithOnlyFallthrough = newValue.noCasesWithOnlyFallthrough
-      self.configuration.rules.noEmptyTrailingClosureParentheses =
-        newValue.noEmptyTrailingClosureParentheses
-      self.configuration.rules.noLabelsInCasePatterns = newValue.noLabelsInCasePatterns
-      self.configuration.rules.noParensAroundConditions = newValue.noParensAroundConditions
-      self.configuration.rules.noVoidReturnOnFunctionSignature =
-        newValue.noVoidReturnOnFunctionSignature
-      self.configuration.rules.omitExplicitReturns = newValue.omitExplicitReturns
-      self.configuration.rules.oneCasePerLine = newValue.oneCasePerLine
-      self.configuration.rules.oneVariableDeclarationPerLine =
-        newValue.oneVariableDeclarationPerLine
-      self.configuration.rules.orderedImports = newValue.orderedImports
-      self.configuration.rules.returnVoidInsteadOfEmptyTuple =
-        newValue.returnVoidInsteadOfEmptyTuple
-      self.configuration.rules.useEarlyExits = newValue.useEarlyExits
-      self.configuration.rules.useExplicitNilCheckInConditions =
-        newValue.useExplicitNilCheckInConditions
-      self.configuration.rules.useShorthandTypeNames = newValue.useShorthandTypeNames
-      self.configuration.rules.useSingleLinePropertyGetter = newValue.useSingleLinePropertyGetter
-      self.configuration.rules.useTripleSlashForDocumentationComments =
-        newValue.useTripleSlashForDocumentationComments
-      self.configuration.rules.useWhereClausesInForLoops = newValue.useWhereClausesInForLoops
     }
   }
 }
@@ -211,7 +209,7 @@ public struct SettingsFeatureView: View {
             FormatterSettingsView(
               store: self.store.scope(
                 state: \.formatterSettings,
-                action: SettingsFeature.Action.formatterSettings
+                action: { .formatterSettings($0) }
               )
             )
           }
@@ -219,10 +217,7 @@ public struct SettingsFeatureView: View {
 
           IfView(viewStore.state == .rules) {
             FormatterRulesView(
-              store: self.store.scope(
-                state: \.formatterRules,
-                action: SettingsFeature.Action.formatterRules
-              )
+              store: self.store.scope(state: \.formatterRules, action: { .formatterRules($0) })
             )
           }
           .tabItem { Text("Rules") }.tag(Tab.rules)

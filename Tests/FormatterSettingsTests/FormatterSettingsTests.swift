@@ -159,13 +159,13 @@ import XCTest
       reducer: { FormatterSettings() }
     )
 
-    await store.send(.noAssignmentInExpressionsAction(action: .gearIconTapped)) {
+    await store.send(.noAssignmentInExpressionsAction(.gearIconTapped)) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState = .init(
         noAssignmentInExpressionsItems: [])
       $0.noAssignmentInExpressionsState.editingState = nil
     }
 
-    await store.receive(.noAssignmentInExpressionsAction(action: .popoverOpened)) {
+    await store.receive(\.noAssignmentInExpressionsAction.popoverOpened) {
       $0.noAssignmentInExpressionsState.editingState = .popover
       $0.focusedField = .noAssignmentInExpressions(.popover)
     }
@@ -198,7 +198,7 @@ import XCTest
       reducer: { FormatterSettings() }
     )
 
-    await store.send(.noAssignmentInExpressionsAction(action: .textFieldTapped)) {
+    await store.send(.noAssignmentInExpressionsAction(.textFieldTapped)) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState = nil
       $0.noAssignmentInExpressionsState.editingState = .textField
       $0.focusedField = .noAssignmentInExpressions(.textField)
@@ -233,9 +233,7 @@ import XCTest
     ) { $0.uuid = .incrementing }
 
     await store.send(
-      .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsTextChanged(newValue: "test")
-      )
+      .noAssignmentInExpressionsAction(.noAssignmentInExpressionsTextChanged(newValue: "test"))
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
         uniqueElements: [
@@ -277,7 +275,7 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsTextChanged(newValue: "test1 test2")
+        .noAssignmentInExpressionsTextChanged(newValue: "test1 test2")
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
@@ -289,7 +287,7 @@ import XCTest
           NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem(
             id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
             text: "test2"
-          )
+          ),
         ])
     }
   }
@@ -323,7 +321,7 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsTextChanged(newValue: "test1  test2")
+        .noAssignmentInExpressionsTextChanged(newValue: "test1  test2")
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
@@ -339,7 +337,7 @@ import XCTest
           NoAssignmentInExpressionsList.State.NoAssignmentInExpressionsListItem(
             id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!,
             text: "test2"
-          )
+          ),
         ])
     }
   }
@@ -374,7 +372,7 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
@@ -431,13 +429,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = UUID(
         uuidString: "00000000-0000-0000-0000-000000000001"
@@ -448,7 +446,7 @@ import XCTest
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
         uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
         ])
     }
   }
@@ -493,13 +491,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = UUID(
         uuidString: "00000000-0000-0000-0000-000000000001"
@@ -510,7 +508,7 @@ import XCTest
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
         uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
         ])
     }
   }
@@ -549,13 +547,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.addButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = UUID(
         uuidString: "00000000-0000-0000-0000-000000000001"
@@ -566,7 +564,7 @@ import XCTest
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
         uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: ""),
         ])
     }
   }
@@ -605,7 +603,7 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     )
   }
@@ -647,7 +645,7 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
@@ -684,13 +682,13 @@ import XCTest
           noAssignmentInExpressionsItems: [
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
           ],
           noAssignmentInExpressionsListState: .init(
             noAssignmentInExpressionsItems: [
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
             ],
             selectedItemIds: [UUID(uuidString: "00000000-0000-0000-0000-000000000001")!]
           ),
@@ -702,13 +700,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = nil
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.selectedItemIds = [
@@ -716,7 +714,7 @@ import XCTest
       ]
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = [
         .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
       ]
     }
   }
@@ -748,18 +746,18 @@ import XCTest
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
           ],
           noAssignmentInExpressionsListState: .init(
             noAssignmentInExpressionsItems: [
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
             ],
             selectedItemIds: [
               UUID(uuidString: "00000000-0000-0000-0000-000000000001")!,
-              UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
+              UUID(uuidString: "00000000-0000-0000-0000-000000000002")!,
             ]
           ),
           editingState: .popover
@@ -770,13 +768,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = nil
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.selectedItemIds = [
@@ -784,7 +782,7 @@ import XCTest
       ]
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = [
         .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
       ]
     }
   }
@@ -816,18 +814,18 @@ import XCTest
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
           ],
           noAssignmentInExpressionsListState: .init(
             noAssignmentInExpressionsItems: [
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
             ],
             selectedItemIds: [
               UUID(uuidString: "00000000-0000-0000-0000-000000000000")!,
-              UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
+              UUID(uuidString: "00000000-0000-0000-0000-000000000002")!,
             ]
           ),
           editingState: .popover
@@ -838,13 +836,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = nil
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.selectedItemIds = [
@@ -852,7 +850,7 @@ import XCTest
       ]
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = [
         .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
       ]
     }
   }
@@ -884,18 +882,18 @@ import XCTest
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
           ],
           noAssignmentInExpressionsListState: .init(
             noAssignmentInExpressionsItems: [
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
-              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4")
+              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, text: "test4"),
             ],
             selectedItemIds: [
               UUID(uuidString: "00000000-0000-0000-0000-000000000000")!,
-              UUID(uuidString: "00000000-0000-0000-0000-000000000003")!
+              UUID(uuidString: "00000000-0000-0000-0000-000000000003")!,
             ]
           ),
           editingState: .popover
@@ -906,13 +904,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = nil
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.selectedItemIds = [
@@ -920,7 +918,7 @@ import XCTest
       ]
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = [
         .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
       ]
     }
   }
@@ -951,13 +949,13 @@ import XCTest
           noAssignmentInExpressionsItems: [
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
           ],
           noAssignmentInExpressionsListState: .init(
             noAssignmentInExpressionsItems: [
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
               .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3")
+              .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, text: "test3"),
             ],
             selectedItemIds: [UUID(uuidString: "00000000-0000-0000-0000-000000000002")!]
           ),
@@ -969,13 +967,13 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
+        .noAssignmentInExpressionsItemsAction(.presented(.removeButtonTapped))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.focusedItemId = nil
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?.selectedItemIds = [
@@ -983,7 +981,7 @@ import XCTest
       ]
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = [
         .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2")
+        .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
       ]
     }
   }
@@ -1010,11 +1008,11 @@ import XCTest
         noAssignmentInExpressionsState: NoAssignmentInExpressions.State(
           noAssignmentInExpressionsItems: [
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
           ],
           noAssignmentInExpressionsListState: .init(noAssignmentInExpressionsItems: [
             .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
-            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2")
+            .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
           ]),
           editingState: .popover
         )
@@ -1024,18 +1022,18 @@ import XCTest
 
     await store.send(
       .noAssignmentInExpressionsAction(
-        action: .noAssignmentInExpressionsItemsAction(.presented(.move([1], 0)))
+        .noAssignmentInExpressionsItemsAction(.presented(.move([1], 0)))
       )
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState?
         .noAssignmentInExpressionsItems = IdentifiedArray(uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
         ])
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsItems = IdentifiedArray(
         uniqueElements: [
           .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, text: "test2"),
-          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1")
+          .init(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!, text: "test1"),
         ])
     }
   }
@@ -1073,7 +1071,7 @@ import XCTest
     )
 
     await store.send(
-      .noAssignmentInExpressionsAction(action: .noAssignmentInExpressionsItemsAction(.dismiss))
+      .noAssignmentInExpressionsAction(.noAssignmentInExpressionsItemsAction(.dismiss))
     ) {
       $0.noAssignmentInExpressionsState.noAssignmentInExpressionsListState = nil
       $0.noAssignmentInExpressionsState.editingState = nil

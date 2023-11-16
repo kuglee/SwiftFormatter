@@ -5,7 +5,7 @@ import SettingsFeature
 import SwiftUI
 import WelcomeFeature
 
-public struct AppFeature: Reducer {
+@Reducer public struct AppFeature {
   @Dependency(\.appUserDefaults) var appUserDefaults
 
   public init() {}
@@ -28,7 +28,7 @@ public struct AppFeature: Reducer {
 
   public enum Action {
     case dismissWelcomeSheet
-    case settingsFeature(action: SettingsFeature.Action)
+    case settingsFeature(SettingsFeature.Action)
   }
 
   public var body: some ReducerOf<Self> {
@@ -47,23 +47,21 @@ public struct AppFeature: Reducer {
         return .none
       }
     }
-    Scope(state: \.settingsFeatureState, action: /Action.settingsFeature(action:)) {
-      SettingsFeature()
-    }
-    .onChange(of: \.settingsFeatureState.configuration) { _, newValue in
-      Reduce { state, action in
-        self.appUserDefaults.setConfigurationWrapper(newValue)
+    Scope(state: \.settingsFeatureState, action: \.settingsFeature) { SettingsFeature() }
+      .onChange(of: \.settingsFeatureState.configuration) { _, newValue in
+        Reduce { state, action in
+          self.appUserDefaults.setConfigurationWrapper(newValue)
 
-        return .none
+          return .none
+        }
       }
-    }
-    .onChange(of: \.settingsFeatureState.shouldTrimTrailingWhitespace) { _, newValue in
-      Reduce { state, action in
-        self.appUserDefaults.setShouldTrimTrailingWhitespace(newValue)
+      .onChange(of: \.settingsFeatureState.shouldTrimTrailingWhitespace) { _, newValue in
+        Reduce { state, action in
+          self.appUserDefaults.setShouldTrimTrailingWhitespace(newValue)
 
-        return .none
+          return .none
+        }
       }
-    }
   }
 }
 
@@ -75,7 +73,7 @@ public struct AppFeatureView: View {
   public var body: some View {
     WithViewStore(self.store, observe: { !$0.didRunBefore }) { viewStore in
       SettingsFeatureView(
-        store: store.scope(state: \.settingsFeatureState, action: AppFeature.Action.settingsFeature)
+        store: store.scope(state: \.settingsFeatureState, action: { .settingsFeature($0) })
       )
       .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) {
         WelcomeFeatureView()

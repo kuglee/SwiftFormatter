@@ -3,7 +3,7 @@ import ConfigurationWrapper
 import StyleGuide
 import SwiftUI
 
-public struct FormatterRules: Reducer {
+@Reducer public struct FormatterRules {
   public init() {}
 
   public struct State: Equatable {
@@ -82,7 +82,7 @@ public struct FormatterRules: Reducer {
     }
   }
 
-  public enum Action: Equatable, BindableAction { case binding(BindingAction<State>) }
+  public enum Action: BindableAction { case binding(BindingAction<State>) }
 
   public var body: some ReducerOf<Self> { BindingReducer() }
 }
@@ -182,9 +182,7 @@ public struct FormatterRulesView: View {
           Toggle(isOn: viewStore.$useExplicitNilCheckInConditions) {
             Text("Use explicit nil check in conditions")
           }
-          .help(
-            "If enabled, let _ = expr inside a condition list will be replaced by expr != nil"
-          )
+          .help("If enabled, let _ = expr inside a condition list will be replaced by expr != nil")
           Toggle(isOn: viewStore.$useShorthandTypeNames) { Text("Use shorthand type names") }
             .help(
               "If enabled, where possible, shorthand types replace long form types; e.g. Array<Element> is converted to [Element]"
