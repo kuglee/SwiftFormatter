@@ -310,7 +310,7 @@ public struct FormatterSettingsView: View {
         NoAssignmentInExpressionsView(
           store: self.store.scope(
             state: \.noAssignmentInExpressionsState,
-            action: { .noAssignmentInExpressionsAction($0) }
+            action: \.noAssignmentInExpressionsAction
           )
         )
         .help("Contains exceptions for the NoAssignmentInExpressions rule.").frame(maxWidth: 350)
@@ -565,7 +565,7 @@ public struct NoAssignmentInExpressionsView: View {
         .popover(
           store: self.store.scope(
             state: \.$noAssignmentInExpressionsListState,
-            action: { .noAssignmentInExpressionsItemsAction($0) }
+            action: \.noAssignmentInExpressionsItemsAction
           ),
           arrowEdge: .trailing
         ) {

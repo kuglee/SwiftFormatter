@@ -73,7 +73,7 @@ public struct AppFeatureView: View {
   public var body: some View {
     WithViewStore(self.store, observe: { !$0.didRunBefore }) { viewStore in
       SettingsFeatureView(
-        store: store.scope(state: \.settingsFeatureState, action: { .settingsFeature($0) })
+        store: store.scope(state: \.settingsFeatureState, action: \.settingsFeature)
       )
       .sheet(isPresented: viewStore.binding(send: .dismissWelcomeSheet)) {
         WelcomeFeatureView()

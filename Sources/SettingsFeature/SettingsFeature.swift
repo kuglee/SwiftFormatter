@@ -207,17 +207,14 @@ public struct SettingsFeatureView: View {
         Group {
           IfView(viewStore.state == .formatting) {
             FormatterSettingsView(
-              store: self.store.scope(
-                state: \.formatterSettings,
-                action: { .formatterSettings($0) }
-              )
+              store: self.store.scope(state: \.formatterSettings, action: \.formatterSettings)
             )
           }
           .tabItem { Text("Formatting") }.tag(Tab.formatting)
 
           IfView(viewStore.state == .rules) {
             FormatterRulesView(
-              store: self.store.scope(state: \.formatterRules, action: { .formatterRules($0) })
+              store: self.store.scope(state: \.formatterRules, action: \.formatterRules)
             )
           }
           .tabItem { Text("Rules") }.tag(Tab.rules)
